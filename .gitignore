@@ -5,6 +5,7 @@ npm-debug.log
 # Cordova
 /platforms
 /plugins
+/hooks
 
 /www/mobileui
 
