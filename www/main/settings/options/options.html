@@ -1,0 +1,84 @@
+<div class="page grey-100">
+    <div class="header grey-900 shadow">
+        <button class="left icon ion-android-arrow-back" onclick="backPage()"></button>
+        <h1>Options</h1>
+    </div>
+    <div class="content padding has-header">
+        <form id="formoptions">
+            <div class="list margin radius">
+                <div class="item">
+                    <h2 class="text-strong">Toolbars</h2>
+                    <div class="item">
+                        <h2>Color bar</h2>
+                        <div class="right">
+                            <input type="checkbox" class="switch grey-900" id="colorbarCheckbox" checked>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h2>Location</h2>
+                        <div class="right">
+                            <input type="checkbox" class="switch grey-900" id="locationCheckbox" checked>
+                        </div>
+                    </div>
+                    <div class="item" id="item-group">
+                        <h2>Group</h2>
+                        <div class="right">
+                            <input type="checkbox" class="switch grey-900" id="groupCheckbox" checked>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h2>Caching</h2>
+                        <div class="right">
+                            <input type="checkbox" class="switch grey-900" id="cachingCheckbox" checked>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <h2 class="text-strong">Other</h2>
+                    <div class="item" id="item-comments">
+                        <h2>Enable comments</h2>
+                        <div class="right">
+                            <input type="checkbox" class="switch grey-900" id="commentsCheckbox" checked>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h2>Feature colors</h2>
+                        <div class="item">
+                            <div class="item">
+                                <label for="blackCheckbox">Black</label>
+                                <div class="right"><input type="checkbox" id="blackCheckbox" value="black"></div>
+                              </div>
+                              <div class="item">
+                                <label for="greenCheckbox">Green</label>
+                                <div class="right"><input type="checkbox" id="greenCheckbox" value="green"></div>
+                              </div>
+                              <div class="item">
+                                <label for="yellowCheckbox">Yellow</label>
+                                <div class="right"><input type="checkbox" id="yellowCheckbox" value="yellow"></div>
+                              </div>
+                              <div class="item">
+                                <label for="redCheckbox">Red</label>
+                                <div class="right"><input type="checkbox" id="redCheckbox" value="red"></div>
+                              </div>
+                              <div class="item">
+                                <label for="blueCheckbox">Blue</label>
+                                <div class="right"><input type="checkbox" id="blueCheckbox" value="blue"></div>
+                              </div>
+                              <div class="item">
+                                <label for="brownCheckbox">Brown</label>
+                                <div class="right"><input type="checkbox" id="brownCheckbox" value="brown"></div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- max zoom lvl über user input -->
+            </div>
+            <div class="space"></div>
+            <div class="row-center">
+                <button type="submit" class="grey-900 radius">Save</button>
+            </div>
+            <div class="space"></div>
+        </form>
+    </div>
+</div>

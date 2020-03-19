@@ -1,0 +1,29 @@
+<div class="page grey-100">
+    <div class="header grey-900 shadow">
+        <button class="left icon ion-android-arrow-back" onclick="backPage()"></button>
+        <h1>Manage variables</h1>
+        <button class="icon ion-android-more-vertical right" onclick="openPopover('manageVarMenu')"></button>
+    </div>
+    <div class="popover" id="manageVarMenu">
+        <div class="list">
+            <div class="item">
+                <h2 id="clearVarBtn">Clear variables</h1>
+            </div>
+            <div class="item">
+                <h2>Render variables as table</h2>
+            </div>
+        </div>
+    </div>
+    <div class="content padding has-header">
+        <form id="formvariables">
+            <div class="list margin radius" id="listvariables">
+                <div class="item">
+                    <input autofocus type="text" placeholder="Add variable" id="variableinput">
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<!-- https://freshman.tech/todo-list/ -->

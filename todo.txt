@@ -1,0 +1,14 @@
+- print disk usage (cache)
+- wenn layer control expanded, moveButtons::: debug!!!
+
+- evtl fixed position von buttons (topleft)
+- style: checkbox und text input
+- polygone???
+- localStorage Cordova????
+- evtl. Zoom Levels über user input
+
+- bug: wenn ortung permission denied
+- bug: liste kein rand rechts
+- überall (i) erklärungen
+- evtl. variablenmanagement csv einlesen/darstellen
+- doks schreiben

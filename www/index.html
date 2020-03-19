@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="mobileui/fonts.css">
+  <link rel="stylesheet" type="text/css" href="mobileui/style.css">
+  <meta name="format-detection" content="telephone=no">
+  <meta charset="utf-8">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport"
+    content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+  <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
+  <link rel="stylesheet" type="text/css" href="index.bundle.css">
+  <title>FieldMapper</title>
+</head>
+
+<body class="grey-100">
+  <div class="header grey-900 shadow">
+    <div class="left" style="margin-top: 12px">
+      <span class="text-big margin">FieldMapper</span>
+    </div>
+    <div class="right">
+      <span class="text-small margin" style="color: lightgrey" id="status"></span>
+    </div>
+  </div>
+  <div class="footer grey-900 shadow tab">
+    <button class="icon ion-android-map active" id="mapBtn" onclick="openTab('map')"> Map</button>
+    <button class="icon ion-ios-gear" id="settingsBtn" onclick="openTab('tabSettings')"> Settings</button>
+    <button class="icon ion-ios-information" id="aboutBtn" onclick="openTab('tabAbout')"> About</button>
+  </div>
+  <div class="content has-header has-footer">
+    <div class="tab-content active" id="map"></div>
+    <div class="tab-content padding" id="tabSettings">
+
+      <div class="list margin radius">
+        <div class="item" onclick="openPage('./main/settings/variables/managevariables')">
+          <h2>Manage variables</h2>
+          <div class="right">></div>
+        </div>
+        <div class="item" onclick="openPage('./main/settings/options/options')">
+          <h2>Show options</h2>
+          <div class="right">></div>
+        </div>
+        <div class="item" onclick="openPage('./main/settings/layers/managelayers')">
+          <h2>Import layer</h2>
+          <div class="right">></div>
+        </div>
+        <div class="item">
+          <h2>Clear/set to default:</h2>
+          <form id="clearForm">
+            <div class="item">
+              <label for="clearVariables">Variables</label>
+              <div class="right"><input type="checkbox" id="clearVariables"></div>
+            </div>
+            <div class="item">
+              <label for="clearLayers">Layers</label>
+              <div class="right"><input type="checkbox" id="clearLayers"></div>
+            </div>
+            <div class="item">
+              <label for="clearOptions">Options</label>
+              <div class="right"><input type="checkbox" id="clearOptions"></div>
+            </div>
+            <div class="item">
+              <label for="clearFiles">Exports</label>
+              <div class="right"><input type="checkbox" id="clearFiles"></div>
+            </div>
+            <div class="item">
+              <label for="clearCache">Cached tiles</label>
+              <div class="right"><input type="checkbox" id="clearCache"></div>
+            </div>
+            <div class="space"></div>
+            <div class="row-center">
+              <button type="submit" class="grey-900 radius" style="margin-right: 5px">Apply</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="tab-content padding" id="tabAbout">
+      <h1 class="padding text-strong">About</h1>
+      <p class="padding">
+        Testtesttesttetsttetsttetsttetstfsdfsdfsdfsdfsfsdfsdfsdfsdfsdfsfsfsfsfsdfsfsfsffsfsffsfsfsfsfsffsfsffsfsf.</p>
+    </div>
+  </div>
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="mobileui/mobileui.js"></script>
+  <script src="index.bundle.js"></script>
+  <script>
+    window.app.init();
+  </script>
+</body>
+
+</html>

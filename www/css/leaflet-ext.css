@@ -1,0 +1,54 @@
+.leaflet-bar a,
+.leaflet-bar a:hover,
+.leaflet-bar button,
+.leaflet-bar button:hover,
+.leaflet-touch .leaflet-bar button,
+.leaflet-touch .leaflet-bar a {
+    width: 35px;
+    height: 35px;
+    line-height: normal;
+    margin: 0;
+    padding: 0;
+    display: flex; 
+    justify-content: center;
+}
+
+.leaflet-bar button.active {
+    background-color: lightgrey;
+}
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out,
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
+    line-height: 42px;
+	font: bold 28px 'Lucida Console', Monaco, monospace;
+    text-indent: 1px;
+}
+
+.leaflet-left-2 {
+	left: 0;
+}
+.leaflet-right-2 {
+    right: 0;
+}
+.leaflet-right-2 .leaflet-control {
+	float: right;
+}
+.leaflet-top .leaflet-control {
+	margin-top: 7px;
+}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 7px;
+}
+.leaflet-left .leaflet-control {
+	margin-left: 7px;
+}
+.leaflet-right .leaflet-control {
+	margin-right: 7px;
+}
+.leaflet-left-2 .leaflet-control {
+	margin-left: 55px;
+}
+.leaflet-right-2 .leaflet-control {
+    margin-right: 55px;
+}

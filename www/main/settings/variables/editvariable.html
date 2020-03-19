@@ -1,0 +1,42 @@
+<div class="page grey-100">
+    <div class="header grey-900 shadow">
+        <button class="left icon ion-android-arrow-back" onclick="backPage()"></button>
+        <h1>Edit variable</h1>
+    </div>
+    <div class="content padding has-header">
+        <form id="formeditvar">
+            <div class="list margin radius" id="listedit">
+                <div class="item">
+                    <label class="text-small">Variable</label>
+                    <input type="text" id="varName" value="">
+                </div>
+                <div class="item" id="var-item-btns">
+                    <label>Type</label>
+                    <div class="space"></div>
+                    <div class="buttons-group full">
+                        <button class="grey-400 radius-left" id="booleanBtn" type="button">Boolean</button>
+                        <button class="grey-400" id="binaryBtn" type="button">Custom binary</button>
+                        <button class="grey-400 radius-right" id="multiBtn" type="button">Multi-value</button>
+                    </div>
+                </div>
+                <div class="item">
+                    <label for="varPos">Position</label>
+                    <select id="varPos">
+                        <option value="topleft" selected>Left</option>
+                        <option value="topright">Right</option>
+                    </select>
+                </div>
+                <div class="item">
+                    <label for="varIcon">Icon</label>
+                    <input type="file" id="varIcon">
+                </div>
+            </div>
+            <div class="space"></div>
+            <div class="row-center">
+                <button type="submit" class="grey-900 radius" style="margin-right: 5px">Save</button>
+                <button type="button" id="deleteeditvar" style="margin-left: 5px" class="grey-900 radius">Delete</button>
+            </div>
+            <div class="space"></div>
+        </form>
+    </div>
+</div>

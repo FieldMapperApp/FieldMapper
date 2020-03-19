@@ -1,0 +1,34 @@
+<div class="page grey-100">
+    <div class="header grey-900 shadow">
+        <button class="left icon ion-android-arrow-back" onclick="backPage()"></button>
+        <h1>Edit layer details</h1>
+    </div>
+    <div class="content padding has-header">
+        <form id="formeditlayer">
+            <div class="list margin radius">
+                <div class="item">
+                    <label class="text-small">Layer</label>
+                    <input type="text" id="layerName" value="">
+                </div>
+                <div class="item" id="layer-item-btns">
+                    <label>Type</label>
+                    <div class="space"></div>
+                    <div class="buttons-group full">
+                        <button class="grey-400 radius-left" id="geoJsonBtn" type="button">GeoJSON</button>
+                        <button class="grey-400" id="imageBtn" type="button">Image overlay</button>
+                    </div>
+                </div>
+                <div class="item">
+                    <label class="text-small">File</label>
+                    <input type="file" id="layerFile" required>
+                </div>
+            </div>
+            <div class="space"></div>
+            <div class="row-center">
+                <button type="submit" class="grey-900 radius" style="margin-right: 5px">Save</button>
+                <button type="button" id="deleteeditlayer" style="margin-left: 5px" class="grey-900 radius">Delete</button>
+            </div>
+            <div class="space"></div>
+        </form>
+    </div>
+</div>
