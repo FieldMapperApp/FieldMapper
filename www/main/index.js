@@ -38,6 +38,16 @@ window.app = {
             zoomControl: false,
         });
 
+        if (localStorage.getItem('position')) {
+            let view = JSON.parse(localStorage.getItem('position'));
+            for (let [k, v] of Object.entries(view)) {
+                view[k] = parseFloat(v)
+            }
+            map.setView([view.lat, view.lng], view.zoom);
+        } else {
+            map.setView([52.520008, 13.404954], 30)
+        }
+
         let OSM;
         let layers = getLayers();
 
@@ -114,9 +124,9 @@ window.app = {
                 if (e.layer) { layersObj[e.name] = e.layer };
             }
 
-
             map.on('moveend', function () {
                 updateStatus(map, OSM);
+                localStorage.setItem('position', JSON.stringify({lat: map.getCenter().lat, lng: map.getCenter().lng, zoom: map.getZoom()}));
             }).fire('moveend');
 
             document.addEventListener("offline", (ev) => ((map, OSM) => onOffline(map, OSM)), false);

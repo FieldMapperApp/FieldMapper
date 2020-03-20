@@ -7,7 +7,6 @@ export function onOpenEdit(arg) { // render variable values (edit page)
 
     document.getElementById('layerName').value = arg.name;
     document.getElementById('layerName').readOnly = true;
-    document.getElementById('layerFile').value = layers[getInd(layers, arg.name)].file;
 
     let btns = [document.getElementById('geoJsonBtn'), document.getElementById('imageBtn')];
 
