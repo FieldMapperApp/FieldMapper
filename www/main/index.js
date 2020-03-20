@@ -38,19 +38,8 @@ window.app = {
             zoomControl: false,
         });
 
-        if (localStorage.getItem('position')) {
-            let view = JSON.parse(localStorage.getItem('position'));
-            for (let [k, v] of Object.entries(view)) {
-                view[k] = parseFloat(v)
-            }
-            map.setView([view.lat, view.lng], view.zoom);
-        } else {
-            map.setView([52.520008, 13.404954], 30)
-        }
-
         let OSM;
-        let layers = getLayers();
-
+        let layers;
         loadMap();
 
         document.getElementById('mapBtn').addEventListener('click', loadMap);
@@ -82,6 +71,20 @@ window.app = {
         function loadMap() {
 
             console.log('map loaded');
+
+            let _layers = getLayers();
+            layers = _layers.filter(e => e.hasOwnProperty('data'));
+
+            if (localStorage.getItem('position')) {
+                let view = JSON.parse(localStorage.getItem('position'));
+                for (let [k, v] of Object.entries(view)) {
+                    view[k] = parseFloat(v)
+                }
+                map.setView([view.lat, view.lng], view.zoom);
+            } else {
+                map.setView([52.520008, 13.404954], 30)
+            }
+
             map.eachLayer(el => el.remove());
             if (controls) { controls.forEach(el => el.remove()) };
             if (points.getLayers().length !== 0) { points.addTo(map) };
@@ -126,7 +129,7 @@ window.app = {
 
             map.on('moveend', function () {
                 updateStatus(map, OSM);
-                localStorage.setItem('position', JSON.stringify({lat: map.getCenter().lat, lng: map.getCenter().lng, zoom: map.getZoom()}));
+                localStorage.setItem('position', JSON.stringify({ lat: map.getCenter().lat, lng: map.getCenter().lng, zoom: map.getZoom() }));
             }).fire('moveend');
 
             document.addEventListener("offline", (ev) => ((map, OSM) => onOffline(map, OSM)), false);

@@ -19,9 +19,7 @@ export class LayerStorage {
     _getType() {
 
         let btns = [document.getElementById('geoJsonBtn'), document.getElementById('imageBtn')];
-        console.log(btns.map(e => e.classList.contains('grey-900')));
         let btns_classes = btns.map(e => e.classList.contains('grey-900'));
-        console.log(['GeoJSON', 'imageOverlay'][btns_classes.indexOf(true)]);
         return ['GeoJSON', 'imageOverlay'][btns_classes.indexOf(true)];
 
     }
