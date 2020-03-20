@@ -8,5 +8,7 @@ npm-debug.log
 /hooks
 
 /www/mobileui
+/www/index.bundle.css
+/www/index.bundle.js
 
 todo.txt
