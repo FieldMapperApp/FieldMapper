@@ -128,7 +128,7 @@ export function addControls(map, OSM, layers) {
     let controls = [zoomCtrl, layerCtrl, modeCtrl, colorBar, cacheBtn, groupBtn, saveBtn, clearBtn, undoBtn, locateBtn, ...buttons];
     function moveControls(event) {
         controls.forEach(e => {
-            if (!(e instanceof Colorbar)) {
+            if (e._map && !(e instanceof Colorbar)) {
                 moveButtons(e, event);
             }
         })
