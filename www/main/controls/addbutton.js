@@ -1,4 +1,5 @@
 import { properties } from '../index';
+import { changeButtons } from './utils';
 
 export function addButton(el, map) {
 
