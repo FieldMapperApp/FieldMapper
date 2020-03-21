@@ -9,8 +9,6 @@ function onLoad(e) {
 
   let layers = getLayers();
 
-  console.log(e.detail.page);
-
   if (e.detail.page === "./main/settings/layers/managelayers.html") { // check which page was requested
     
     if (layers.length !== 0) { layers.forEach(el => addItem(el.name, layers)) }; // render variable list from local storage
