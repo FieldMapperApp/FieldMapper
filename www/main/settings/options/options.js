@@ -20,6 +20,12 @@ function onLoad(e) {
     let cachingCheckbox = document.getElementById('cachingCheckbox');
     cachingCheckbox.checked = options.cache;
 
+    let deletionCheckbox = document.getElementById('deletionCheckbox');
+    deletionCheckbox.checked = options.deletion;
+
+    let exportCheckbox = document.getElementById('exportCheckbox');
+    exportCheckbox.checked = options.export;
+
     let groupCheckbox = document.getElementById('groupCheckbox');
     groupCheckbox.checked = options.group;
 
@@ -70,6 +76,12 @@ function onSubmitOptions(e, options, defColors) {
   let cachingCheckbox = document.getElementById('cachingCheckbox');
   options.cache = cachingCheckbox.checked;
 
+  let deletionCheckbox = document.getElementById('deletionCheckbox');
+  options.deletion = deletionCheckbox.checked;
+
+  let exportCheckbox = document.getElementById('exportCheckbox');
+  options.export = exportCheckbox.checked;
+
   let groupCheckbox = document.getElementById('groupCheckbox');
   options.group = groupCheckbox.checked;
 
@@ -94,7 +106,6 @@ function onSubmitOptions(e, options, defColors) {
 function checkGroupBtn(btn, options) {
   let elem = document.getElementById('item-comments');
   if (btn.checked) {
-    //elem.classList.add('no-space-bottom', 'no-border');
     elem.insertAdjacentHTML('afterend', `
         <div class="item" id="group-type">
             <h2>Only group features of same geometry type</h2>
@@ -141,5 +152,16 @@ function checkColorBtn(e) {
 }
 
 export function getOptions() {
-  return (localStorage.hasOwnProperty('options') ? JSON.parse(localStorage.getItem('options')) : { colorbar: true, colors: ["black", "green", "yellow", "red", "blue", "brown"], location: true, comments: true, cache: true, group: true, groupType: true, groupColor: false })
+  return (localStorage.hasOwnProperty('options') ? JSON.parse(localStorage.getItem('options')) : { 
+    colorbar: true, 
+    colors: ["black", "green", "yellow", "red", "blue", "brown"], 
+    location: true, 
+    comments: true, 
+    cache: true, 
+    deletion: false, 
+    export: false,
+    group: true, 
+    groupType: true, 
+    groupColor: false 
+  })
 }

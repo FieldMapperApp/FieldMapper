@@ -1,4 +1,4 @@
-import { points, lines } from '../index';
+import { points, lines, importedFeatures } from '../index';
 import { getOptions } from '../settings/options/options';
 import { getVars } from '../settings/utils';
 import { addButton } from './addbutton';
@@ -87,19 +87,19 @@ export function addControls(map, OSM, layers) {
 
     // undo btn
 
-    let undoBtn = createUndoBtn(map, points, lines);
+    let undoBtn = createUndoBtn(map, points, lines, importedFeatures);
     undoBtn.addTo(map);
 
 
     // clear all button
 
-    let clearBtn = createClearBtn(map, points, lines);
+    let clearBtn = createClearBtn(map, points, lines, importedFeatures);
     clearBtn.addTo(map);
 
 
     // save button
 
-    let saveBtn = createSaveBtn(points, lines);
+    let saveBtn = createSaveBtn(map, points, lines, importedFeatures);
     saveBtn.addTo(map);
 
 

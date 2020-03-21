@@ -1,4 +1,3 @@
-import 'onsenui';
 import '../../node_modules/leaflet-easybutton/src/easy-button.css';
 import '../../node_modules/leaflet/dist/leaflet.css';
 import '../css/leaflet-ext.css';
@@ -21,6 +20,7 @@ export var properties = new Properties;
 
 export var points = L.featureGroup();
 export var lines = L.featureGroup();
+export var importedFeatures = L.featureGroup();
 
 window.app = {
     init: () => {

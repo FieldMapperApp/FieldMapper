@@ -25,8 +25,7 @@
     "cordova-plugin-network-information": "^2.0.2",
     "leaflet": "^1.6.0",
     "leaflet-easybutton": "^2.4.0",
-    "mobileui": "^1.1.19",
-    "onsenui": "^2.10.10"
+    "mobileui": "^1.1.19"
   },
   "devDependencies": {
     "cordova-plugin-webpack": "^0.4.7",

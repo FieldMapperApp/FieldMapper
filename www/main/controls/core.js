@@ -1,6 +1,7 @@
 import { writeToFile } from '../utils/export';
+import { getOptions } from '../settings/options/options';
 
-export function createUndoBtn(map, points, lines) {
+export function createUndoBtn(map, points, lines, imports) {
 
     return L.easyButton({
         position: 'topright',
@@ -9,20 +10,27 @@ export function createUndoBtn(map, points, lines) {
             onClick: function (control) {
                 control.setActive();
                 setTimeout(function () {
+                    let options = getOptions();
                     let features = points.getLayers().concat(lines.getLayers());
+
+                    if (options.deletion) {
+                        features = features.concat(imports.getLayers())
+                    }
+
                     let sortedFeatures = features.sort((a, b) => {
                         return Date.parse(a.feature.properties.timestamp) - Date.parse(b.feature.properties.timestamp)
                     });
                     let lastFeature = sortedFeatures[sortedFeatures.length - 1];
-                    let previousFeature = sortedFeatures[sortedFeatures.length - 2];
 
                     if (features.length !== 0) {
                         let sureUndo = confirm('Are your sure?');
                         if (sureUndo === true) {
                             if (lines.hasLayer(lastFeature)) {
                                 lines.removeLayer(lastFeature);
-                            } else {
+                            } else if (points.hasLayer(lastFeature)) {
                                 points.removeLayer(lastFeature);
+                            } else {
+                                imports.removeLayer(lastFeature)
                             }
                             map.removeLayer(lastFeature);
                         }
@@ -34,18 +42,7 @@ export function createUndoBtn(map, points, lines) {
     })
 }
 
-export function createClearBtn(map, points, lines) {
-    
-    function clearAll() {
-        console.log(points.getLayers().length);
-        console.log(lines.getLayers().length);
-        points.eachLayer(e => map.removeLayer(e));
-        lines.eachLayer(e => map.removeLayer(e));
-        points.clearLayers();
-        lines.clearLayers();
-        console.log(points.getLayers().length);
-        console.log(lines.getLayers().length);
-    };
+export function createClearBtn(map, points, lines, imports) {
 
     return L.easyButton({
         position: 'topright',
@@ -54,9 +51,17 @@ export function createClearBtn(map, points, lines) {
             onClick: function (control) {
                 control.setActive();
                 setTimeout(function () {
-                    if (lines.getLayers().length + points.getLayers().length !== 0) {
+                    let options = getOptions();
+                    let layers = lines.getLayers().length + points.getLayers().length;
+                    if (options.deletion) {
+                        console.log('option true')
+                        console.log(imports.getLayers())
+                        layers += imports.getLayers().length;
+                    }
+                    console.log(layers)
+                    if (layers !== 0) {
                         let sureClear = confirm('Are you sure?');
-                        if (sureClear === true) { clearAll() };
+                        if (sureClear === true) { clearAll(options.deletion, points, lines, imports, map) };
                     };
                     control.setInactive();
                 }, 2);
@@ -65,34 +70,67 @@ export function createClearBtn(map, points, lines) {
     })
 }
 
-export function createSaveBtn(points, lines) {
+export function createSaveBtn(map, points, lines, imports) {
 
     return L.easyButton({
         position: 'topright',
         states: [{
             icon: '<img alt="save" src="img/save.svg" height="60%" width="60%" style="padding-top:6px" />',
             onClick: function (control) {
+
+                let options = getOptions();
+
                 control.setActive();
                 setTimeout(function () {
+
                     control.setInactive();
+
                     let saveAs;
-                    if (points.getLayers().length + lines.getLayers().length === 0) {
+                    let layers = lines.getLayers().length + points.getLayers().length;
+                    if (options.deletion) {
+                        layers += imports.getLayers().length;
+                    }
+                    if (layers === 0) {
                         alert('Nothing there to save yet!')
                     } else {
                         saveAs = prompt('Save as', '');
                     };
+
                     console.log(JSON.stringify(points.toGeoJSON()));
                     console.log(JSON.stringify(lines.toGeoJSON()));
-                    if (device.platform == 'Android' && saveAs != null) {
-                        if (lines.getLayers() != null) { writeToFile(JSON.stringify(lines.toGeoJSON()), 'lines', saveAs) };
-                        if (points.getLayers() != null) { writeToFile(JSON.stringify(points.toGeoJSON()), 'points', saveAs) };
+                    console.log(JSON.stringify(imports.toGeoJSON()));
+
+                    if (device.platform == 'Android' && saveAs) {
+                        if (lines.getLayers()) { writeToFile(JSON.stringify(lines.toGeoJSON()), 'lines', saveAs) };
+                        if (points.getLayers()) { writeToFile(JSON.stringify(points.toGeoJSON()), 'points', saveAs) };
+                        if (options.export && imports.getLayers()) { writeToFile(JSON.stringify(imports.toGeoJSON()), 'imports', saveAs) }
+                    
+                        clearAll(options.deletion, points, lines, imports, map);
                     };
-                    clearAll();
+
                 }, 2)
             }
         }]
     })
 }
+
+function clearAll(option, points, lines, imports, map) {
+
+    console.log(points.getLayers().length);
+    console.log(lines.getLayers().length);
+    console.log(imports.getLayers().length);
+    points.eachLayer(e => map.removeLayer(e));
+    lines.eachLayer(e => map.removeLayer(e));
+    points.clearLayers();
+    lines.clearLayers();
+    if (option) {
+        imports.eachLayer(e => map.removeLayer(e));
+        imports.clearLayers();
+    }
+    console.log(points.getLayers().length);
+    console.log(lines.getLayers().length);
+    console.log(imports.getLayers().length);
+};
 
 export function createGroupBtn() {
     return L.easyButton({
