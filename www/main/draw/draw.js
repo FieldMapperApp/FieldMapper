@@ -25,6 +25,7 @@ export function onMousedown(e) {
         line.feature.properties.comments = (getOptions().comments ? prompt('Comments: ', '') : null);
 
         addPopUp(line);
+        map.off('mouseup', onMouseup);
     }
 
 };
