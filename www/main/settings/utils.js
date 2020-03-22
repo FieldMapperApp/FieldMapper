@@ -10,7 +10,6 @@ export function deleteItem(key, arr, type) {
 
 export function updateItem(arr, obj) {
 
-    console.log(obj);
     let i = getInd(arr, obj.name);
     arr[i] = obj;
     console.log(obj);

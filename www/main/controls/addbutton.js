@@ -18,7 +18,7 @@ export function addButton(el, map) {
                 position: el.position,
                 states: [{
                     stateName: 'inactive',
-                    icon: (el.icon.length > 2 ? '<img alt="activate ' + name + '" src="' + el.icon + '" height="60%" width="60%" />' : `<span>${el.icon}</span>`),
+                    icon: el.icon,
                     title: 'activate',
                     onClick: function (control) {
                         properties[name] = true;
@@ -26,7 +26,7 @@ export function addButton(el, map) {
                         control.state('active');
                     }
                 }, {
-                    icon: (el.icon.length > 2 ? '<img alt="activate ' + name + '" src="' + el.icon + '" height="60%" width="60%" />' : `<span>${el.icon}</span>`),
+                    icon: el.icon,
                     stateName: 'active',
                     title: 'deactivate',
                     onClick: function (control) {
@@ -47,7 +47,7 @@ export function addButton(el, map) {
                 position: el.position,
                 states: [{
                     stateName: 'inactive',
-                    icon: (el.icon.length > 2 ? '<img alt="activate ' + name + '" src="' + el.icon + '" height="60%" width="60%" />' : `<span>${el.icon}</span>`),
+                    icon: el.icon,
                     title: 'activate',
                     onClick: function (control) {
                         properties[name] = el.value[1];
@@ -55,7 +55,7 @@ export function addButton(el, map) {
                         control.state('active');
                     }
                 }, {
-                    icon: (el.icon.length > 2 ? '<img alt="activate ' + name + '" src="' + el.icon + '" height="60%" width="60%" />' : `<span>${el.icon}</span>`),
+                    icon: el.icon,
                     stateName: 'active',
                     title: 'deactivate',
                     onClick: function (control) {
@@ -71,11 +71,10 @@ export function addButton(el, map) {
         case "multi":
 
             console.log('case multi');
-            let arr = [];
-            el.value.forEach((e, i) => {
+            let arr = el.value.map((e, i) => {
                 let btn = L.easyButton({
                     states: [{
-                        icon: (el.icon[0].length > 2 ? '<img alt="activate ' + name + '" src="' + el.icon[i] + '" height="60%" width="60%" />' : `<span>${el.icon[i]}</span>`),
+                        icon: el.icon[i],
                         title: 'activate ' + e,
                         onClick: function () {
                             changeButtons(arr);
@@ -84,7 +83,6 @@ export function addButton(el, map) {
                         }
                     }]
                 })
-                arr.push(btn);
             });
 
             newButton = L.easyBar(arr).addTo(map);

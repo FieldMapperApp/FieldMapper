@@ -6,6 +6,7 @@ import { createSecondCol, moveButtons } from './utils';
 import { createLocationBtn } from './locationbtn';
 import { createModeBtns } from './modes';
 import { Colorbar } from './colorbar';
+import { Var } from '../settings/variables/var';
 import { LayerControl } from './layercontrol';
 import { createCacheBtn } from './cache';
 import { createUndoBtn, createClearBtn, createGroupBtn, createSaveBtn } from './core';
@@ -58,9 +59,9 @@ export function addControls(map, OSM, layers) {
     let vars = getVars();
 
     let buttons = [];
-    if (vars !== null) {
+    if (vars) {
         vars.forEach(el => {
-            buttons.push(addButton(el, map));
+            buttons.push(addButton(new Var(el), map));
         })
     };
 
