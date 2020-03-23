@@ -37,7 +37,7 @@ export class VarStorage {
       if (document.getElementById('checkboxIcon').checked) {
 
         let _files = (this.type !== "boolean" ?
-          this.value.map((e, i) => { document.getElementById(`varIcon${i + 1}`).files[0] }) :
+          this.value.map((e, i) => { return document.getElementById(`varIcon${i + 1}`).files[0] }) :
           [document.getElementById('varIcon1').files[0]]
         );
 
@@ -78,7 +78,7 @@ export class Var {
       return this._createIcon(this.name, 0)
     } else {
       let ret = this.value.map((e, i) => {
-        this._createIcon(e, i);
+        return this._createIcon(e, i);
       })
       return ret;
     }
@@ -88,21 +88,36 @@ export class Var {
 
     if (this.data) {
 
-      let svg = atob(this.data[i].replace(/data:image\/svg\+xml;base64,/, ''));
-      //(el.icon.length > 2 ? '<img alt="activate ' + name + '" src="' + el.icon + '" height="60%" width="60%" />' : `<span>${el.icon}</span>`)
+      let icon;
+      let type = this.data[i].match(/[^:\s*]\w+\/[\w-+\d.]+(?=[;| ])/)[0];
 
-      let div = document.createElement('div');
-      div.innerHTML = svg.trim();
+      if (type === "image/svg+xml") {
 
-      let icon = div.firstChild;
-      icon.setAttribute("height", "60%");
-      icon.setAttribute("width", "60%");
+        let svg = atob(this.data[i].replace(/data:image\/svg\+xml;base64,/, ''));
+  
+        let div = document.createElement('div');
+        div.innerHTML = svg.trim();
+  
+        icon = div.firstChild;
+        icon.setAttribute("height", "60%");
+        icon.setAttribute("width", "60%");
+  
+      } else {
+
+        icon = new Image;
+        icon.src = this.data[i];
+        icon.height = "60%";
+        icon.width = "60%";
+
+      }
 
       return icon.outerHTML;
 
     } else {
 
-      let icon = document.createElement("span").textContent = e.slice(0, 2);
+      let icon = document.createElement("span");
+      icon.textContent = e.slice(0, 2);
+
       return icon.outerHTML;
 
     }

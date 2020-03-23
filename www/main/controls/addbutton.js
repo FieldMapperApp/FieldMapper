@@ -72,7 +72,7 @@ export function addButton(el, map) {
 
             console.log('case multi');
             let arr = el.value.map((e, i) => {
-                let btn = L.easyButton({
+                return L.easyButton({
                     states: [{
                         icon: el.icon[i],
                         title: 'activate ' + e,

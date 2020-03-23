@@ -70,7 +70,7 @@ function addFiles() {
       document.getElementById('icon-checkbox').insertAdjacentHTML('afterend', `
       <div class="item" id="icon-1">
         <label for="varIcon1">SVG Icon 1</label>
-        <input type="file" id="varIcon1" accept="image/svg+xml" required></input>
+        <input type="file" id="varIcon1" accept="image/*" required></input>
       </div>
       `);
     } else {
@@ -78,7 +78,7 @@ function addFiles() {
         return `
         <div class="item" id="icon-${i + 1}">
         <label for="varIcon${i + 1}">SVG Icon ${i + 1}</label>
-        <input type="file" id="varIcon${i + 1}" accept="image/svg+xml" required></input>
+        <input type="file" id="varIcon${i + 1}" accept="image/*" required></input>
       </div>
         `
       })
