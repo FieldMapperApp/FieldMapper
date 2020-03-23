@@ -1,12 +1,10 @@
-import { moveButtons, changeButtons } from './utils';
 import { properties } from '../index';
 
 export class Colorbar {
 
-    constructor(map, buttons, colors) {
+    constructor(colors) {
 
-        this._map = map;
-        this._buttons = buttons;
+        this._container = this._createContainer();
         this._colors = colors;
         this._colorBtnsOpen = this._createBtnsOpen();
         this._colorBtnsCollapsed = this._createBtnsCollapsed();
@@ -14,6 +12,17 @@ export class Colorbar {
         this._colorBarCollapsed = this._createBarCollapsed();
         this._collapseBar = this._collapseBar.bind(this);
         this._expandBar = this._expandBar.bind(this);
+
+    }
+
+    _createContainer() {
+
+        let container = document.createElement('div');
+        container.id = "colorbar";
+        let topLeftControl = document.getElementsByClassName('leaflet-top leaflet-left')[0];
+        topLeftControl.appendChild(container);
+
+        return container;
 
     }
 
@@ -29,7 +38,7 @@ export class Colorbar {
 
         return L.easyBar(_this._colorBtnsOpen.concat([L.easyButton('<img alt="collapse" src="img/chevron-up.svg" width="60%" height="60%" />', function () {
             _this._collapseBar();
-        })]));
+        })])).container;
 
     }
 
@@ -47,7 +56,7 @@ export class Colorbar {
 
         let _this = this;
 
-        return L.easyBar(_this._colorBtnsCollapsed);
+        return L.easyBar(_this._colorBtnsCollapsed).container;
     }
 
     _createBtn(color) {
@@ -55,7 +64,6 @@ export class Colorbar {
         let _this = this;
 
         return L.easyButton('<img src=""/>', function (control) {
-            changeButtons(_this._colorBtnsOpen);
             properties.color = color;
             control.setActive();
             _this._collapseBar();
@@ -65,52 +73,37 @@ export class Colorbar {
     _collapseBar() {
 
         this._colorBarOpen.remove();
-        if (this._buttons) { this._buttons.forEach(e => e.remove()) };
-        this._colorBarCollapsed.addTo(this._map);
+        this._container.appendChild(this._colorBarCollapsed);
         this._colorBtnsCollapsed[0].button.style.backgroundColor = properties.color;
-        if (this._buttons) {
-            this._buttons.forEach((e) => {
-                e.addTo(this._map);
-                moveButtons(e);
-            })
-        }
+
+        let ev = new Event('controlcollapse');
+        window.dispatchEvent(ev);
 
     }
 
     _expandBar() {
 
         this._colorBarCollapsed.remove();
-        if (this._buttons) { this._buttons.forEach(e => e.remove()) };
-        this._colorBarOpen.addTo(this._map);
+        this._container.appendChild(this._colorBarOpen);
         for (let [i, val] of this._colors.entries()) {
             this._colorBtnsOpen[i].button.style.backgroundColor = val;
         };
-        if (this._buttons) {
-            this._buttons.forEach((e) => {
-                e.addTo(this._map);
-                moveButtons(e);
-            })
-        }
+
+        let ev = new Event('controlexpand');
+        window.dispatchEvent(ev);
     }
 
     add() {
 
-        if (this._buttons) { this._buttons.forEach(e => e.remove()) };
-        this._colorBarCollapsed.addTo(this._map);
+        
+        this._container.appendChild(this._colorBarCollapsed);
         this._colorBtnsCollapsed[0].button.style.backgroundColor = properties.color;
-        if (this._buttons) {
-            this._buttons.forEach((e) => {
-                e.addTo(this._map);
-                moveButtons(e);
-            })
-        }
         
     }
 
     remove() {
 
-        this._colorBarCollapsed.remove();
-        this._colorBarOpen.remove();
+        this._container.remove();
         this._colorBtnsOpen = [];
         this._colorBtnsCollapsed = [];
 

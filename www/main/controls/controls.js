@@ -17,6 +17,9 @@ export function addControls(map, OSM, layers) {
 
     createSecondCol();
 
+    window.addEventListener('controlexpand', moveControls);
+    window.addEventListener('controlcollapse', moveControls);
+
     // layer ctrl
 
     let baselayers = {
@@ -31,14 +34,6 @@ export function addControls(map, OSM, layers) {
 
     let container = layerCtrl.getContainer();
 
-    container.addEventListener('layercontrolexpand', () => {
-        console.log('expand')
-        moveControls('expand');
-    })
-    container.addEventListener('layercontrolcollapse', () => {
-        console.log('collapse')
-        moveControls('collapse');
-    })
     container.addEventListener('click', () => {
         setTimeout(function () { layerCtrl.collapse() }, 200);
     })
@@ -53,21 +48,9 @@ export function addControls(map, OSM, layers) {
     modeCtrl.addTo(map);
     modeCtrl.container.id = 'modeCtrl';
 
-
-    // custom btns
-
-    let vars = getVars();
-
-    let buttons = [];
-    if (vars) {
-        vars.forEach(el => {
-            buttons.push(addButton(new Var(el), map));
-        })
-    };
-
     // color bar
 
-    let colorBar = new Colorbar(map, buttons, options.colors);
+    let colorBar = new Colorbar(options.colors);
 
     if (options.colorbar === true) {
         colorBar.add();
@@ -126,6 +109,17 @@ export function addControls(map, OSM, layers) {
         console.log("location deactivated");
     };
 
+    // custom btns
+
+    let vars = getVars();
+
+    let buttons = [];
+    if (vars) {
+        vars.forEach(el => {
+            buttons.push(addButton(new Var(el), map));
+        })
+    };
+
     let controls = [zoomCtrl, layerCtrl, modeCtrl, colorBar, cacheBtn, groupBtn, saveBtn, clearBtn, undoBtn, locateBtn, ...buttons];
     function moveControls(event) {
         controls.forEach(e => {
@@ -134,7 +128,8 @@ export function addControls(map, OSM, layers) {
             }
         })
     };
-    moveControls();
+    let ev = new Event('controlexpand');
+    window.dispatchEvent(ev)
 
     return controls;
 };

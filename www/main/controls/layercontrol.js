@@ -11,16 +11,16 @@ export var LayerControl = L.Control.Layers.extend({
         }
         this._checkDisabledLayers();
 
-        let ev = new Event('layercontrolexpand');
-        this._container.dispatchEvent(ev);
+        let ev = new Event('controlexpand');
+        window.dispatchEvent(ev);
 
         return this;
     },
     collapse: function () {
         L.DomUtil.removeClass(this._container, 'leaflet-control-layers-expanded');
         
-        let ev = new Event('layercontrolcollapse');
-        this._container.dispatchEvent(ev);
+        let ev = new Event('controlcollapse');
+        window.dispatchEvent(ev);
 
 		return this;
 	},
