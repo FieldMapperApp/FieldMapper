@@ -37,7 +37,6 @@ function _moveButtons(e, event) {
 
             if (movedBtnsR.length != 0) {
                 movedBtnsR.forEach(e => {
-                    console.log(e, enoughSpace(e, topRightControl, marginBottom, attributionControl))
                     if (enoughSpace(e, topRightControl, marginBottom, attributionControl)) {
                         e.remove();
                         topRightControl.appendChild(e);
@@ -48,8 +47,6 @@ function _moveButtons(e, event) {
             }
             if (movedBtnsL.length != 0) {
                 movedBtnsL.forEach(e => {
-                    console.log(e, enoughSpace(e, topRightControl, marginBottom))
-
                     if (enoughSpace(e, topLeftControl, marginBottom)) {
                         e.remove();
                         topLeftControl.appendChild(e);
@@ -88,7 +85,8 @@ function isElementOutMap(el, ctrl) {
 
 function enoughSpace(el, col, marginBottom, ctrl) {
     let children = [...col.childNodes];
-    let bottomBtn = (children[children.length - 1].offsetHeight > 0 ? children[children.length - 1] : children[children.length - 1].childNodes[0]);
+    let lastChild = children[children.length - 1];
+    let bottomBtn = (lastChild.offsetHeight > 0 ? lastChild : lastChild.childNodes[0]);
     let bottomEdge = (ctrl ? ctrl.getBoundingClientRect().top : document.getElementById('map').getBoundingClientRect().bottom);
     
     return ((bottomBtn.getBoundingClientRect().bottom + el.offsetHeight + marginBottom) < bottomEdge);
