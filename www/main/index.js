@@ -91,10 +91,13 @@ window.app = {
             if (lines.getLayers().length !== 0) { lines.addTo(map) };
 
             try {
-                OSM = L.tileLayerCordova('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 60,
-                    minZoom: 14,
-                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright/">OpenStreetMap contributors</a>',
+                OSM = L.tileLayerCordova('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZmVsbHVrc2NoIiwiYSI6ImNqeGFpdTk4NTB2eGYzc3J6MTFiYnUzd2EifQ.Nf5z6iAR6YSOqlJmNyGVgg', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 18,
+                    id: 'mapbox/streets-v11',
+                    tileSize: 512,
+                    zoomOffset: -1,
+                    //accessToken: 'pk.eyJ1IjoiZmVsbHVrc2NoIiwiYSI6ImNqeGFpdTk4NTB2eGYzc3J6MTFiYnUzd2EifQ.Nf5z6iAR6YSOqlJmNyGVgg',
                     folder: 'TileLayer',
                     name: 'OSM',
                     debug: true
@@ -134,8 +137,8 @@ window.app = {
 
             document.addEventListener("offline", (ev) => ((map, OSM) => onOffline(map, OSM)), false);
             document.addEventListener("online", (ev) => ((map, OSM) => onOnline(map, OSM)), false);
-
-            controls = addControls(map, OSM, layersObj);
+            
+            controls = addControls(map, OSM)//, layersObj);
 
         };
 
