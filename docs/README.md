@@ -1,5 +1,5 @@
 * [FieldMapper](../README.md)
-* [Use cases](/use_cases/use_cases.md)
+* [Use cases](./use_cases/use_cases.md)
   * Surveying
   * Interviewing
 * FAQ
