@@ -32,15 +32,24 @@
     <div class="tab-content active" id="map"></div>
     <div class="tab-content padding" id="tabSettings">
 
-      <div class="list margin radius">
+      <div class="list radius" style="margin-top: 5px">
         <div class="item" onclick="openPage('./main/settings/variables/managevariables')">
           <h2>Variable Management</h2>
+          <div class="right">
+            <i class="icon icon-small ion-chevron-right grey" style="margin-right: 5px"></i>
+          </div>
         </div>
         <div class="item" onclick="openPage('./main/settings/options/options')">
           <h2>Options</h2>
+          <div class="right">
+            <i class="icon icon-small ion-chevron-right grey" style="margin-right: 5px"></i>
+          </div>
         </div>
         <div class="item" onclick="openPage('./main/settings/layers/managelayers')">
           <h2>Layer Management</h2>
+          <div class="right">
+            <i class="icon icon-small ion-chevron-right grey" style="margin-right: 5px"></i>
+          </div>
         </div>
         <div class="item">
           <h2>Set to default:</h2>
@@ -67,7 +76,7 @@
             </div>
             <div class="space"></div>
             <div class="row-center">
-              <button type="submit" class="grey-900 radius" style="margin-right: 5px">Apply</button>
+              <button type="submit" class="grey-900 radius">Apply</button>
             </div>
           </form>
         </div>
@@ -76,9 +85,16 @@
 
     </div>
     <div class="tab-content padding" id="tabAbout">
-      <h1 class="padding text-strong">About</h1>
-      <p class="padding">
-        Testtesttesttetsttetsttetsttetstfsdfsdfsdfsdfsfsdfsdfsdfsdfsdfsfsfsfsfsdfsfsfsffsfsffsfsfsfsfsffsfsffsfsf.</p>
+      <div class="list radius" style="margin-top: 10px">
+        <div class="item no-border" style="text-align: center">
+          Thanks for using FieldMapper. Visit the PROJECT WEBSITE for an extensive documentation. The source code is
+          available ON GITHUB&mdash;contributions welcome! 
+        </div>
+        <div class="item no-border" style="text-align: center">
+          Do not hesitate to GET IN TOUCH if you encounter bugs or feel like FieldMapper is missing an important
+          feature.
+        </div>
+      </div>
     </div>
   </div>
   <script type="text/javascript" src="cordova.js"></script>

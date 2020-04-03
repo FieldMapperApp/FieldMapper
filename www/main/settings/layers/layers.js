@@ -14,7 +14,7 @@ function onLoad(e) {
     if (layers.length !== 0) { layers.forEach(el => addItem(el.name, layers)) }; // render variable list from local storage
 
     let clearBtn = document.getElementById('clearLayersBtn'); // set up event listeners
-    clearBtn.addEventListener('click', function(ev) { onClearBtn(layers) });
+    clearBtn.addEventListener('click', function(ev) { onClearBtn() });
 
     let form = document.getElementById("formlayers");
     if (form) {
@@ -35,8 +35,9 @@ function onLoad(e) {
   }
 };
 
-function onClearBtn(layers) { // remove all variables from storage and variables list
+function onClearBtn() { // remove all variables from storage and variables list
 
+  let layers = getLayers();  
   layers.forEach(el => {
 
     let item = document.getElementById("layers_item_" + el.name);

@@ -14,7 +14,7 @@ function onLoad(e) {
     if (variables.length !== 0) { variables.forEach(el => addItem(el.name, variables)) }; // render variable list from local storage
 
     let clearBtn = document.getElementById('clearVarBtn'); // set up event listeners
-    clearBtn.addEventListener('click', function(ev) { onClearBtn(variables) });
+    clearBtn.addEventListener('click', function(ev) { onClearBtn() });
 
     let form = document.getElementById("formvariables");
     if (form) {
@@ -35,8 +35,10 @@ function onLoad(e) {
   }
 };
 
-function onClearBtn(variables) { // remove all variables from storage and variables list
+function onClearBtn() { // remove all variables from storage and variables list
 
+  let variables = getVars();
+  
   variables.forEach(el => {
 
     let item = document.getElementById("var_item_" + el.name);
