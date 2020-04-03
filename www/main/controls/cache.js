@@ -15,10 +15,8 @@ export function createCacheBtn(map, OSM) {
 }
 
 function cacheBounds(map, OSM) {
-    let lat = map.getCenter().lat;
-    let lng = map.getCenter().lng;
     let zmin = map.getZoom();
-    let zmax = 18; // user input!!
+    let zmax = (zmin + 10 <= 20 ? zmin + 10 : 20);
     let tile_list = OSM.calculateXYZListFromBounds(map.getBounds(), zmin, zmax);
     let message = "Preparing to cache tiles.\n" + "Zoom level " + zmin + " through " + zmax + "\n" + tile_list.length + " tiles total." + "\nClick OK to proceed.";
     let ok = confirm(message);
