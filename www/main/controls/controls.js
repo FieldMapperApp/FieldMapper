@@ -101,7 +101,7 @@ export function addControls(map, OSM, layers) {
 
     // locate btn
 
-    let locateBtn = createLocationBtn();
+    let locateBtn = createLocationBtn(map);
 
     if (options.location === true) {
         locateBtn.addTo(map);

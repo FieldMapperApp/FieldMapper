@@ -33,8 +33,6 @@ window.app = {
         document.getElementById('aboutBtn').addEventListener('click', hideStatus);
 
         const map = new L.map('map', {
-            minZoom: 14,
-            maxZoom: 30,
             zoomControl: false,
         });
 

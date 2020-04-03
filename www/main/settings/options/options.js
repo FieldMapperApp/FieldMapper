@@ -45,45 +45,49 @@ function onLoad(e) {
 
     let form = document.getElementById("formoptions");
     if (form) {
-      console.log("form initialzed");
-      form.addEventListener('submit', function (ev) {
-        onSubmitOptions(ev, options, defColors)
-      })
+      [...form.elements].forEach(e => e.addEventListener('input', (ev) => { onChange(ev, options, defColors) }))
     }
   }
 }
 
-function onSubmitOptions(e, options, defColors) {
+function onChange(ev, options, defColors) {
 
-  e.preventDefault();
+  ev.preventDefault();
 
-  let colorbarCheckbox = document.getElementById("colorbarCheckbox");
-  options.colorbar = colorbarCheckbox.checked;
+  switch (ev.target.id) {
+    case "colorbarCheckbox":
+      options.colorbar = ev.target.checked;
+      break
+    case "locationCheckbox":
+      options.location = ev.target.checked;
+      break
+    case "commentsCheckbox":
+      options.comments = ev.target.checked;
+      break
+    case "cachingCheckbox":
+      options.cache = ev.target.checked;
+      break
+    case "deletionCheckbox":
+      options.deletion = ev.target.checked;
+      break
+    case "exportCheckbox":
+      options.export = ev.target.checked;
+      break
+    case "groupCheckbox":
+      options.group = ev.target.checked;
+      break
+  }  
 
-  let colorCheckboxes = defColors.map(e => document.getElementById(`${e}Checkbox`));
-  let colorsNew = colorCheckboxes.map(e => {
-    if (e.checked) { return e.value }
-  })
-  options.colors = colorsNew.filter(el => el != null);
-  properties.color = options.colors[0];
+  if (defColors) {
 
-  let locationCheckbox = document.getElementById("locationCheckbox");
-  options.location = locationCheckbox.checked;
+    let colorCheckboxes = defColors.map(e => document.getElementById(`${e}Checkbox`));
+    let colorsNew = colorCheckboxes.map(e => {
+      if (e.checked) { return e.value }
+    })
+    options.colors = colorsNew.filter(el => el != null);
+    properties.color = options.colors[0];
 
-  let commentsCheckbox = document.getElementById("commentsCheckbox");
-  options.comments = commentsCheckbox.checked;
-
-  let cachingCheckbox = document.getElementById('cachingCheckbox');
-  options.cache = cachingCheckbox.checked;
-
-  let deletionCheckbox = document.getElementById('deletionCheckbox');
-  options.deletion = deletionCheckbox.checked;
-
-  let exportCheckbox = document.getElementById('exportCheckbox');
-  options.export = exportCheckbox.checked;
-
-  let groupCheckbox = document.getElementById('groupCheckbox');
-  options.group = groupCheckbox.checked;
+  }
 
   if (document.getElementById('groupTypeCheckbox')) {
     options.groupType = document.getElementById('groupTypeCheckbox').checked
@@ -100,7 +104,6 @@ function onSubmitOptions(e, options, defColors) {
 
   console.log(JSON.parse(localStorage.getItem('options')));
 
-  backPage();
 }
 
 function checkGroupBtn(btn, options) {
@@ -108,21 +111,26 @@ function checkGroupBtn(btn, options) {
   if (btn.checked) {
     elem.insertAdjacentHTML('afterend', `
         <div class="item" id="group-type">
-            <h2>Only group features of same geometry type</h2>
+            <label for="groupTypeCheckbox">Only group features of same geometry type</label>
             <div class="right no-space-top">
                 <input type="checkbox" class="switch grey-900" id="groupTypeCheckbox" checked>
             </div>
         </div>
         <div class="item" id="group-color">
-            <h2>Automatically choose random color for groups</h2>
+            <label for="groupColorCheckbox">Automatically choose random color for groups</label>
             <div class="right">
                 <input type="checkbox" class="switch grey-900" id="groupColorCheckbox" checked>
             </div>
         </div>
       `);
 
-    document.getElementById('groupTypeCheckbox').checked = options.groupType;
-    document.getElementById('groupColorCheckbox').checked = options.groupColor;
+    let groupTypeBtn = document.getElementById('groupTypeCheckbox');
+    groupTypeBtn.checked = options.groupType;
+    groupTypeBtn.addEventListener('input', (ev) => { onChange(ev, options) });
+    
+    let groupColorBtn = document.getElementById('groupColorCheckbox')
+    groupColorBtn.checked = options.groupColor;
+    groupColorBtn.addEventListener('input', (ev) => { onChange(ev, options) });
 
   } else {
     if (document.getElementById('group-type')) {

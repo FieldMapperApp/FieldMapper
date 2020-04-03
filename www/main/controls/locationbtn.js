@@ -1,4 +1,4 @@
-export function createLocationBtn() {
+export function createLocationBtn(map) {
     
     let locationIcon = L.divIcon({
         className: "custom-pin",
@@ -16,12 +16,24 @@ export function createLocationBtn() {
             title: 'Activate Geolocation',
             onClick: function (control) {
                 console.log('button clicked');
+
+                locationPermission.getStatus(function(status) {
+                    console.log(status)
+                    switch(status) {
+                        case locationPermission.GRANTED: onPermissionSuccess(); break
+                        case locationPermission.DENIED: alert("Looks like you need to enable geolocation first."); break
+                    }
+                })
+
+                let onPermissionSuccess = () => {
+                    navigator.geolocation.getCurrentPosition(onPositionSuccess, onError, { timeout: 5000, enableHighAccuracy: true });
+                }
+
                 let onError = function (error) {
-                    //console.log(error.code);
-                    //if (error.code === 1) { alert('geolocation disabled') };
                     alert(error.code + '\n' +
                         error.message + '\n');
                 };
+
                 let onPositionSuccess = function (position) {
                     console.log('position success');
                     currentPosition = L.latLng(position.coords.latitude, position.coords.longitude);
@@ -30,15 +42,13 @@ export function createLocationBtn() {
                     let newCircle = L.circle(currentPosition, radius, { weight: '2' });
                     locationMarkers.addLayer(newCircle);
                     locationMarkers.addLayer(newMarker);
-                    //locationMarkers.addLayer(L.marker(currentPosition, {icon: iconColor('black')}));
                     locationMarkers.addTo(map);
                     locationMarkers.eachLayer(e => console.log(e._latlng));
                     map.flyTo(currentPosition, 17);
                     control.setActive();
                     console.log(currentPosition + ' ' + updatedPosition);
                 };
-                if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(onPositionSuccess, onError, { timeout: 20000, enableHighAccuracy: true }) } else { console.log('error 1'); };
-
+                
                 let onWatchSuccess = function (position) {
                     console.log('watching');
                     updatedPosition = L.latLng(position.coords.latitude, position.coords.longitude);
@@ -83,3 +93,15 @@ export function createLocationBtn() {
 
     return locateBtn;
 }
+
+function getCurrentPosition () {
+    if (navigator.geolocation) {
+      return new Promise(
+        (resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject)
+      )
+    } else {
+      return new Promise(
+        resolve => resolve({})
+      )
+    }
+  }
