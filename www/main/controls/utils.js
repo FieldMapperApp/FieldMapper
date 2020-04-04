@@ -2,11 +2,17 @@ export function createSecondCol() {
 
     let topLeftControl2 = document.createElement('div');
     topLeftControl2.classList.add('leaflet-top', 'leaflet-left-2');
-    document.getElementsByClassName('leaflet-control-container')[0].append(topLeftControl2);
+
+    let topLeftControl3 = document.createElement('div');
+    topLeftControl3.classList.add('leaflet-top', 'leaflet-left-3');
+    document.getElementsByClassName('leaflet-control-container')[0].append(topLeftControl2, topLeftControl3);
+
     let bottomRightControl2 = document.createElement('div');
     bottomRightControl2.classList.add('leaflet-bottom', 'leaflet-right-2');
     document.getElementsByClassName('leaflet-control-container')[0].append(bottomRightControl2);
+
     topLeftControl2.id = 'top-left-ctrl-2';
+    topLeftControl3.id = 'top-left-ctrl-3';
     bottomRightControl2.id = 'bottom-right-ctrl-2';
 
 }
@@ -15,8 +21,7 @@ export var moveButtons = _moveButtons();
 
 function _moveButtons(e, event) {
 
-    let movedBtnsR = [];
-    let movedBtnsL = [];
+    let firstEl2Col, firstEl3Col;
 
     return function _move(e, event) {
 
@@ -26,6 +31,7 @@ function _moveButtons(e, event) {
         let topRightControl = document.getElementsByClassName('leaflet-top leaflet-right')[0];
 
         let topLeftControl2 = document.getElementById('top-left-ctrl-2');
+        let topLeftControl3 = document.getElementById('top-left-ctrl-3');
         let bottomRightControl2 = document.getElementById('bottom-right-ctrl-2');
         let attributionControl = document.getElementsByClassName('leaflet-control-attribution')[0];
 
@@ -34,45 +40,65 @@ function _moveButtons(e, event) {
 
         if (event.type === 'controlcollapse') {
 
-
-            if (movedBtnsR.length != 0) {
-                movedBtnsR.forEach(e => {
+            [...bottomRightControl2.childNodes].reverse()
+                .forEach(e => {
                     if (enoughSpace(e, topRightControl, marginBottom, attributionControl)) {
                         e.remove();
                         topRightControl.appendChild(e);
                     }
-                })
-                changeBottom(bottomRightControl2, marginBottom);
-                movedBtnsR = [];
-            }
-            if (movedBtnsL.length != 0) {
-                movedBtnsL.forEach(e => {
-                    if (enoughSpace(e, topLeftControl, marginBottom)) {
-                        e.remove();
-                        topLeftControl.appendChild(e);
-                    }
-                })
-                movedBtnsL = [];
-            }
+                });
+
+            [...topLeftControl3.childNodes].forEach(e => {
+                if (enoughSpace(e, topLeftControl2, marginBottom)) {
+                    e.remove();
+                    topLeftControl2.appendChild(e);
+                }
+            });
+
+            [...topLeftControl2.childNodes].forEach(e => {
+                if (enoughSpace(e, topLeftControl, marginBottom)) {
+                    e.remove();
+                    topLeftControl.appendChild(e);
+                }
+            });
 
         } else {
 
-            if (el.parentElement.classList.contains('leaflet-left', 'leaflet-top') && isElementOutMap(el)) {
-                el.remove();
-                topLeftControl2.appendChild(el);
-                movedBtnsL.push(el);
+            if (event.type === 'controlinit') {
+                firstEl2Col = topLeftControl2.firstChild;
+                firstEl3Col = topLeftControl3.firstChild;
             }
-            if (el.parentElement.classList.contains('leaflet-right', 'leaflet-top') && isElementOutMap(el, attributionControl)) {
-                el.remove();
-                bottomRightControl2.appendChild(el);
-                changeBottom(bottomRightControl2, marginBottom);
-                movedBtnsR.push(el);
-            }
+            let args = [event.type, el, topLeftControl2, topLeftControl3, bottomRightControl2, firstEl2Col, firstEl3Col, attributionControl];
+            expandInit(...args);
 
         }
+        changeBottom(bottomRightControl2, topRightControl, marginBottom);
 
     }
+}
 
+function expandInit(type, el, topLeftControl2, topLeftControl3, bottomRightControl2, firstEl2Col, firstEl3Col, attributionControl) {
+
+    if (el.parentElement.classList.contains('leaflet-left', 'leaflet-top') && isElementOutMap(el)) {
+        el.remove();
+        if (type === 'controlinit') {
+            topLeftControl2.appendChild(el) }
+        else {
+            firstEl2Col.insertAdjacentElement('beforebegin', el)
+        }
+    }
+    if (el.parentElement.classList.contains('leaflet-left-2', 'leaflet-top') && isElementOutMap(el)) {
+        el.remove();
+        if (type === 'controlinit') {
+            topLeftControl3.appendChild(el) }
+        else {
+            firstEl3Col.insertAdjacentElement('beforebegin', el)
+        }
+    }
+    if (el.parentElement.classList.contains('leaflet-right', 'leaflet-top') && isElementOutMap(el, attributionControl)) {
+        el.remove();
+        bottomRightControl2.appendChild(el);
+    }
 
 }
 
@@ -88,22 +114,24 @@ function enoughSpace(el, col, marginBottom, ctrl) {
     let lastChild = children[children.length - 1];
     let bottomBtn = (lastChild.offsetHeight > 0 ? lastChild : lastChild.childNodes[0]);
     let bottomEdge = (ctrl ? ctrl.getBoundingClientRect().top : document.getElementById('map').getBoundingClientRect().bottom);
-    
+
     return ((bottomBtn.getBoundingClientRect().bottom + el.offsetHeight + marginBottom) < bottomEdge);
-} 
+}
 
-function changeBottom(col, marginBottom) {
+function changeBottom(secondCol, firstCol, marginBottom) {
 
-    // align second col to first col
+    // align second col with first col
 
-    let containerRight = document.getElementsByClassName('leaflet-right')[0];
-    let bottomElem = containerRight.childNodes[containerRight.childNodes.length - 1];
-    let rect = bottomElem.getBoundingClientRect();
-    let rectMap = document.getElementById('map').getBoundingClientRect();
+    if (secondCol.childNodes.length != 0) {
 
-    let bottom = (Math.abs(rect.bottom - rectMap.bottom) - marginBottom).toString() + "px";
+        let bottomElem = firstCol.childNodes[firstCol.childNodes.length - 1];
+        let rect = bottomElem.getBoundingClientRect();
+        let rectMap = document.getElementById('map').getBoundingClientRect();
 
-    col.style.bottom = bottom;
+        let bottom = (Math.abs(rect.bottom - rectMap.bottom) - marginBottom).toString() + "px";
+        secondCol.style.bottom = bottom;
+
+    }
 
 }
 

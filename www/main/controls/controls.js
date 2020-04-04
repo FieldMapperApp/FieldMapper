@@ -17,9 +17,9 @@ export function addControls(map, OSM, layers) {
 
     createSecondCol();
 
-    window.addEventListener('controlexpand', moveControls);
-    window.addEventListener('controlcollapse', moveControls);
-
+    window.addEventListener('controlexpand', (ev) => { console.log('expand'); moveControls(ev) });
+    window.addEventListener('controlcollapse', (ev) => { console.log('collapse'); moveControls(ev) });
+    window.addEventListener('controlinit', (ev => { console.log('init'); moveControls(ev) }));
     // layer ctrl
 
     let baselayers = {
@@ -86,6 +86,15 @@ export function addControls(map, OSM, layers) {
     let saveBtn = createSaveBtn(map, points, lines, importedFeatures);
     saveBtn.addTo(map);
 
+     // locate btn
+
+     let locateBtn = createLocationBtn(map);
+
+     if (options.location === true) {
+         locateBtn.addTo(map);
+     } else {
+         console.log("location deactivated");
+     };
 
     // group btn
 
@@ -98,27 +107,10 @@ export function addControls(map, OSM, layers) {
         console.log("group deactivated");
     };
 
-
-    // locate btn
-
-    let locateBtn = createLocationBtn(map);
-
-    if (options.location === true) {
-        locateBtn.addTo(map);
-    } else {
-        console.log("location deactivated");
-    };
-
     // custom btns
 
     let vars = getVars();
-
-    let buttons = [];
-    if (vars) {
-        vars.forEach(el => {
-            buttons.push(addButton(new Var(el), map));
-        })
-    };
+    let buttons = vars.map(e => addButton(new Var(e), map));
 
     let controls = [zoomCtrl, layerCtrl, modeCtrl, colorBar, cacheBtn, groupBtn, saveBtn, clearBtn, undoBtn, locateBtn, ...buttons];
     function moveControls(event) {
@@ -128,7 +120,7 @@ export function addControls(map, OSM, layers) {
             }
         })
     };
-    let ev = new Event('controlexpand');
+    let ev = new Event('controlinit');
     window.dispatchEvent(ev)
 
     return controls;

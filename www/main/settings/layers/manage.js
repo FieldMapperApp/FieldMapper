@@ -55,7 +55,7 @@ export function addItem(name, layers) {
     delBtn.addEventListener('click', e => {
         //e.stopPropagation();
         console.log(name + "delete button triggered");
-        deleteItem(name, layers, 'layers');
+        deleteItem(name, 'layers');
     });
 
     editBtn.addEventListener('click', e => {

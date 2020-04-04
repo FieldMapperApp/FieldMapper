@@ -11,7 +11,7 @@ function onLoad(e) {
 
   if (e.detail.page === "./main/settings/variables/managevariables.html") { // check which page was requested
     
-    if (variables.length !== 0) { variables.forEach(el => addItem(el.name, variables)) }; // render variable list from local storage
+    if (variables.length !== 0) { variables.forEach(el => addItem(el.name)) }; // render variable list from local storage
 
     let clearBtn = document.getElementById('clearVarBtn'); // set up event listeners
     clearBtn.addEventListener('click', function(ev) { onClearBtn() });
@@ -28,7 +28,7 @@ function onLoad(e) {
     let form = document.getElementById("formeditvar");
     if (form) {
 
-      form.addEventListener('submit', function(ev) { onSubmitEdit(ev, variables) });
+      form.addEventListener('submit', onSubmitEdit );
 
     }
 

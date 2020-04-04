@@ -7,7 +7,6 @@ export function onOpenEdit(arg) { // render variable values (edit page)
 
   document.getElementById('varName').value = arg.name;
   document.getElementById('varName').readOnly = true;
-  document.getElementById('varPos').value = variables[getInd(variables, arg.name)].position;
   document.getElementById('checkboxIcon').checked = (variables[getInd(variables, arg.name)].data ? true : false);
 
   let btns = [document.getElementById('booleanBtn'), document.getElementById('binaryBtn'), document.getElementById('multiBtn')];
@@ -19,7 +18,6 @@ export function onOpenEdit(arg) { // render variable values (edit page)
 
   addValue(activeBtn.id);
   if (activeBtn.id !== 'booleanBtn') { document.getElementById('varValue').value = variables[getInd(variables, arg.name)].value };
-  if (activeBtn.id === 'multiBtn') { document.getElementById('checkboxCompulsory').checked = variables[getInd(variables, arg.name)].compulsory }
 
   addFiles();
   
@@ -35,14 +33,14 @@ export function onOpenEdit(arg) { // render variable values (edit page)
   }
 
   document.getElementById('deleteeditvar').addEventListener('click', function () {
-    variables = deleteItem(arg.name, variables, 'variables');
+    deleteItem(arg.name, 'variables');
     backPage();
   })
 
   document.getElementById('checkboxIcon').addEventListener('click', addFiles);
 };
 
-export async function onSubmitEdit(e, variables) {
+export async function onSubmitEdit(e) {
 
   e.preventDefault();
   console.log('submitted');
@@ -50,10 +48,7 @@ export async function onSubmitEdit(e, variables) {
   let varStorage = new VarStorage();
   await varStorage.create();
 
-  variables = updateItem(variables, varStorage);
-
-  localStorage.setItem('variables', JSON.stringify({ ...variables })); // store locally (update variables data)
-  console.log(JSON.parse(localStorage.getItem('variables')));
+  updateItem('variables', varStorage);
 
   backPage();
 
@@ -120,17 +115,11 @@ function addValue(id) {
         <label for="varValue">You can enter as many comma-separated values as you want.</label>
         <input type="text" id="varValue" placeholder="value1, value2, value3, ..." required>
       </div>
-      <div class="item" id="item-multi2">
-        <label for="checkboxCompulsory">Make variable compulsory</label>
-        <div class="right">
-          <input type="checkbox" class="switch grey-900" id ="checkboxCompulsory" checked></input>
-        </div>
-      </div>
       `);
       document.getElementById('varValue').addEventListener('change', addFiles);
   } else {
     if (document.getElementById('item-bin')) { document.getElementById('item-bin').remove() };
-    if (document.getElementById('item-multi')) { document.getElementById('item-multi').remove(); document.getElementById('item-multi2').remove() };
+    if (document.getElementById('item-multi')) { document.getElementById('item-multi').remove(); };
     if (document.getElementById('varValue')) { document.getElementById('varValue').removeEventListener('change', addFiles) };
   };
 

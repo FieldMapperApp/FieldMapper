@@ -27,9 +27,8 @@ function addNewVar(name, variables) {
     let newVar = { // default values (can be changed upon click on the edit button)
         name,
         type: 'boolean',
-        value: null,
-        icon: name.slice(0, 2),
-        position: 'topleft',
+        value: ["true, false"],
+        icon: name.slice(0, 2)
     }
 
     addItem(newVar.name, variables); // add variable name to the list
@@ -38,7 +37,7 @@ function addNewVar(name, variables) {
 
 };
 
-export function addItem(name, variables) {
+export function addItem(name) {
 
     let list = document.getElementById("listvariables");
 
@@ -58,7 +57,7 @@ export function addItem(name, variables) {
     delBtn.addEventListener('click', e => {
         //e.stopPropagation();
         console.log(name + "delete button triggered");
-        deleteItem(name, variables, 'variables');
+        deleteItem(name, 'variables');
     });
 
     editBtn.addEventListener('click', e => {

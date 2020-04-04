@@ -25,7 +25,7 @@
     text-indent: 1px;
 }
 
-.leaflet-left-2 {
+.leaflet-left-2, .leaflet-left-3 {
 	left: 0;
 }
 .leaflet-right-2 {
@@ -51,4 +51,10 @@
 }
 .leaflet-right-2 .leaflet-control {
     margin-right: 55px;
+}
+.leaflet-left-2 .leaflet-control {
+	margin-left: 55px;
+}
+.leaflet-left-3 .leaflet-control {
+	margin-left: 103px;
 }

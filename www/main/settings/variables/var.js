@@ -2,9 +2,7 @@ export class VarStorage {
 
   constructor() {
     this.name = document.getElementById('varName').value;
-    this.position = document.getElementById("varPos").value;
     this.type = this._getType();
-    this.compulsory = (this.type === 'multi' ? document.getElementById('checkboxCompulsory').checked : undefined);
     this.value = this._getValue();
   }
 

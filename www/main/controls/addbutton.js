@@ -15,7 +15,6 @@ export function addButton(el, map) {
             console.log('case boolean');
             properties[name] = false;
             newButton = L.easyButton({
-                position: el.position,
                 states: [{
                     stateName: 'inactive',
                     icon: el.icon,
@@ -44,7 +43,6 @@ export function addButton(el, map) {
             console.log('case binary');
             properties[name] = el.value[0];
             newButton = L.easyButton({
-                position: el.position,
                 states: [{
                     stateName: 'inactive',
                     icon: el.icon,
@@ -86,12 +84,8 @@ export function addButton(el, map) {
             });
 
             newButton = L.easyBar(arr).addTo(map);
-            if (el.compulsory === true) {
-                properties[name] = el.value[0];
-                arr[0].setActive();
-            } else {
-                properties[name] = null
-            }
+            properties[name] = el.value[0];
+            arr[0].setActive();
             break;
     }
 

@@ -28,7 +28,7 @@ function onLoad(e) {
     let form = document.getElementById("formeditlayer");
     if (form) {
 
-      form.addEventListener('submit', function(ev) { onSubmitEdit(ev, layers) });
+      form.addEventListener('submit', onSubmitEdit );
 
     }
 

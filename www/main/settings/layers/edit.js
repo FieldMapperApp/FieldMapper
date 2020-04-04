@@ -28,12 +28,12 @@ export function onOpenEdit(arg) { // render variable values (edit page)
     }
 
     document.getElementById('deleteeditlayer').addEventListener('click', function () {
-        layers = deleteItem(arg.name, layers, 'layers');
+        deleteItem(arg.name, 'layers');
         backPage();
     })
 };
 
-export async function onSubmitEdit(e, layers) {
+export async function onSubmitEdit(e) {
 
     e.preventDefault();
     console.log('submitted');
@@ -41,10 +41,7 @@ export async function onSubmitEdit(e, layers) {
     let layer = new LayerStorage;
     await layer.create();
 
-    layers = updateItem(layers, layer);
-
-    localStorage.setItem('layers', JSON.stringify({ ...layers })); // store locally (update variables data)
-    console.log(JSON.parse(localStorage.getItem('layers')));
+    updateItem('layers', layer);
 
     backPage();
   

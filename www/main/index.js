@@ -102,7 +102,6 @@ window.app = {
                 alert(e);
             }
 
-
             let addLayers = () => {
 
                 return layers.map((e) => {
