@@ -15,7 +15,9 @@ export function createLocationBtn(map) {
             icon: '<img alt="activate location" src="img/location-arrow.svg" width="55%" height="55%" />',
             title: 'Activate Geolocation',
             onClick: function (control) {
+
                 control.setActive();
+
                 locationPermission.getStatus(function(status) {
                     console.log(status)
                     switch(status) {
@@ -68,12 +70,14 @@ export function createLocationBtn(map) {
                 }
                 watchLocation = navigator.geolocation.watchPosition(onWatchSuccess, onError, { timeout: 20000, enableHighAccuracy: true });
                 control.state('location-on');
+
             }
         }, {
             stateName: 'location-on',
             icon: '<img alt="deactivate location" src="img/location-arrow.svg" height="55%" width="55%" />',
             title: 'Deactivate Geolocation',
             onClick: function (control) {
+
                 navigator.geolocation.clearWatch(watchLocation);
                 locationMarkers.clearLayers();
                 locationMarkers.remove();
@@ -85,6 +89,7 @@ export function createLocationBtn(map) {
                 console.log(locationMarkers.getLayers().length + ' ' + updatedLocationMarkers.getLayers().length);
                 console.log('location off');
                 control.state('location-off');
+                
             },
         }]
     });
