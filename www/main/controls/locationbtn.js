@@ -15,8 +15,7 @@ export function createLocationBtn(map) {
             icon: '<img alt="activate location" src="img/location-arrow.svg" width="55%" height="55%" />',
             title: 'Activate Geolocation',
             onClick: function (control) {
-                console.log('button clicked');
-
+                control.setActive();
                 locationPermission.getStatus(function(status) {
                     console.log(status)
                     switch(status) {
@@ -45,7 +44,6 @@ export function createLocationBtn(map) {
                     locationMarkers.addTo(map);
                     locationMarkers.eachLayer(e => console.log(e._latlng));
                     map.flyTo(currentPosition, 17);
-                    control.setActive();
                     console.log(currentPosition + ' ' + updatedPosition);
                 };
                 
