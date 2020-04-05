@@ -27,16 +27,19 @@ export function createLocationBtn(map) {
                 })
 
                 let onPermissionSuccess = () => {
-                    navigator.geolocation.getCurrentPosition(onPositionSuccess, onError, { timeout: 5000, enableHighAccuracy: true });
+                    document.getElementById('status').innerHTML = "Fetching location ...";
+                    navigator.geolocation.getCurrentPosition(onPositionSuccess, onError, { timeout: 20000, enableHighAccuracy: true });
                 }
 
                 let onError = function (error) {
+                    document.getElementById('status').innerHTML = "";
                     alert(error.code + '\n' +
                         error.message + '\n');
                 };
 
                 let onPositionSuccess = function (position) {
                     console.log('position success');
+                    document.getElementById('status').innerHTML = "";
                     currentPosition = L.latLng(position.coords.latitude, position.coords.longitude);
                     let radius = position.coords.accuracy;
                     let newMarker = L.marker(currentPosition, { icon: locationIcon }).bindPopup("You are within " + radius + " meters from this point").openPopup();
@@ -63,7 +66,6 @@ export function createLocationBtn(map) {
                         let newCircle = L.circle(updatedPosition, radius, { weight: '2' });
                         updatedLocationMarkers.addLayer(newCircle);
                         updatedLocationMarkers.addLayer(newMarker);
-                        //updatedLocationMarkers.addLayer(L.marker(currentPosition, {icon: iconColor('black')}));
                         updatedLocationMarkers.addTo(map);
                         updatedLocationMarkers.eachLayer(e => console.log(e._latlng));
                     }
@@ -76,7 +78,7 @@ export function createLocationBtn(map) {
             stateName: 'location-on',
             icon: '<img alt="deactivate location" src="img/location-arrow.svg" height="55%" width="55%" />',
             title: 'Deactivate Geolocation',
-            onClick: function (control) {
+            onClick: function (control) { 
 
                 navigator.geolocation.clearWatch(watchLocation);
                 locationMarkers.clearLayers();
@@ -84,27 +86,14 @@ export function createLocationBtn(map) {
                 updatedLocationMarkers.clearLayers();
                 updatedLocationMarkers.remove();
                 console.log(locationMarkers.getLayers().length + ' ' + updatedLocationMarkers.getLayers().length);
-                //map.removeLayer(locationMarkers);
                 control.setInactive();
                 console.log(locationMarkers.getLayers().length + ' ' + updatedLocationMarkers.getLayers().length);
                 console.log('location off');
                 control.state('location-off');
-                
+
             },
         }]
     });
 
     return locateBtn;
 }
-
-function getCurrentPosition () {
-    if (navigator.geolocation) {
-      return new Promise(
-        (resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject)
-      )
-    } else {
-      return new Promise(
-        resolve => resolve({})
-      )
-    }
-  }

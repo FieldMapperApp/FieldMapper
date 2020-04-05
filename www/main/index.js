@@ -79,16 +79,15 @@ window.app = {
                     onLoadOptions();
                     break
             }
-
-            map.on('moveend', function () {
-                updateStatus(map, OSM);
-                localStorage.setItem('position', JSON.stringify({ lat: map.getCenter().lat, lng: map.getCenter().lng, zoom: map.getZoom() }));
-            }).fire('moveend');
-
-            document.addEventListener("offline", (ev) => ((map, OSM) => onOffline(map, OSM)), false);
-            document.addEventListener("online", (ev) => ((map, OSM) => onOnline(map, OSM)), false);
-
         });
+
+        map.on('moveend', function () {
+            updateStatus(map, OSM);
+            localStorage.setItem('position', JSON.stringify({ lat: map.getCenter().lat, lng: map.getCenter().lng, zoom: map.getZoom() }));
+        }).fire('moveend');
+
+        document.addEventListener("offline", (ev) => ((map, OSM) => onOffline(map, OSM)), false);
+        document.addEventListener("online", (ev) => ((map, OSM) => onOnline(map, OSM)), false);
 
     },
 
