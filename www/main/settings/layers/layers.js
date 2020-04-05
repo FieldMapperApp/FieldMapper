@@ -2,42 +2,30 @@ import { onSubmitEdit } from './edit';
 import { onSubmitManage, addItem } from './manage';
 import { getLayers } from '../utils';
 
-// init
-document.addEventListener('openPage', onLoad);
-
-function onLoad(e) {
+export function onLoadManageLayers() {
 
   let layers = getLayers();
 
-  if (e.detail.page === "./main/settings/layers/managelayers.html") { // check which page was requested
-    
-    if (layers.length !== 0) { layers.forEach(el => addItem(el.name, layers)) }; // render variable list from local storage
+  if (layers.length !== 0) { layers.forEach(el => addItem(el.name, layers)) }; // render variable list from local storage
 
-    let clearBtn = document.getElementById('clearLayersBtn'); // set up event listeners
-    clearBtn.addEventListener('click', function(ev) { onClearBtn() });
+  let clearBtn = document.getElementById('clearLayersBtn'); // set up event listeners
+  clearBtn.addEventListener('click', function (ev) { onClearBtn() });
 
-    let form = document.getElementById("formlayers");
-    if (form) {
-      
-      form.addEventListener('submit', onSubmitManage);
+  let form = document.getElementById("formlayers");
+  if (form) { form.addEventListener('submit', onSubmitManage) };
 
-    }
+}
 
-  } else if (e.detail.page === "./main/settings/layers/editlayer.html") {
+export function onLoadEditLayers() {
 
-    let form = document.getElementById("formeditlayer");
-    if (form) {
+  let form = document.getElementById("formeditlayer");
+  if (form) { form.addEventListener('submit', onSubmitEdit) };
 
-      form.addEventListener('submit', onSubmitEdit );
-
-    }
-
-  }
-};
+}
 
 function onClearBtn() { // remove all variables from storage and variables list
 
-  let layers = getLayers();  
+  let layers = getLayers();
   layers.forEach(el => {
 
     let item = document.getElementById("layers_item_" + el.name);

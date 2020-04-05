@@ -1,7 +1,6 @@
 import { getDatetime } from '../utils/date';
 import { getOptions } from '../settings/options/options';
 import { checkGroup } from './utils';
-import { properties, points, lines } from '../index';
 
 export class Feature {
 
@@ -18,10 +17,10 @@ class FeatureProperties {
     
     constructor() {
 
-        Object.assign(this, properties);
+        Object.assign(this, app.properties);
 
         this.group = (getOptions().group ? this._getGroup() : null),
-        this.color = (checkGroup(this.group) ? properties.getGroupColor() : properties.color),
+        this.color = (checkGroup(this.group) ? app.properties.getGroupColor() : app.properties.color),
         this.timestamp = getDatetime(new Date),
 
         delete this.getGroupColor;
@@ -35,9 +34,9 @@ class FeatureProperties {
         let modes = document.getElementById('modeCtrl');
 
         if (getOptions().groupType) {
-            return (modes.classList.contains('points-mode') ? this._calcGroup(points, "p") : this._calcGroup(lines, "l"))
+            return (modes.classList.contains('points-mode') ? this._calcGroup(app.points, "p") : this._calcGroup(app.lines, "l"))
         } else {
-            return (modes.classList.contains('points-mode') ? this._calcGroup(points) : this._calcGroup(lines))
+            return (modes.classList.contains('points-mode') ? this._calcGroup(app.points) : this._calcGroup(app.lines))
         }
 
     }

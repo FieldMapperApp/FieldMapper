@@ -1,4 +1,3 @@
-import { properties } from '../index';
 import { changeButtons } from './utils';
 
 export function addButton(el, map) {
@@ -13,14 +12,14 @@ export function addButton(el, map) {
         case "boolean":
 
             console.log('case boolean');
-            properties[name] = false;
+            app.properties[name] = false;
             newButton = L.easyButton({
                 states: [{
                     stateName: 'inactive',
                     icon: el.icon,
                     title: 'activate',
                     onClick: function (control) {
-                        properties[name] = true;
+                        app.properties[name] = true;
                         control.setActive();
                         control.state('active');
                     }
@@ -29,7 +28,7 @@ export function addButton(el, map) {
                     stateName: 'active',
                     title: 'deactivate',
                     onClick: function (control) {
-                        properties[name] = false;
+                        app.properties[name] = false;
                         control.setInactive();
                         control.state('inactive');
                     },
@@ -41,14 +40,14 @@ export function addButton(el, map) {
         case "binary":
 
             console.log('case binary');
-            properties[name] = el.value[0];
+            app.properties[name] = el.value[0];
             newButton = L.easyButton({
                 states: [{
                     stateName: 'inactive',
                     icon: el.icon,
                     title: 'activate',
                     onClick: function (control) {
-                        properties[name] = el.value[1];
+                        app.properties[name] = el.value[1];
                         control.setActive();
                         control.state('active');
                     }
@@ -57,7 +56,7 @@ export function addButton(el, map) {
                     stateName: 'active',
                     title: 'deactivate',
                     onClick: function (control) {
-                        properties[name] = el.value[0];
+                        app.properties[name] = el.value[0];
                         control.setInactive();
                         control.state('inactive');
                     },
@@ -76,7 +75,7 @@ export function addButton(el, map) {
                         title: 'activate ' + e,
                         onClick: function () {
                             changeButtons(arr);
-                            properties[name] = e;
+                            app.properties[name] = e;
                             this.setActive();
                         }
                     }]
@@ -84,7 +83,7 @@ export function addButton(el, map) {
             });
 
             newButton = L.easyBar(arr).addTo(map);
-            properties[name] = el.value[0];
+            app.properties[name] = el.value[0];
             arr[0].setActive();
             break;
     }

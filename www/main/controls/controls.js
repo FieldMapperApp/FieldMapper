@@ -1,4 +1,3 @@
-import { points, lines, importedFeatures } from '../index';
 import { getOptions } from '../settings/options/options';
 import { getVars } from '../settings/utils';
 import { addButton } from './addbutton';
@@ -20,6 +19,7 @@ export function addControls(map, OSM, layers) {
     window.addEventListener('controlexpand', (ev) => { console.log('expand'); moveControls(ev) });
     window.addEventListener('controlcollapse', (ev) => { console.log('collapse'); moveControls(ev) });
     window.addEventListener('controlinit', (ev => { console.log('init'); moveControls(ev) }));
+   
     // layer ctrl
 
     let baselayers = {
@@ -27,8 +27,8 @@ export function addControls(map, OSM, layers) {
     };
     let overlays = {
         ...layers,
-        "Lines": lines,
-        "Points": points,
+        "Lines": app.lines,
+        "Points": app.points,
     };
     let layerCtrl = new LayerControl(baselayers, overlays, { collapsed: true }).addTo(map);
 
@@ -71,19 +71,19 @@ export function addControls(map, OSM, layers) {
 
     // undo btn
 
-    let undoBtn = createUndoBtn(map, points, lines, importedFeatures);
+    let undoBtn = createUndoBtn(map, app.points, app.lines, app.importedFeatures);
     undoBtn.addTo(map);
 
 
     // clear all button
 
-    let clearBtn = createClearBtn(map, points, lines, importedFeatures);
+    let clearBtn = createClearBtn(map, app.points, app.lines, app.importedFeatures);
     clearBtn.addTo(map);
 
 
     // save button
 
-    let saveBtn = createSaveBtn(map, points, lines, importedFeatures);
+    let saveBtn = createSaveBtn(map, app.points, app.lines, app.importedFeatures);
     saveBtn.addTo(map);
 
      // locate btn

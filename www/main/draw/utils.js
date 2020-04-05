@@ -1,4 +1,3 @@
-import { points, lines } from '../index';
 import { getOptions } from '../settings/options/options';
 
 export function addPopUp(feature) {
@@ -34,8 +33,8 @@ export function checkGroup(group) {
 
 function getLastLayer() {
     
-    let lastP = points.getLayers()[points.getLayers().length - 1];
-    let lastL = lines.getLayers()[lines.getLayers().length - 1];
+    let lastP = app.points.getLayers()[app.points.getLayers().length - 1];
+    let lastL = app.lines.getLayers()[app.lines.getLayers().length - 1];
 
     if (lastP && lastL) {
         return (Date.parse(lastP.feature.properties.timestamp) > Date.parse(lastL.feature.properties.timestamp) ? lastP : lastL)

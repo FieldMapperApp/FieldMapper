@@ -1,5 +1,4 @@
 import { iconColor, addPopUp } from "../../draw/utils";
-import { importedFeatures } from '../../index';
 import { getDatetime } from '../../utils/date';
 
 export class LayerStorage {
@@ -88,7 +87,7 @@ export class Layer {
                         feature.properties["timestamp_old"] = feature.properties.timestamp;
                     }
                     feature.properties.timestamp = getDatetime(new Date);
-                    importedFeatures.addLayer(layer);
+                    app.importedFeatures.addLayer(layer);
 
                     addPopUp(layer)
                 }

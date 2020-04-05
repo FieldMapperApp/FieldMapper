@@ -1,52 +1,46 @@
-import { properties } from '../../index';
+export function onLoadOptions() {
 
-document.addEventListener('openPage', onLoad);
-function onLoad(e) {
+  let defColors = ["black", "green", "yellow", "red", "blue", "brown"];
+  let options = getOptions();
 
-  if (e.detail.page === "./main/settings/options/options.html") {
+  let colorbarCheckbox = document.getElementById("colorbarCheckbox");
+  colorbarCheckbox.checked = options.colorbar;
 
-    let defColors = ["black", "green", "yellow", "red", "blue", "brown"];
-    let options = getOptions();
+  let locationCheckbox = document.getElementById("locationCheckbox");
+  locationCheckbox.checked = options.location;
 
-    let colorbarCheckbox = document.getElementById("colorbarCheckbox");
-    colorbarCheckbox.checked = options.colorbar;
+  let commentsCheckbox = document.getElementById("commentsCheckbox");
+  commentsCheckbox.checked = options.comments;
 
-    let locationCheckbox = document.getElementById("locationCheckbox");
-    locationCheckbox.checked = options.location;
+  let cachingCheckbox = document.getElementById('cachingCheckbox');
+  cachingCheckbox.checked = options.cache;
 
-    let commentsCheckbox = document.getElementById("commentsCheckbox");
-    commentsCheckbox.checked = options.comments;
+  let deletionCheckbox = document.getElementById('deletionCheckbox');
+  deletionCheckbox.checked = options.deletion;
 
-    let cachingCheckbox = document.getElementById('cachingCheckbox');
-    cachingCheckbox.checked = options.cache;
+  let exportCheckbox = document.getElementById('exportCheckbox');
+  exportCheckbox.checked = options.export;
 
-    let deletionCheckbox = document.getElementById('deletionCheckbox');
-    deletionCheckbox.checked = options.deletion;
+  let groupCheckbox = document.getElementById('groupCheckbox');
+  groupCheckbox.checked = options.group;
 
-    let exportCheckbox = document.getElementById('exportCheckbox');
-    exportCheckbox.checked = options.export;
+  checkGroupBtn(groupCheckbox, options);
 
-    let groupCheckbox = document.getElementById('groupCheckbox');
-    groupCheckbox.checked = options.group;
+  groupCheckbox.addEventListener('click', function (e) { checkGroupBtn(e.target, options) });
 
-    checkGroupBtn(groupCheckbox, options);
+  document.getElementById('groupColorCheckbox').addEventListener('click', checkColorBtn);
+  document.getElementById('colorbarCheckbox').addEventListener('click', checkColorBtn);
 
-    groupCheckbox.addEventListener('click', function (e) { checkGroupBtn(e.target, options) });
-
-    document.getElementById('groupColorCheckbox').addEventListener('click', checkColorBtn);
-    document.getElementById('colorbarCheckbox').addEventListener('click', checkColorBtn);
-
-    let colorsAdded = defColors.map(e => {
-      if (options.colors.includes(e)) {
-        return document.getElementById(`${e}Checkbox`);
-      }
-    });
-    colorsAdded.filter(el => el != null).forEach(e => { e.checked = true });
-
-    let form = document.getElementById("formoptions");
-    if (form) {
-      [...form.elements].forEach(e => e.addEventListener('input', (ev) => { onChange(ev, options, defColors) }))
+  let colorsAdded = defColors.map(e => {
+    if (options.colors.includes(e)) {
+      return document.getElementById(`${e}Checkbox`);
     }
+  });
+  colorsAdded.filter(el => el != null).forEach(e => { e.checked = true });
+
+  let form = document.getElementById("formoptions");
+  if (form) {
+    [...form.elements].forEach(e => e.addEventListener('input', (ev) => { onChange(ev, options, defColors) }))
   }
 }
 
@@ -76,7 +70,7 @@ function onChange(ev, options, defColors) {
     case "groupCheckbox":
       options.group = ev.target.checked;
       break
-  }  
+  }
 
   if (defColors) {
 
@@ -85,7 +79,7 @@ function onChange(ev, options, defColors) {
       if (e.checked) { return e.value }
     })
     options.colors = colorsNew.filter(el => el != null);
-    properties.color = options.colors[0];
+    app.properties.color = options.colors[0];
 
   }
 
@@ -127,7 +121,7 @@ function checkGroupBtn(btn, options) {
     let groupTypeBtn = document.getElementById('groupTypeCheckbox');
     groupTypeBtn.checked = options.groupType;
     groupTypeBtn.addEventListener('input', (ev) => { onChange(ev, options) });
-    
+
     let groupColorBtn = document.getElementById('groupColorCheckbox')
     groupColorBtn.checked = options.groupColor;
     groupColorBtn.addEventListener('input', (ev) => { onChange(ev, options) });
@@ -160,16 +154,16 @@ function checkColorBtn(e) {
 }
 
 export function getOptions() {
-  return (localStorage.hasOwnProperty('options') ? JSON.parse(localStorage.getItem('options')) : { 
-    colorbar: true, 
-    colors: ["black", "green", "yellow", "red", "blue", "brown"], 
-    location: true, 
-    comments: true, 
-    cache: true, 
-    deletion: false, 
+  return (localStorage.hasOwnProperty('options') ? JSON.parse(localStorage.getItem('options')) : {
+    colorbar: true,
+    colors: ["black", "green", "yellow", "red", "blue", "brown"],
+    location: true,
+    comments: true,
+    cache: true,
+    deletion: false,
     export: false,
-    group: true, 
-    groupType: true, 
-    groupColor: false 
+    group: true,
+    groupType: true,
+    groupColor: false
   })
 }

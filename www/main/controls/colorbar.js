@@ -1,5 +1,3 @@
-import { properties } from '../index';
-
 export class Colorbar {
 
     constructor(colors) {
@@ -47,7 +45,7 @@ export class Colorbar {
 
         let _this = this;
 
-        return [_this._createBtn(properties.color), L.easyButton('<img alt="expand" src="img/chevron-down.svg" width="60%" height="60%" />', function () {
+        return [_this._createBtn(app.properties.color), L.easyButton('<img alt="expand" src="img/chevron-down.svg" width="60%" height="60%" />', function () {
             _this._expandBar();
         })];
     }
@@ -64,7 +62,7 @@ export class Colorbar {
         let _this = this;
 
         return L.easyButton('<img src=""/>', function (control) {
-            properties.color = color;
+            app.properties.color = color;
             control.setActive();
             _this._collapseBar();
         })
@@ -74,7 +72,7 @@ export class Colorbar {
 
         this._colorBarOpen.remove();
         this._container.appendChild(this._colorBarCollapsed);
-        this._colorBtnsCollapsed[0].button.style.backgroundColor = properties.color;
+        this._colorBtnsCollapsed[0].button.style.backgroundColor = app.properties.color;
 
         let ev = new Event('controlcollapse');
         window.dispatchEvent(ev);
@@ -97,7 +95,7 @@ export class Colorbar {
 
         
         this._container.appendChild(this._colorBarCollapsed);
-        this._colorBtnsCollapsed[0].button.style.backgroundColor = properties.color;
+        this._colorBtnsCollapsed[0].button.style.backgroundColor = app.properties.color;
         
     }
 
