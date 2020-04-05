@@ -77,7 +77,7 @@ function addFiles() {
       </div>
         `
       })
-      document.getElementById('icon-checkbox').insertAdjacentHTML('afterend', items.join());
+      document.getElementById('icon-checkbox').insertAdjacentHTML('afterend', items.join(''));
     } 
   } else {
     getItems().forEach(e => e.remove())
@@ -107,7 +107,7 @@ function addValue(id) {
         <input type="text" id="varValue" placeholder="value1, value2" pattern="^[^,\n]+(?:,[^,\n]+){0,2}$" required></input>
       </div>
       `);
-      document.getElementById('varValue').addEventListener('change', addFiles);
+      document.getElementById('varValue').addEventListener('input', addFiles);
   } else if (id === 'multiBtn') {
     if (document.getElementById('item-bin')) { document.getElementById('item-bin').remove() };
     document.getElementById('var-item-btns').insertAdjacentHTML('afterend', `
@@ -116,7 +116,7 @@ function addValue(id) {
         <input type="text" id="varValue" placeholder="value1, value2, value3, ..." required>
       </div>
       `);
-      document.getElementById('varValue').addEventListener('change', addFiles);
+      document.getElementById('varValue').addEventListener('input', addFiles);
   } else {
     if (document.getElementById('item-bin')) { document.getElementById('item-bin').remove() };
     if (document.getElementById('item-multi')) { document.getElementById('item-multi').remove(); };
