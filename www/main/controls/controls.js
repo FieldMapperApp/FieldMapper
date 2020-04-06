@@ -19,7 +19,7 @@ export function addControls(map, OSM, layers) {
     window.addEventListener('controlexpand', (ev) => { console.log('expand'); moveControls(ev) });
     window.addEventListener('controlcollapse', (ev) => { console.log('collapse'); moveControls(ev) });
     window.addEventListener('controlinit', (ev => { console.log('init'); moveControls(ev) }));
-   
+
     // layer ctrl
 
     let baselayers = {
@@ -86,15 +86,15 @@ export function addControls(map, OSM, layers) {
     let saveBtn = createSaveBtn(map, app.points, app.lines, app.importedFeatures);
     saveBtn.addTo(map);
 
-     // locate btn
+    // locate btn
 
-     let locateBtn = createLocationBtn(map);
+    let locateBtn = createLocationBtn(map);
 
-     if (options.location === true) {
-         locateBtn.addTo(map);
-     } else {
-         console.log("location deactivated");
-     };
+    if (options.location === true) {
+        locateBtn.addTo(map);
+    } else {
+        console.log("location deactivated");
+    };
 
     // group btn
 
@@ -114,10 +114,9 @@ export function addControls(map, OSM, layers) {
 
     let controls = [zoomCtrl, layerCtrl, modeCtrl, colorBar, cacheBtn, groupBtn, saveBtn, clearBtn, undoBtn, locateBtn, ...buttons];
     function moveControls(event) {
-        controls.forEach(e => {
-            if (e._map && !(e instanceof Colorbar)) {
-                moveButtons(e, event);
-            }
+        let _controls = controls.filter(e => e._map && !(e instanceof Colorbar));
+        _controls.forEach((e, i) => {
+            moveButtons(e, event, i === _controls.length - 1);
         })
     };
     let ev = new Event('controlinit');
