@@ -1,5 +1,3 @@
-import { getOptions } from '../settings/options/options';
-
 export function addPopUp(feature) {
 
     let featureProperties = "";
@@ -25,10 +23,10 @@ export function iconColor(color) {
 
 }
 
-export function checkGroup(group) {
+export function checkGroup(group, options) {
     let prev = getLastLayer();
     if (prev) { console.log(prev.feature.properties.group, ' ', group) } else { console.log(group) };
-    return (prev && getOptions().groupColor ? prev.feature.properties.group !== group : false)
+    return (prev && options.groupColor ? prev.feature.properties.group !== group : false)
 }
 
 function getLastLayer() {

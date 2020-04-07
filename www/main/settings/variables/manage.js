@@ -1,12 +1,12 @@
 import { onOpenEdit } from './edit';
 import { getVars, deleteItem } from '../utils';
 
-export function onSubmitManage(e) {
+export async function onSubmitManage(e) {
 
     e.preventDefault();
     console.log('submit manage');
 
-    let variables = getVars();
+    let variables = await getVars();
 
     let input = document.getElementById("variableinput");
     let name = input.value.trim();
@@ -18,7 +18,7 @@ export function onSubmitManage(e) {
         input.focus();
     }
 
-    localStorage.setItem('variables', JSON.stringify({ ...variables })); // store locally
+    db.setItem('variables', JSON.stringify({ ...variables })); // store locally
 
 };
 

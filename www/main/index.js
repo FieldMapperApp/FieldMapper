@@ -6,9 +6,10 @@ import './utils/leaflet-tilelayer-cordova';
 import 'leaflet-easybutton';
 import './utils/easybutton-ext';
 
+import './utils/db';
 import { updateStatus, onOnline, onOffline, hideStatus, showStatus } from './utils';
 import { addControls } from './controls/controls';
-import { getLayers } from './settings/utils';
+import { getLayers, getOptions } from './settings/utils';
 import { onLoadReset } from './settings/reset/reset';
 import { onLoadManageVars, onLoadEditVars } from './settings/variables/variables';
 import { onLoadManageLayers, onLoadEditLayers } from './settings/layers/layers';
@@ -25,7 +26,7 @@ window.app = {
         document.addEventListener('deviceready', app.ready, false);
     },
 
-    ready: () => {
+    ready: async () => {
 
         app.map = new L.map('map', {
             zoomControl: false,
@@ -34,73 +35,28 @@ window.app = {
         app.points = L.featureGroup();
         app.lines = L.featureGroup();
         app.importedFeatures = L.featureGroup();
+        console.log('dsad')
         app.properties = new Properties;
+        await app.properties.create();
 
-        app.loadMap();
+        await app.loadMap();
         app.initListeners();
 
     },
 
-    initListeners: () => {
+    loadMap: async () => {
+
+        console.log(await getOptions())
+
+        let _layers = await getLayers();
+        let position = await db.getItem('position');
 
         let map = app.map;
-        let OSM = app.OSM;
 
-        document.getElementById('mapBtn').addEventListener('click', showStatus);
-        document.getElementById('settingsBtn').addEventListener('click', hideStatus);
-        document.getElementById('aboutBtn').addEventListener('click', hideStatus);
-
-        document.getElementById('mapBtn').addEventListener('click', app.loadMap);
-        document.addEventListener('openPage', function (ev) {
-
-            switch (ev.detail.page) {
-
-                case "./main/settings/reset/reset.html":
-                    onLoadReset(OSM);
-                    break
-
-                case "./main/settings/layers/editlayer.html":
-                    onLoadEditLayers();
-                    break
-
-                case "./main/settings/layers/managelayers.html":
-                    onLoadManageLayers();
-                    break
-
-                case "./main/settings/variables/editvariable.html":
-                    onLoadEditVars();
-                    break
-
-                case "./main/settings/variables/managevariables.html":
-                    onLoadManageVars();
-                    break
-
-                case "./main/settings/options/options.html":
-                    onLoadOptions();
-                    break
-            }
-        });
-
-        map.on('moveend', function () {
-            updateStatus(map, OSM);
-            localStorage.setItem('position', JSON.stringify({ lat: map.getCenter().lat, lng: map.getCenter().lng, zoom: map.getZoom() }));
-        }).fire('moveend');
-
-        document.addEventListener("offline", (ev) => ((map, OSM) => onOffline(map, OSM)), false);
-        document.addEventListener("online", (ev) => ((map, OSM) => onOnline(map, OSM)), false);
-
-    },
-
-    loadMap: () => {
-
-        let map = app.map;
-        let controls = app.controls;
-
-        let _layers = getLayers();
         let layers = _layers.filter(e => e.hasOwnProperty('data'));
 
-        if (localStorage.getItem('position')) {
-            let view = JSON.parse(localStorage.getItem('position'));
+        if (position) {
+            let view = JSON.parse(position);
             for (let [k, v] of Object.entries(view)) {
                 view[k] = parseFloat(v)
             }
@@ -110,7 +66,7 @@ window.app = {
         }
 
         map.eachLayer(el => el.remove());
-        if (controls) { controls.forEach(el => el.remove()) };
+        if (app.controls) { console.log(app.controls); app.controls.forEach(el => el.remove()) };
         if (app.points.getLayers().length !== 0) { app.points.addTo(map) };
         if (app.lines.getLayers().length !== 0) { app.lines.addTo(map) };
 
@@ -151,9 +107,59 @@ window.app = {
             if (e.layer) { layersObj[e.name] = e.layer };
         }
 
-        app.controls = addControls(map, app.OSM, layersObj);
+        addControls(map, app.OSM, layersObj);
 
         console.log('map loaded');
+
+    },
+
+    initListeners: () => {
+
+        let map = app.map;
+        let OSM = app.OSM;
+
+        document.getElementById('mapBtn').addEventListener('click', showStatus);
+        document.getElementById('settingsBtn').addEventListener('click', hideStatus);
+        document.getElementById('aboutBtn').addEventListener('click', hideStatus);
+
+        document.getElementById('mapBtn').addEventListener('click', app.loadMap);
+        document.addEventListener('openPage', function (ev) {
+
+            switch (ev.detail.page) {
+
+                case "./main/settings/reset/reset.html":
+                    onLoadReset();
+                    break
+
+                case "./main/settings/layers/editlayer.html":
+                    onLoadEditLayers();
+                    break
+
+                case "./main/settings/layers/managelayers.html":
+                    onLoadManageLayers();
+                    break
+
+                case "./main/settings/variables/editvariable.html":
+                    onLoadEditVars();
+                    break
+
+                case "./main/settings/variables/managevariables.html":
+                    onLoadManageVars();
+                    break
+
+                case "./main/settings/options/options.html":
+                    onLoadOptions();
+                    break
+            }
+        });
+
+        map.on('moveend', function () {
+            updateStatus(map, OSM);
+            db.setItem('position', JSON.stringify({ lat: map.getCenter().lat, lng: map.getCenter().lng, zoom: map.getZoom() }));
+        }).fire('moveend');
+
+        document.addEventListener("offline", (ev) => ((map, OSM) => onOffline(map, OSM)), false);
+        document.addEventListener("online", (ev) => ((map, OSM) => onOnline(map, OSM)), false);
 
     }
 

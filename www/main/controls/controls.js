@@ -1,5 +1,4 @@
-import { getOptions } from '../settings/options/options';
-import { getVars } from '../settings/utils';
+import { getVars, getOptions } from '../settings/utils';
 import { addButton } from './addbutton';
 import { createSecondCol, moveButtons } from './utils';
 import { createLocationBtn } from './locationbtn';
@@ -10,9 +9,9 @@ import { LayerControl } from './layercontrol';
 import { createCacheBtn } from './cache';
 import { createUndoBtn, createClearBtn, createGroupBtn, createSaveBtn } from './core';
 
-export function addControls(map, OSM, layers) {
+export async function addControls(map, OSM, layers) {
 
-    let options = getOptions();
+    let options = await getOptions();
 
     createSecondCol();
 
@@ -109,12 +108,12 @@ export function addControls(map, OSM, layers) {
 
     // custom btns
 
-    let vars = getVars();
+    let vars = await getVars();
     let buttons = vars.map(e => addButton(new Var(e), map));
 
-    let controls = [zoomCtrl, layerCtrl, modeCtrl, colorBar, cacheBtn, groupBtn, saveBtn, clearBtn, undoBtn, locateBtn, ...buttons];
+    app.controls = [zoomCtrl, layerCtrl, modeCtrl, colorBar, cacheBtn, groupBtn, saveBtn, clearBtn, undoBtn, locateBtn, ...buttons];
     function moveControls(event) {
-        let _controls = controls.filter(e => e._map && !(e instanceof Colorbar));
+        let _controls = app.controls.filter(e => e._map && !(e instanceof Colorbar));
         _controls.forEach((e, i) => {
             moveButtons(e, event, i === _controls.length - 1);
         })
@@ -122,5 +121,4 @@ export function addControls(map, OSM, layers) {
     let ev = new Event('controlinit');
     window.dispatchEvent(ev)
 
-    return controls;
 };

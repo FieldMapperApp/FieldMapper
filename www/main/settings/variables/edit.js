@@ -1,9 +1,9 @@
 import { deleteItem, getInd, getVars, updateItem } from '../utils';
 import { VarStorage } from './var';
 
-export function onOpenEdit(arg) { // render variable values (edit page)
+export async function onOpenEdit(arg) { // render variable values (edit page)
 
-  let variables = getVars();
+  let variables = await getVars();
 
   document.getElementById('varName').value = arg.name;
   document.getElementById('varName').readOnly = true;

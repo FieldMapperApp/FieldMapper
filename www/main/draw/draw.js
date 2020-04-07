@@ -1,12 +1,14 @@
-import { getOptions } from '../settings/options/options';
+import { getOptions } from '../settings/utils';
 import { Feature } from './feature';
 import { iconColor, addPopUp } from './utils';
 
-export function onMousedown(e) {
+export async function onMousedown(e) {
 
     let map = e.target;
     map.dragging.disable();
     let feature = new Feature;
+    await feature.create();
+
     let line = L.polyline([e.latlng], { color: feature.properties.color })
         .addTo(map)
         .addTo(app.lines);
@@ -31,10 +33,12 @@ export function onMousedown(e) {
 
 };
 
-export function onClick(e) {
+export async function onClick(e) {
 
     let map = e.target;
     let feature = new Feature;
+    await feature.create();
+
     let marker = L.marker(e.latlng, { icon: iconColor(feature.properties.color), draggable: true })
         .addTo(map)
         .addTo(app.points);

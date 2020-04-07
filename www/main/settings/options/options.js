@@ -1,7 +1,9 @@
-export function onLoadOptions() {
+import { getOptions } from '../utils';
+
+export async function onLoadOptions() {
 
   let defColors = ["black", "green", "yellow", "red", "blue", "brown"];
-  let options = getOptions();
+  let options = await getOptions();
 
   let colorbarCheckbox = document.getElementById("colorbarCheckbox");
   colorbarCheckbox.checked = options.colorbar;
@@ -44,7 +46,7 @@ export function onLoadOptions() {
   }
 }
 
-function onChange(ev, options, defColors) {
+async function onChange(ev, options, defColors) {
 
   ev.preventDefault();
 
@@ -94,9 +96,8 @@ function onChange(ev, options, defColors) {
     options.groupColor = null;
   }
 
-  localStorage.setItem('options', JSON.stringify(options));
-
-  console.log(JSON.parse(localStorage.getItem('options')));
+  db.setItem('options', JSON.stringify(options));
+  console.log(await getOptions())
 
 }
 
@@ -151,19 +152,4 @@ function checkColorBtn(e) {
     colorgroup.checked = true;
   }
 
-}
-
-export function getOptions() {
-  return (localStorage.hasOwnProperty('options') ? JSON.parse(localStorage.getItem('options')) : {
-    colorbar: true,
-    colors: ["black", "green", "yellow", "red", "blue", "brown"],
-    location: true,
-    comments: true,
-    cache: true,
-    deletion: false,
-    export: false,
-    group: true,
-    groupType: true,
-    groupColor: false
-  })
 }

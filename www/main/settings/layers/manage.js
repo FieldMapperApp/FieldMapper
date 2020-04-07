@@ -1,11 +1,11 @@
 import { onOpenEdit } from './edit';
 import { getLayers, deleteItem } from '../utils';
 
-export function onSubmitManage(e) {
+export async function onSubmitManage(e) {
 
     e.preventDefault();
 
-    let layers = getLayers();
+    let layers = await getLayers();
 
     let input = document.getElementById("layersinput");
     let name = input.value.trim();
@@ -17,7 +17,7 @@ export function onSubmitManage(e) {
         input.focus();
     }
 
-    localStorage.setItem('layers', JSON.stringify({ ...layers })); // store locally
+    db.setItem('layers', JSON.stringify({ ...layers })); // store locally
 
 };
 

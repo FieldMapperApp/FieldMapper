@@ -1,5 +1,5 @@
 import { getDatetime } from '../utils/date';
-import { getOptions } from '../settings/options/options';
+import { getOptions } from '../settings/utils';
 import { checkGroup } from './utils';
 
 export class Feature {
@@ -7,33 +7,28 @@ export class Feature {
     constructor() {
 
         this.type = "Feature";
-        this.properties = new FeatureProperties;
+        this.properties = {};
+        Object.assign(this.properties, app.properties);
+
+        this.properties.timestamp = getDatetime(new Date);
+
+        delete this.properties.getGroupColor;
 
     }
 
-}
+    async create() {
 
-class FeatureProperties {
-    
-    constructor() {
+        let options = await getOptions();
+        this.properties.group = (options.group ? this._getGroup(options) : null);
+        this.properties.color = (checkGroup(this.properties.group, options) ? app.properties.getGroupColor(options) : app.properties.color);
+   
+    }
 
-        Object.assign(this, app.properties);
-
-        this.group = (getOptions().group ? this._getGroup() : null),
-        this.color = (checkGroup(this.group) ? app.properties.getGroupColor() : app.properties.color),
-        this.timestamp = getDatetime(new Date),
-
-        delete this.getGroupColor;
-        delete this._getGroupColor;
-        delete this._colors;
-        
-    };
-
-    _getGroup() {
+    _getGroup(options) {
 
         let modes = document.getElementById('modeCtrl');
 
-        if (getOptions().groupType) {
+        if (options.groupType) {
             return (modes.classList.contains('points-mode') ? this._calcGroup(app.points, "p") : this._calcGroup(app.lines, "l"))
         } else {
             return (modes.classList.contains('points-mode') ? this._calcGroup(app.points) : this._calcGroup(app.lines))
@@ -68,5 +63,5 @@ class FeatureProperties {
 
     }
 
-    
+
 }

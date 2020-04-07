@@ -1,22 +1,23 @@
-import { getOptions } from "./settings/options/options";
+import { getOptions } from "./settings/utils";
 
 export class Properties {
 
     constructor() {
-
-        this._colors = getOptions().colors;
-        this.color = this._colors[0];
         this.getGroupColor = this._getGroupColor();
-
     }
 
-    _getGroupColor() {
+    async create() {
 
-        let colors = this._colors;
+        let options = await getOptions();
+        this.color = options.colors[0];
+    }
+
+    _getGroupColor(options) {
 
         let i = 0;
 
-        return function increment() {
+        return function increment(options) {
+            let colors = options.colors;
             i = (i >= colors.length - 1 ? 0 : i + 1);
             this.color = colors[i];
             return this.color;

@@ -2,9 +2,9 @@ import { onSubmitEdit } from './edit';
 import { onSubmitManage, addItem } from './manage';
 import { getLayers } from '../utils';
 
-export function onLoadManageLayers() {
+export async function onLoadManageLayers() {
 
-  let layers = getLayers();
+  let layers = await getLayers();
 
   if (layers.length !== 0) { layers.forEach(el => addItem(el.name, layers)) }; // render variable list from local storage
 
@@ -23,9 +23,9 @@ export function onLoadEditLayers() {
 
 }
 
-function onClearBtn() { // remove all variables from storage and variables list
+async function onClearBtn() { // remove all variables from storage and variables list
 
-  let layers = getLayers();
+  let layers = await getLayers();
   layers.forEach(el => {
 
     let item = document.getElementById("layers_item_" + el.name);
@@ -33,6 +33,6 @@ function onClearBtn() { // remove all variables from storage and variables list
 
   });
 
-  localStorage.removeItem('layers');
+  db.removeItem('layers');
 
 };

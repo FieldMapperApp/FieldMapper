@@ -1,27 +1,43 @@
-import { clearData } from '../../utils/export';
+import { clearData, countFiles } from '../../utils/export';
+import { getVars, getLayers, sizeOf } from '../utils';
 
-export function onLoadReset(OSM) {
+export async function onLoadReset() {
 
-    document.getElementById('clearForm').addEventListener('submit', function () {
+    let vars = await getVars();
+    let layers = await getLayers();
 
-        let vars = document.getElementById('clearVariables').checked;
-        let files = document.getElementById('clearFiles').checked;
-        let cache = document.getElementById('clearCache').checked;
-        let options = document.getElementById('clearOptions').checked;
-        let layers = document.getElementById('clearLayers').checked;
-        let sure = ([vars, files, cache, options, layers].some(x => x) ? confirm('Are you sure?') : false);
-        if (sure) {
-            if (vars) { localStorage.removeItem('variables') };
-            if (files) { clearData() };
-            if (cache) {
-                OSM.emptyCache(function (oks, fails) {
-                    var message = "Cleared cache.\n" + oks + " deleted OK\n" + fails + " failed";
-                    alert(message);
-                })
-            }
-            if (options) { localStorage.removeItem('options') };
-            if (layers) { localStorage.removeItem('layers') };
-        }
+    app.OSM.getCacheContents(async cache => {
+        let exports = await countFiles();
+        let size = await db.getSize();
+        console.log(size)
+
+        document.getElementById('vars-reset').innerText = vars.length.toString() + " variables cached";
+        document.getElementById('layers-reset').innerText = layers.length.toString() + " layers imported";
+        document.getElementById('exports-reset').innerText = exports + " layers saved in exports directory";
+        document.getElementById('cache-reset').innerText = cache.length + " tiles cached";
+        document.getElementById('stats').innerText = "Cache used: " + sizeOf(size).toString();
+
+        document.getElementById('clearForm').addEventListener('submit', onSubmit);
 
     });
+}
+
+function onSubmit(ev) {
+
+    let vars = document.getElementById('clearVariables').checked;
+    let files = document.getElementById('clearFiles').checked;
+    let cache = document.getElementById('clearCache').checked;
+    let options = document.getElementById('clearOptions').checked;
+    let layers = document.getElementById('clearLayers').checked;
+    let position = document.getElementById('clearPosition').checked;
+    let sure = ([vars, files, cache, options, layers, position].some(x => x) ? confirm('Are you sure?') : false);
+    if (sure) {
+        if (vars) { db.removeItem('variables') };
+        if (files) { clearData() };
+        if (cache) { app.OSM.emptyCache() };
+        if (options) { db.removeItem('options') };
+        if (layers) { db.removeItem('layers') };
+        if (position) { db.removeItem('position') };
+    }
+
 }

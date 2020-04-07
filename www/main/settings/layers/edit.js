@@ -52,7 +52,7 @@ function addBounds(id) {
     if (id === 'imageBtn') {
         document.getElementById('layer-item-btns').insertAdjacentHTML('afterend', `
       <div class="item" id="item-bounds">
-        <label for="layerBounds">Please provide the coordinates (in degrees) of two diagonally opposite corners of the rectangle.</label>
+        <label for="layerBounds">Please provide the coordinates (in decimal degrees) of two diagonally opposite corners of the rectangle.</label>
         <div class="item">
         <input type="text" id="layerBounds1" placeholder="latitude1, longitude1" required></input>
         </div>

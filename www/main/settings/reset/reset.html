@@ -2,18 +2,21 @@
     <div class="header grey-900 shadow">
         <button class="left icon ion-android-arrow-back" onclick="backPage()"></button>
         <h1>Reset</h1>
+        <div class="right">
+            <span class="text-small margin" style="color: lightgrey" id="stats"></span>
+        </div>
     </div>
     <div class="content padding has-header">
         <form id="clearForm">
             <div class="list radius" style="margin-top: 10px">
                 <div class="item">
-                    <h2 class="text-strong">Set to default</h2>
+                    <h2 class="text-strong left">Set to default</h2>
                     <div class="item">
-                        <label for="clearVariables">Variables</label>
+                        <label for="clearVariables">Variables<br /><sup id="vars-reset"></sup></label>
                         <div class="right"><input type="checkbox" id="clearVariables"></div>
                     </div>
                     <div class="item">
-                        <label for="clearLayers">Layers</label>
+                        <label for="clearLayers">Layers<br /><sup id="layers-reset"></sup></label>
                         <div class="right"><input type="checkbox" id="clearLayers"></div>
                     </div>
                     <div class="item">
@@ -21,12 +24,16 @@
                         <div class="right"><input type="checkbox" id="clearOptions"></div>
                     </div>
                     <div class="item">
-                        <label for="clearFiles">Exports</label>
+                        <label for="clearFiles">Exports<br /><sup id="exports-reset"></sup></label>
                         <div class="right"><input type="checkbox" id="clearFiles"></div>
                     </div>
                     <div class="item">
-                        <label for="clearCache">Cached tiles</label>
+                        <label for="clearCache">Cached tiles<br /><sup id="cache-reset"></sup></label>
                         <div class="right"><input type="checkbox" id="clearCache"></div>
+                    </div>
+                    <div class="item">
+                        <label for="clearPosition">Last map bounds/zoom level</label>
+                        <div class="right"><input type="checkbox" id="clearPosition"></div>
                     </div>
                 </div>
             </div>
@@ -34,6 +41,7 @@
             <div class="row-center">
                 <button type="submit" class="grey-900 radius">Apply</button>
             </div>
+            <div class="space"></div>
         </form>
     </div>
 </div>

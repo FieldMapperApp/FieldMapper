@@ -1,5 +1,5 @@
 import { writeToFile } from '../utils/export';
-import { getOptions } from '../settings/options/options';
+import { getOptions } from '../settings/utils';
 
 export function createUndoBtn(map, points, lines, imports) {
 

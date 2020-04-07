@@ -3,9 +3,9 @@ import { onSubmitManage, addItem } from './manage';
 import { getVars } from '../utils';
 
 // init
-export function onLoadManageVars() {
+export async function onLoadManageVars() {
 
-  let variables = getVars();
+  let variables = await getVars();
 
   if (variables.length !== 0) { variables.forEach(el => addItem(el.name)) }; // render variable list from local storage
 
@@ -24,9 +24,9 @@ export function onLoadEditVars() {
 
 }
 
-function onClearBtn() { // remove all variables from storage and variables list
+async function onClearBtn() { // remove all variables from storage and variables list
 
-  let variables = getVars();
+  let variables = await getVars();
 
   variables.forEach(el => {
 
@@ -35,6 +35,6 @@ function onClearBtn() { // remove all variables from storage and variables list
 
   });
 
-  localStorage.removeItem('variables');
+  db.removeItem('variables');
 
 };

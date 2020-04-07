@@ -5,9 +5,9 @@ export function writeToFile(data, feature, saveAs) {
     var date = getDate(new Date);
     if (saveAs.length != 0) { var filename = saveAs + "_" + feature + "_" + datetime + ".geojson" }
     else { var filename = feature + "_" + datetime + ".geojson"};
-    window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (fs) {
-        console.log(fs.fullPath); 
-        fs.getDirectory('exports', {create: true }, function (dirEntry) {
+    window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (root) {
+        console.log(root.fullPath); 
+        root.getDirectory('exports', {create: true }, function (dirEntry) {
             console.log(dirEntry.fullPath);
             dirEntry.getDirectory(date, { create: true }, function (subDirEntry) {
                 console.log(subDirEntry.fullPath);
@@ -22,7 +22,7 @@ export function writeToFile(data, feature, saveAs) {
                             console.log('Failed!');
                         };
 
-                        var blob = new Blob([data], { type: 'text/plain' });
+                        let blob = new Blob([data], { type: 'text/plain' });
                         fileWriter.write(blob);
                     }, onError);
                 }, onError);
@@ -31,15 +31,27 @@ export function writeToFile(data, feature, saveAs) {
     }, onError);
 }
 
-function onError(error) {
-    console.log(error.code)
-};
-
 export function clearData() {
-    window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (fs) {
-        console.log(fs.fullPath); 
-        fs.getDirectory('exports', {create: false }, function (dirEntry) {
-            dirEntry.remove();
+    window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (root) {
+        root.getDirectory('exports', { create: true }, function (dirEntry) {
+            dirEntry.removeRecursively(() => console.log('success'), (e) => { console.log(e) });
         }, onError);
     }, onError);
 }
+
+export function countFiles() {
+    return new Promise(resolve => {
+        window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (root) {
+            root.getDirectory('exports', { create: true }, function (dirEntry) {
+                let reader = dirEntry.createReader();
+                reader.readEntries((entries) => {
+                    resolve(entries.length)
+                })
+            }, onError);
+        }, onError);
+    })
+}
+
+function onError(error) {
+    console.log(error)
+};
