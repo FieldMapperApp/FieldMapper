@@ -28,6 +28,8 @@ window.app = {
 
     ready: async () => {
 
+        if (!db.root) { await db.init() };
+
         app.map = new L.map('map', {
             zoomControl: false,
         });
@@ -35,7 +37,6 @@ window.app = {
         app.points = L.featureGroup();
         app.lines = L.featureGroup();
         app.importedFeatures = L.featureGroup();
-        console.log('dsad')
         app.properties = new Properties;
         await app.properties.create();
 
