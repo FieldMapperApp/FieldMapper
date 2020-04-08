@@ -1,12 +1,13 @@
 # Variable Management
 
-## Choosing the right type
+## Overview
 As your aim is to collect data that suits your research question, you probably want to work with a custom set of variables tailored to your case. 
 These variables will actually determine the attributes of objects that you add to the map. Once you have clicked on *Variable Management* in the settings tab, you are prompted to add a variable. 
 Now just enter the name of the new variable and click on enter. The variable shows up in the list below.
 Next to its name you can see two buttons: if you press the left button, you can *edit* the variable and how it appears as a button in the map interface. 
 The right button will delete the variable. You can delete all variables at once if click on the three dots in the upper right corner and choose "Clear variables". Note that, if you do not edit the variable, it will be operationalised as a boolean variable (see below).
 
+## Choosing the right type
 If you click on the edit button, a page opens up where you can change the type, value and icon of the variable (button). 
 First decide which kind of data you want to encode. Instead of variables we could also speak of attributes since Type *Boolean* generates a single button that can be activated and deactivated. 
 Active state means "true", inactive state means "false". 
