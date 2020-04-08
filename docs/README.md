@@ -1,7 +1,3 @@
 * [FieldMapper](../README.md)
-* [Use cases](./use_cases/use_cases.md)
-  * Surveying
-  * Interviewing
-* FAQ
-  * How can I import files?
-  * How can I do other things?
+* [Use Cases](use_cases.md)
+* [Map Interface](map_interface.md)
