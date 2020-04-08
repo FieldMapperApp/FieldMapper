@@ -17,7 +17,7 @@ export async function onSubmitManage(e) {
         input.focus();
     }
 
-    db.setItem('layers', JSON.stringify({ ...layers })); // store locally
+    await db.setItem('layers', JSON.stringify({ ...layers })); // store locally
 
 };
 

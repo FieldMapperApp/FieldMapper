@@ -154,9 +154,9 @@ window.app = {
             }
         });
 
-        map.on('moveend', function () {
+        map.on('moveend', async function () {
             updateStatus(map, OSM);
-            db.setItem('position', JSON.stringify({ lat: map.getCenter().lat, lng: map.getCenter().lng, zoom: map.getZoom() }));
+            await db.setItem('position', JSON.stringify({ lat: map.getCenter().lat, lng: map.getCenter().lng, zoom: map.getZoom() }));
         }).fire('moveend');
 
         document.addEventListener("offline", (ev) => ((map, OSM) => onOffline(map, OSM)), false);

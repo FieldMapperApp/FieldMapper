@@ -22,7 +22,9 @@ export async function onLoadReset() {
     });
 }
 
-function onSubmit(ev) {
+async function onSubmit(ev) {
+
+    ev.preventDefault();
 
     let vars = document.getElementById('clearVariables').checked;
     let files = document.getElementById('clearFiles').checked;
@@ -32,12 +34,14 @@ function onSubmit(ev) {
     let position = document.getElementById('clearPosition').checked;
     let sure = ([vars, files, cache, options, layers, position].some(x => x) ? confirm('Are you sure?') : false);
     if (sure) {
-        if (vars) { db.removeItem('variables') };
-        if (files) { clearData() };
+        if (vars) { await db.removeItem('variables') };
+        if (files) { await clearData() };
         if (cache) { app.OSM.emptyCache() };
-        if (options) { db.removeItem('options') };
-        if (layers) { db.removeItem('layers') };
-        if (position) { db.removeItem('position') };
+        if (options) { await db.removeItem('options') };
+        if (layers) { await db.removeItem('layers') };
+        if (position) { await db.removeItem('position') };
     }
+
+    backPage();
 
 }

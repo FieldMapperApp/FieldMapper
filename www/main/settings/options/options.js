@@ -96,7 +96,7 @@ async function onChange(ev, options, defColors) {
     options.groupColor = null;
   }
 
-  db.setItem('options', JSON.stringify(options));
+  await db.setItem('options', JSON.stringify(options));
   console.log(await getOptions())
 
 }

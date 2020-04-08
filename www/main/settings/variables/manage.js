@@ -18,7 +18,7 @@ export async function onSubmitManage(e) {
         input.focus();
     }
 
-    db.setItem('variables', JSON.stringify({ ...variables })); // store locally
+    await db.setItem('variables', JSON.stringify({ ...variables })); // store locally
 
 };
 

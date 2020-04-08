@@ -5,7 +5,7 @@ export async function deleteItem(key, type) {
     arr = arr.filter(item => item.name !== key); // remove from array
     let item = (type === 'variables' ? document.getElementById("var_item_" + key) : document.getElementById("layers_item_" + key));
     item.remove(); // remove from list
-    db.setItem(type, JSON.stringify({ ...arr })); // update storage  
+    await db.setItem(type, JSON.stringify({ ...arr })); // update storage  
 
 }
 
@@ -15,7 +15,7 @@ export async function updateItem(type, obj) {
     arr[i] = obj;
     console.log(obj);
 
-    db.setItem(type, JSON.stringify({ ...arr })); // store locally (update variables data)
+    await db.setItem(type, JSON.stringify({ ...arr })); // store locally (update variables data)
 }
 
 export function getInd(arr, name) {

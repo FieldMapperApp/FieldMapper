@@ -1,9 +1,9 @@
 import { deleteItem, getInd, getLayers, updateItem } from '../utils';
 import { LayerStorage } from './layer';
 
-export function onOpenEdit(arg) { // render variable values (edit page)
+export async function onOpenEdit(arg) { // render variable values (edit page)
 
-    let layers = getLayers();
+    let layers = await getLayers();
 
     document.getElementById('layerName').value = arg.name;
     document.getElementById('layerName').readOnly = true;

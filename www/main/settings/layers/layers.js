@@ -33,6 +33,6 @@ async function onClearBtn() { // remove all variables from storage and variables
 
   });
 
-  db.removeItem('layers');
+  await db.removeItem('layers');
 
 };

@@ -84,7 +84,7 @@ function _moveButtons(e, event, last) {
         if (last && topLeftControl2.lastChild) {
             let bottom = topLeftControl2.lastChild.getBoundingClientRect().bottom;
             let bottomMap = document.getElementById('map').getBoundingClientRect().bottom;
-            if (bottomMap - bottom < 100) {
+            if (bottomMap - bottom < 50) {
                 bottomLeft.forEach(e => { e.remove(); bottomLeftControl.appendChild(e) })
                 changeBottom(bottomLeftControl, topLeftControl2, marginBottom)
             }
@@ -97,7 +97,7 @@ function expandInit(type, el, topLeftControl2, topLeftControl3, bottomRightContr
 
     if (el.parentElement.classList.contains('leaflet-left', 'leaflet-top') && isElementOutMap(el)) {
         el.remove();
-        if (type === 'controlinit') {
+        if (type === 'controlinit' || !firstEl2Col) {
             topLeftControl2.appendChild(el)
         }
         else {
@@ -106,7 +106,7 @@ function expandInit(type, el, topLeftControl2, topLeftControl3, bottomRightContr
     }
     if (el.parentElement.classList.contains('leaflet-left-2', 'leaflet-top') && isElementOutMap(el)) {
         el.remove();
-        if (type === 'controlinit') {
+        if (type === 'controlinit' || !firstEl3Col) {
             topLeftControl3.appendChild(el)
         }
         else {

@@ -9,8 +9,8 @@ export function createUndoBtn(map, points, lines, imports) {
             icon: '<img alt="undo last marker" src="img/undo.svg" height="55%" width="55%" />',
             onClick: function (control) {
                 control.setActive();
-                setTimeout(function () {
-                    let options = getOptions();
+                setTimeout(async function () {
+                    let options = await getOptions();
                     let features = points.getLayers().concat(lines.getLayers());
 
                     if (options.deletion) {
@@ -50,8 +50,8 @@ export function createClearBtn(map, points, lines, imports) {
             icon: '<img alt="clear all" src="img/trash.svg" height="60%" width="60%" />',
             onClick: function (control) {
                 control.setActive();
-                setTimeout(function () {
-                    let options = getOptions();
+                setTimeout(async function () {
+                    let options = await getOptions();
                     let layers = lines.getLayers().length + points.getLayers().length;
                     if (options.deletion) {
                         console.log('option true')
@@ -76,12 +76,12 @@ export function createSaveBtn(map, points, lines, imports) {
         position: 'topright',
         states: [{
             icon: '<img alt="save" src="img/save.svg" height="60%" width="60%" style="padding-top:6px" />',
-            onClick: function (control) {
+            onClick: async function (control) {
 
-                let options = getOptions();
+                let options = await getOptions();
 
                 control.setActive();
-                setTimeout(function () {
+                setTimeout(async function () {
 
                     control.setInactive();
 
@@ -101,9 +101,9 @@ export function createSaveBtn(map, points, lines, imports) {
                     console.log(JSON.stringify(imports.toGeoJSON()));
 
                     if (device.platform == 'Android' && saveAs) {
-                        if (lines.getLayers()) { writeToFile(JSON.stringify(lines.toGeoJSON()), 'lines', saveAs) };
-                        if (points.getLayers()) { writeToFile(JSON.stringify(points.toGeoJSON()), 'points', saveAs) };
-                        if (options.export && imports.getLayers()) { writeToFile(JSON.stringify(imports.toGeoJSON()), 'imports', saveAs) }
+                        if (lines.getLayers()) { await writeToFile(JSON.stringify(lines.toGeoJSON()), 'lines', saveAs) };
+                        if (points.getLayers()) { await writeToFile(JSON.stringify(points.toGeoJSON()), 'points', saveAs) };
+                        if (options.export && imports.getLayers()) { await writeToFile(JSON.stringify(imports.toGeoJSON()), 'imports', saveAs) }
                     
                         clearAll(options.deletion, points, lines, imports, map);
                     };

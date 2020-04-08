@@ -8,18 +8,20 @@ window.db = {
         this.root = await fs;
     },
     setItem: (key, value) => {
-        this.root.getDirectory('db', { create: true }, dirEntry => {
-            dirEntry.getFile(key, { create: true }, function (fileEntry) {
-                fileEntry.createWriter(function (fileWriter) {
-                    let blob = new Blob([value], { type: 'text/plain' });
-                    fileWriter.onwriteend = async function () {
-                        console.log("Successful file write: ", key);
-                        console.log(await db.getItem(key))
-                    };
-                    fileWriter.write(blob);
+        return new Promise(resolve => {
+            this.root.getDirectory('db', { create: true }, dirEntry => {
+                dirEntry.getFile(key, { create: true }, function (fileEntry) {
+                    fileEntry.createWriter(function (fileWriter) {
+                        let blob = new Blob([value], { type: 'text/plain' });
+                        fileWriter.onwriteend = function () {
+                            console.log("Successful file write: ", key);
+                            resolve()
+                        };
+                        fileWriter.write(blob);
+                    }, onError);
                 }, onError);
             }, onError);
-        }, onError);
+        })
     },
     getItem: (key) => {
         return new Promise(resolve => {
@@ -38,16 +40,21 @@ window.db = {
 
     },
     removeItem: (key) => {
-        this.root.getDirectory('db', { create: false }, dirEntry => {
-            dirEntry.getFile(key, { create: false }, function (fileEntry) {
-                fileEntry.remove()
+        return new Promise(resolve => {
+            this.root.getDirectory('db', { create: false }, dirEntry => {
+                dirEntry.getFile(key, { create: false }, function (fileEntry) {
+                    fileEntry.remove(resolve())
+                }, onError);
             }, onError);
-        }, onError);
+        })
+        
     },
     clear: () => {
-        this.root.getDirectory('db', { create: true }, dirEntry => {
-            dirEntry.removeRecursively();
-        }, onError);
+        return new Promise(resolve => {
+            this.root.getDirectory('db', { create: true }, dirEntry => {
+                dirEntry.removeRecursively(resolve());
+            }, onError);
+        })
     },
     getSize: () => {
         return new Promise(resolve => {

@@ -35,6 +35,6 @@ async function onClearBtn() { // remove all variables from storage and variables
 
   });
 
-  db.removeItem('variables');
+  await db.removeItem('variables');
 
 };
