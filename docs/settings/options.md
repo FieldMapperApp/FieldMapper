@@ -20,6 +20,6 @@ If enabled, points and lines can't be in the same group (which leads to groups l
 * *Automatically choose random color for groups*: 
 If enabled, the color bar disappears from the map interface and the app will iterate over the colors (see below) and automatically color features belonging to the same group accordingly.
 
-## Colors
+## Feature colors
 
 Choose which colors you want to have in the game. Will affect both automatic (see above) and manual coloring of features.
