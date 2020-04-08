@@ -28,7 +28,7 @@ window.app = {
 
     ready: async () => {
 
-        if (!db.root) { await db.init() };
+        if (!db.hasOwnProperty('root')) { await db.init() };
 
         app.map = new L.map('map', {
             zoomControl: false,

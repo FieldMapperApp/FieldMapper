@@ -14,6 +14,7 @@ window.db = {
                     let blob = new Blob([value], { type: 'text/plain' });
                     fileWriter.onwriteend = async function () {
                         console.log("Successful file write: ", key);
+                        console.log(await db.getItem(key))
                     };
                     fileWriter.write(blob);
                 }, onError);
@@ -21,7 +22,7 @@ window.db = {
         }, onError);
     },
     getItem: (key) => {
-        //return new Promise(resolve => {
+        return new Promise(resolve => {
             this.root.getDirectory('db', { create: true }, dirEntry => {
                 dirEntry.getFile(key, { create: false }, function (fileEntry) {
                     fileEntry.file(function (file) {
@@ -33,7 +34,7 @@ window.db = {
                     }, (e) => { console.log(key); onError(e) });
                 }, (e) => { console.log(key, " ", e.code); resolve(null) });
             }, (e) => { console.log(key); onError(e) });
-        //});
+        });
 
     },
     removeItem: (key) => {
