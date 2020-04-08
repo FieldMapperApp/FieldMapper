@@ -11,7 +11,7 @@ export function onOnline(map, OSM) {
 }
 
 export function updateStatus(map, OSM) {
-    document.getElementById('status').innerHTML =  map.getCenter().lat.toFixed(5) + ' x ' + map.getCenter().lng.toFixed(5) + ' @ ' + map.getZoom() + (OSM.isOnline() ? ' (ONLINE)' : OSM.isOffline() ? ' (OFFLINE)' : '');
+    document.getElementById('status').innerHTML =  map.getCenter().lat.toFixed(5) + ' ' + map.getCenter().lng.toFixed(5) + ' @ ZL ' + map.getZoom() + (OSM.isOnline() ? ' (online)' : OSM.isOffline() ? ' (offline))' : '');
 }
 
 export function hideStatus() {
