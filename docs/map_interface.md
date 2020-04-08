@@ -19,4 +19,4 @@
     <area target="" alt="group" title="group" href="" coords="1733,824,1806,906" shape="rect">
 </map>
 
-**Click on map elements to show information!**
+**Click on map elements to show what they are about!**
