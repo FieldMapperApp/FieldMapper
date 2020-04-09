@@ -16,15 +16,15 @@ If "true"/"false" does not make sense but you still want to operationalise the a
 You can now enter two comma-separated values. The first value will correspond to an inactive button. 
 As with most things, you can operationalise an attribute in more than one way. Instead of the following configuration ...
 
-* Variable name: Hat
-* Type: Boolean
-* (Values: "true", "false")
+Name | Type | Values
+--- | --- | ---
+Hat | Boolean | (true, false)
 
 ... you could also encode the same information with this configuration:
 
-* Variable name: Hat
-* Type: Custom binary
-* Values: "doesn't wear one", "wears one"
+Name | Type | Values
+--- | --- | ---
+Hat | Custom Binary | doesn't wear one, wears one
 
 In most cases, working with boolean variables (where reasonable) will make things easier.
 
