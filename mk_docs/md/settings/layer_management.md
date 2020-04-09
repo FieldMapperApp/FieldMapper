@@ -39,7 +39,7 @@ QGIS has an "export as image" function. If you want to export a layers as an ima
 1. Draw on top of a OSM layer or create your custom layers a different way.
 2. Create a extent layer enclosing all relevant layers (in a spatial sense) and extract the layer extent (`Vector > Research Tools > Extract Layer Extent...`).
 3. Go to the attribute table of the resulting layer. You can now extract a pair of coordinates representing two diagonally opposite corners of the image layer that you will be asked for in the edit menu of FieldMapper: 
-`<MINX>, <MINY>` and `<MAXX>, <MAXY>`.
-4. Select `File > Import/Export > Export Map to Image`. Calculate the extent from your extent layer and click save.
+`<MINX>, <MINY>` and `<MAXX>, <MAXY>`. Make sure the coordinates are in WGS84 decimal degree format.
+4. Select `File > Import/Export > Export Map to Image`. Calculate the extent using your extent layer and click save.
 
 
