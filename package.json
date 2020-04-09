@@ -11,9 +11,6 @@
     "ecosystem:cordova"
   ],
   "author": "Felix Schott",
-  "docpress": {
-    "github": "felluksch/FieldMapper"
-  },
   "license": "GPL-3.0",
   "dependencies": {
     "cordova-android": "^8.1.0",

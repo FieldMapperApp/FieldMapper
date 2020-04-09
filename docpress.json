@@ -1,0 +1,8 @@
+{
+    "docs": "mk_docs",
+    "dist": "docs",
+    "github": "felluksch/FieldMapper",
+    "scripts": [
+      "scripts/script.js"
+    ]
+  }
