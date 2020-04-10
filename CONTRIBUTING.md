@@ -3,5 +3,7 @@ If you're planning on implementing major changes, please [get in touch](mailto:f
 To build the app, clone the repo and run `$ npm i && cordova prepare`.
 
 **To Do**:
+- [ ] Auto saving
+- [ ] Custom colors
 - [ ] Search function for places
 - [ ] iOS version
