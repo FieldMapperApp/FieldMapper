@@ -29,7 +29,6 @@ function _moveButtons(e, event, last) {
 
         let topLeftControl = document.getElementsByClassName('leaflet-top leaflet-left')[0];
         let topRightControl = document.getElementsByClassName('leaflet-top leaflet-right')[0];
-        let bottomLeftControl = document.getElementsByClassName('leaflet-bottom leaflet-left')[0];
 
         let topLeftControl2 = document.getElementById('top-left-ctrl-2');
         let topLeftControl3 = document.getElementById('top-left-ctrl-3');
@@ -38,7 +37,7 @@ function _moveButtons(e, event, last) {
 
         let _marginBottom = window.getComputedStyle(document.getElementsByClassName('leaflet-right leaflet-bottom')[0].firstChild).getPropertyValue('margin-bottom');
         let marginBottom = parseInt(_marginBottom.replace(/px/g, ''), 10);
-        
+
         if (event.type === 'controlcollapse') {
 
             [...bottomRightControl2.childNodes].reverse()
@@ -65,35 +64,42 @@ function _moveButtons(e, event, last) {
 
         } else {
 
-            if (event.type !== 'controlinit') {
-                bottomLeft.forEach(e => { e.remove(); topLeftControl.appendChild(e) });
-            }
-
-            let args = [event.type, el, topLeftControl2, topLeftControl3, bottomRightControl2, firstEl2Col, firstEl3Col, attributionControl];
+            let args = [event.type, el, topLeftControl2, topLeftControl3, bottomRightControl2, firstEl2Col, firstEl3Col, marginBottom, attributionControl];
             expandInit(...args);
 
             if (event.type === 'controlinit') {
                 firstEl2Col = topLeftControl2.firstChild;
                 firstEl3Col = topLeftControl3.firstChild;
-            } 
+            }
 
         }
         changeBottom(bottomRightControl2, topRightControl, marginBottom);
 
         bottomLeft = [...topLeftControl.childNodes].filter(e => e.id != "colorbar" && e.id != "modeCtrl");
-        if (last && topLeftControl2.lastChild) {
-            let bottom = topLeftControl2.lastChild.getBoundingClientRect().bottom;
+        if (last && topLeftControl2.lastChild && bottomLeft.length != 0) {
+            let bottom2 = topLeftControl2.lastChild.getBoundingClientRect().bottom;
+            let bottom1 = topLeftControl.lastChild.getBoundingClientRect().bottom;
+            let nonVars = [...topLeftControl.childNodes].filter(e => e.id == "colorbar" || e.id == "modeCtrl");
+            let _lastNonVars = nonVars[nonVars.length - 1];
+            let lastNonVars = (_lastNonVars.classList.contains('leaflet-control') ? _lastNonVars : _lastNonVars.childNodes[0]);
+            let bottomNonVars = lastNonVars.getBoundingClientRect().bottom;
             let bottomMap = document.getElementById('map').getBoundingClientRect().bottom;
-            if (bottomMap - bottom < 50) {
-                bottomLeft.forEach(e => { e.remove(); bottomLeftControl.appendChild(e) })
-                changeBottom(bottomLeftControl, topLeftControl2, marginBottom)
+            if (bottom2 > bottom1) {
+                let newMargin = ((bottom2 - bottomNonVars - totalHeight(bottomLeft, marginBottom)) / bottomLeft.length) - marginBottom;
+                bottomLeft.forEach(e => e.style.marginTop = newMargin.toString() + "px");
+            } else if (bottom2 < bottom1 && bottomMap - bottom2 < 60) {
+                let firstElBottom = firstEl2Col.getBoundingClientRect().bottom;
+                let btns = [...topLeftControl2.childNodes].slice(1);
+                console.log(firstEl2Col, firstElBottom)
+                let newMargin = ((bottom1 - firstElBottom - totalHeight(btns, marginBottom)) / btns.length) - marginBottom;
+                btns.forEach(e => e.style.marginTop = newMargin.toString() + "px");
             }
         }
 
     }
 }
 
-function expandInit(type, el, topLeftControl2, topLeftControl3, bottomRightControl2, firstEl2Col, firstEl3Col, attributionControl) {
+function expandInit(type, el, topLeftControl2, topLeftControl3, bottomRightControl2, firstEl2Col, firstEl3Col, marginBottom, attributionControl) {
 
     if (el.parentElement.classList.contains('leaflet-left', 'leaflet-top') && isElementOutMap(el)) {
         el.remove();
@@ -103,6 +109,7 @@ function expandInit(type, el, topLeftControl2, topLeftControl3, bottomRightContr
         else {
             firstEl2Col.insertAdjacentElement('beforebegin', el)
         }
+        el.style.marginTop = marginBottom.toString() + "px";
     }
     if (el.parentElement.classList.contains('leaflet-left-2', 'leaflet-top') && isElementOutMap(el)) {
         el.remove();
@@ -112,12 +119,23 @@ function expandInit(type, el, topLeftControl2, topLeftControl3, bottomRightContr
         else {
             firstEl3Col.insertAdjacentElement('beforebegin', el)
         }
+        el.style.marginTop = marginBottom.toString() + "px";
+    }
+    if (el.parentElement.classList.contains('leaflet-left-3', 'leaflet-top') && isElementOutMap(el)) {
+        alert('Too many variables, please delete at least one.')
     }
     if (el.parentElement.classList.contains('leaflet-right', 'leaflet-top') && isElementOutMap(el, attributionControl)) {
         el.remove();
         bottomRightControl2.appendChild(el);
     }
 
+}
+
+function totalHeight(arr, marginBottom) {
+    let n = arr.length;
+    let _arr = arr.map(e => e.offsetHeight);
+    let _totalHeight = _arr.reduce((a, c) => a + c);
+    return _totalHeight - n * marginBottom; // without margin
 }
 
 function isElementOutMap(el, ctrl) {
@@ -147,7 +165,7 @@ function changeBottom(secondCol, firstCol, marginBottom) {
 
     if (secondCol.childNodes.length != 0) {
 
-        let bottomElem = firstCol.childNodes[firstCol.childNodes.length - 1];
+        let bottomElem = firstCol.lastChild;
         let rect = bottomElem.getBoundingClientRect();
         let rectMap = document.getElementById('map').getBoundingClientRect();
 

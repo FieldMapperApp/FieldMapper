@@ -20,7 +20,7 @@
 .leaflet-control-zoom-in,
 .leaflet-control-zoom-out,
 .leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
-    line-height: 42px;
+    /*line-height: 42px;*/
 	font: bold 28px 'Lucida Console', Monaco, monospace;
     text-indent: 1px;
 }
@@ -51,9 +51,6 @@
 }
 .leaflet-right-2 .leaflet-control {
     margin-right: 55px;
-}
-.leaflet-left-2 .leaflet-control {
-	margin-left: 55px;
 }
 .leaflet-left-3 .leaflet-control {
 	margin-left: 103px;
