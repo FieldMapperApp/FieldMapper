@@ -11,9 +11,16 @@ mobileui install page
 mobileui install font "Open+Sans:300"
 ```
 
-**To Do**:
+**To Do**:  
+1.0.0
+- [ ] change order of variables (buttons)
+- [ ] info icon where appropriate
+
+1.1.0
 - [ ] Auto saving
 - [ ] Images as attributes
 - [ ] Custom colors
 - [ ] Search function for places
+
+...
 - [ ] iOS version
