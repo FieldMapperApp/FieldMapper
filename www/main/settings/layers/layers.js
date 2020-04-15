@@ -9,7 +9,7 @@ export async function onLoadManageLayers() {
   if (layers.length !== 0) { layers.forEach(el => addItem(el.name, layers)) }; // render variable list from local storage
 
   let clearBtn = document.getElementById('clearLayersBtn'); // set up event listeners
-  clearBtn.addEventListener('click', function (ev) { onClearBtn() });
+  clearBtn.addEventListener('click', onClearBtn);
 
   let form = document.getElementById("formlayers");
   if (form) { form.addEventListener('submit', onSubmitManage) };

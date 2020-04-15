@@ -37,7 +37,7 @@ function addNewLayer(name, layers) {
 
 };
 
-export function addItem(name, layers) {
+export function addItem(name) {
 
     let list = document.getElementById("listlayers");
 
