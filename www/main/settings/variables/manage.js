@@ -12,14 +12,16 @@ export async function onSubmitManage(e) {
     let name = input.value.trim();
     console.log("submitted: " + name);
 
-    if (name !== '') {
+    let names = variables.map(e => e.name);
+    if (name !== '' && !names.includes(name)) {
         variables.push(addNewVar(name, variables)); // get input and call function to visualize new item
         input.value = '';
         input.focus();
+        await db.setItem('variables', JSON.stringify({ ...variables })); // store locally
+    } else {
+        alert('Please enter a non-duplicate and non-empty name.')
     }
-
-    await db.setItem('variables', JSON.stringify({ ...variables })); // store locally
-
+    
 };
 
 function addNewVar(name, variables) {
@@ -28,10 +30,11 @@ function addNewVar(name, variables) {
         name,
         type: 'boolean',
         value: ["true, false"],
-        icon: name.slice(0, 2)
+        icon: name.slice(0, 2),
+        id: variables.length
     }
 
-    addItem(newVar.name, variables); // add variable name to the list
+    addItem(newVar.name); // add variable name to the list
 
     return newVar;
 
@@ -45,17 +48,17 @@ export function addItem(name) {
       <div class="item" id="var_item_${name}">
         <h2>${name}</h2>
         <div class="right">
+        <button class="grey-400 circle ion-arrow-move small margin" type="button"></button>
         <button class="grey-900 circle ion-edit small" type="button" id="var_edit_${name}"></button>
         <button class="grey-900 circle ion-minus small margin" type="button" id="var_del_${name}"></button>
         </div>
       </div>
     `);
-
+    
     let delBtn = document.getElementById("var_del_" + name);
     let editBtn = document.getElementById("var_edit_" + name);
 
     delBtn.addEventListener('click', e => {
-        //e.stopPropagation();
         console.log(name + "delete button triggered");
         deleteItem(name, 'variables');
     });

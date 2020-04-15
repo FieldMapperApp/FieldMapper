@@ -34,7 +34,6 @@ module.exports = {
   plugins: [
     new webpack.ProvidePlugin({
       L: 'leaflet',
-      d3: 'd3',
     }),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output

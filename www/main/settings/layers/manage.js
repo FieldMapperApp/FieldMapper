@@ -11,13 +11,15 @@ export async function onSubmitManage(e) {
     let name = input.value.trim();
     console.log("submitted: " + name);
 
-    if (name !== '') {
+    let names = layers.map(e => e.name);
+    if (name !== '' && !names.includes(name)) {
         layers.push(addNewLayer(name, layers)); // get input and call function to visualize new item
         input.value = '';
         input.focus();
+        await db.setItem('layers', JSON.stringify({ ...layers })); // store locally
+    } else {
+        alert('Please enter a non-duplicate and non-empty name.')
     }
-
-    await db.setItem('layers', JSON.stringify({ ...layers })); // store locally
 
 };
 
