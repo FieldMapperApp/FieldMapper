@@ -18,6 +18,16 @@
                         <button class="grey-400" id="imageBtn" type="button">Image overlay</button>
                     </div>
                 </div>
+                <div class="item" id="item-bounds">
+                    <label for="layerBounds">Please provide the coordinates (in decimal degrees) of two diagonally
+                        opposite corners of the rectangle.</label>
+                    <div class="item">
+                        <input type="text" id="layerBounds1" placeholder="latitude1, longitude1" required></input>
+                    </div>
+                    <div class="item">
+                        <input type="text" id="layerBounds2" placeholder="latitude2, longitude2" required></input>
+                    </div>
+                </div>
                 <div class="item">
                     <label class="text-small">File</label>
                     <input type="file" id="layerFile" required>
@@ -26,7 +36,8 @@
             <div class="space"></div>
             <div class="row-center">
                 <button type="submit" class="grey-900 radius" style="margin-right: 5px">Save</button>
-                <button type="button" id="deleteeditlayer" style="margin-left: 5px" class="grey-900 radius">Delete</button>
+                <button type="button" id="deleteeditlayer" style="margin-left: 5px"
+                    class="grey-900 radius">Delete</button>
             </div>
             <div class="space"></div>
         </form>

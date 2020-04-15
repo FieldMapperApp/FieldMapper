@@ -37,36 +37,24 @@ export async function onSubmitEdit(e) {
 
     e.preventDefault();
     console.log('submitted');
-        
+
     let layer = new LayerStorage;
     await layer.create();
 
     updateItem('layers', layer);
 
     backPage();
-  
+
 };
 
 function addBounds(id) {
 
     if (id === 'imageBtn') {
-        document.getElementById('layer-item-btns').insertAdjacentHTML('afterend', `
-      <div class="item" id="item-bounds">
-        <label for="layerBounds">Please provide the coordinates (in decimal degrees) of two diagonally opposite corners of the rectangle.</label>
-        <div class="item">
-        <input type="text" id="layerBounds1" placeholder="latitude1, longitude1" required></input>
-        </div>
-        <div class="item">
-        <input type="text" id="layerBounds2" placeholder="latitude2, longitude2" required></input>
-        </div>
-      </div>
-      <!-- pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$
-      " -->
-      `);
-      document.getElementById('layerFile').accept = "image/*";
-    /* https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates */
+        document.getElementById('item-bounds').style.display = "inline-block";
+        document.getElementById('layerFile').accept = "image/*";
+        /* https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates */
     } else {
-        if (document.getElementById('item-bounds')) { document.getElementById('item-bounds').remove() };
+        document.getElementById('item-bounds').style.display = "none";
         document.getElementById('layerFile').accept = "";
     };
 

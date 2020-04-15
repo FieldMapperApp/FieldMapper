@@ -10,24 +10,28 @@
                     <h2 class="text-strong">Toolbars</h2>
                     <div class="item">
                         <label for="colorbarCheckbox">Color bar</label>
+                        <i class="icon ion-information-circled" onclick="openPopover('popoverColorbar')"></i>
                         <div class="right">
                             <input type="checkbox" class="switch grey-900" id="colorbarCheckbox" checked>
                         </div>
                     </div>
                     <div class="item">
                         <label for="locationCheckbox">Location</label>
+                        <i class="icon ion-information-circled" onclick="openPopover('popoverLocation')"></i>
                         <div class="right">
                             <input type="checkbox" class="switch grey-900" id="locationCheckbox" checked>
                         </div>
                     </div>
                     <div class="item" id="item-group">
                         <label for="groupCheckbox">Group</label>
+                        <i class="icon ion-information-circled" onclick="openPopover('popoverGroup')"></i>
                         <div class="right">
                             <input type="checkbox" class="switch grey-900" id="groupCheckbox" checked>
                         </div>
                     </div>
                     <div class="item">
                         <label for="cachingCheckbox">Caching</label>
+                        <i class="icon ion-information-circled" onclick="openPopover('popoverCaching')"></i>
                         <div class="right">
                             <input type="checkbox" class="switch grey-900" id="cachingCheckbox" checked>
                         </div>
@@ -35,27 +39,45 @@
                 </div>
                 <div class="item">
                     <h2 class="text-strong">Other</h2>
-                    <div class="item">
+                    <div class="item" id="item-deletion">
                         <label for="deletionCheckbox">Allow deletion of imported features</label>
+                        <i class="icon ion-information-circled" onclick="openPopover('popoverDeletion')"></i>
                         <div class="right">
                             <input type="checkbox" class="switch grey-900" id="deletionCheckbox">
                         </div>
                     </div>
-                    <div class="item">
+                    <div class="item" id="item-export">
                         <label for="exportCheckbox">Include imported features in export</label>
+                        <i class="icon ion-information-circled" onclick="openPopover('popoverExport')"></i>
                         <div class="right">
                             <input type="checkbox" class="switch grey-900" id="exportCheckbox">
                         </div>
                     </div>
-                    <div class="item" id="item-comments">
+                    <div class="item no-border" id="item-comments">
                         <label for="commentsCheckbox">Enable comments</label>
+                        <i class="icon ion-information-circled" onclick="openPopover('popoverComments')"></i>
                         <div class="right">
                             <input type="checkbox" class="switch grey-900" id="commentsCheckbox" checked>
                         </div>
                     </div>
+                    <div class="item" id="group-type">
+                        <label for="groupTypeCheckbox">Only group features of same geometry type</label>
+                        <i class="icon ion-information-circled" onclick="openPopover('popoverGroupType')"></i>
+                        <div class="right no-space-top">
+                            <input type="checkbox" class="switch grey-900" id="groupTypeCheckbox" checked>
+                        </div>
+                    </div>
+                    <div class="item" id="group-color">
+                        <label for="groupColorCheckbox">Automatically choose random color for groups</label>
+                        <i class="icon ion-information-circled" onclick="openPopover('popoverGroupColor')"></i>
+                        <div class="right">
+                            <input type="checkbox" class="switch grey-900" id="groupColorCheckbox" checked>
+                        </div>
+                    </div>
                 </div>
                 <div class="item">
-                    <h2 class="text-strong">Feature colors</h2>
+                    <h2 class="text-strong">Feature colors <i class="icon ion-information-circled"
+                            onclick="openPopover('popoverColors')"></i></h2>
                     <div class="item">
                         <label for="blackCheckbox">Black</label>
                         <div class="right"><input type="checkbox" id="blackCheckbox" value="black"></div>
@@ -82,6 +104,29 @@
                     </div>
                 </div>
             </div>
+            <div class="popover padding" id="popoverColorbar">If enabled, the map will show a color bar to change the
+                feature color.</div>
+            <div class="popover padding" id="popoverLocation">If enabled, the map will show a geolocation button.</div>
+            <div class="popover padding" id="popoverGroup">If enabled, the map will show a "group" button. Activate this
+                button to relate the next feature to the previous feature.</div>
+            <div class="popover padding" id="popoverCaching">If enabled, the map will show a button to cache the current
+                map
+                extent for offline use.</div>
+            <div class="popover padding" id="popoverDeletion">If enabled, imported features can be deleted with the
+                undo/clear
+                buttons.</div>
+            <div class="popover padding" id="popoverComments">If enabled, a window will show up where you can enter
+                additional
+                information after placing a feature on the map.</div>
+            <div class="popover padding" id="popoverExport">If enabled, imported features will be exported with newly
+                drawn
+                features, although in a different file.</div>
+            <div class="popover padding" id="popoverGroupColor">If enabled, feature colors will be chosen automatically
+                based on
+                group membership.</div>
+            <div class="popover padding" id="popoverGroupType">If enabled, lines and points cannot be grouped together.
+            </div>
+            <div class="popover padding" id="popoverColors">Color palette to style map objects. Changes will also affect automatically assigned colors.</div>
         </form>
     </div>
 </div>

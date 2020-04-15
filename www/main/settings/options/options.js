@@ -1,9 +1,10 @@
-import { getOptions } from '../utils';
+import { getOptions, getLayers } from '../utils';
 
 export async function onLoadOptions() {
 
   let defColors = ["black", "green", "yellow", "red", "blue", "brown"];
   let options = await getOptions();
+  let layers = await getLayers();
 
   let colorbarCheckbox = document.getElementById("colorbarCheckbox");
   colorbarCheckbox.checked = options.colorbar;
@@ -23,8 +24,19 @@ export async function onLoadOptions() {
   let exportCheckbox = document.getElementById('exportCheckbox');
   exportCheckbox.checked = options.export;
 
+  if (layers.length == 0) {
+    document.getElementById('item-deletion').style.display = "none";
+    document.getElementById('item-export').style.display = "none"
+  }
+
   let groupCheckbox = document.getElementById('groupCheckbox');
   groupCheckbox.checked = options.group;
+
+  let groupTypeBtn = document.getElementById('groupTypeCheckbox');
+  groupTypeBtn.checked = options.groupType;
+
+  let groupColorBtn = document.getElementById('groupColorCheckbox')
+  groupColorBtn.checked = options.groupColor;
 
   checkGroupBtn(groupCheckbox, options);
 
@@ -85,15 +97,12 @@ async function onChange(ev, options, defColors) {
 
   }
 
-  if (document.getElementById('groupTypeCheckbox')) {
-    options.groupType = document.getElementById('groupTypeCheckbox').checked
-  } else {
-    options.groupType = null;
-  }
-  if (document.getElementById('groupColorCheckbox')) {
+  if (document.getElementById('groupCheckbox').checked) {
+    options.groupType = document.getElementById('groupTypeCheckbox').checked;
     options.groupColor = document.getElementById('groupColorCheckbox').checked;
   } else {
     options.groupColor = null;
+    options.groupType = null;
   }
 
   await db.setItem('options', JSON.stringify(options));
@@ -101,37 +110,19 @@ async function onChange(ev, options, defColors) {
 
 }
 
-function checkGroupBtn(btn, options) {
-  let elem = document.getElementById('item-comments');
+function checkGroupBtn(btn) {
+  let groupType = document.getElementById("group-type");
+  let groupColor = document.getElementById("group-color");
+  let itemComments = document.getElementById("item-comments");
+
   if (btn.checked) {
-    elem.insertAdjacentHTML('afterend', `
-        <div class="item" id="group-type">
-            <label for="groupTypeCheckbox">Only group features of same geometry type</label>
-            <div class="right no-space-top">
-                <input type="checkbox" class="switch grey-900" id="groupTypeCheckbox" checked>
-            </div>
-        </div>
-        <div class="item" id="group-color">
-            <label for="groupColorCheckbox">Automatically choose random color for groups</label>
-            <div class="right">
-                <input type="checkbox" class="switch grey-900" id="groupColorCheckbox" checked>
-            </div>
-        </div>
-      `);
-
-    let groupTypeBtn = document.getElementById('groupTypeCheckbox');
-    groupTypeBtn.checked = options.groupType;
-    groupTypeBtn.addEventListener('input', (ev) => { onChange(ev, options) });
-
-    let groupColorBtn = document.getElementById('groupColorCheckbox')
-    groupColorBtn.checked = options.groupColor;
-    groupColorBtn.addEventListener('input', (ev) => { onChange(ev, options) });
-
+    groupType.style.display = "inline-block";
+    groupColor.style.display = "inline-block";
+    itemComments.classList.remove('no-border');
   } else {
-    if (document.getElementById('group-type')) {
-      document.getElementById('group-type').remove();
-      document.getElementById('group-color').remove();
-    }
+    groupType.style.display = "none";
+    groupColor.style.display = "none";
+    itemComments.classList.add('no-border');
   }
 }
 
