@@ -13,8 +13,8 @@ mobileui install font "Open+Sans:300"
 
 **To Do**:  
 1.0.0
-- [ ] change order of variables (buttons)
-- [ ] info icon where appropriate
+- [x] change order of variables (buttons)
+- [x] info icon where appropriate
 
 1.1.0
 - [ ] Auto saving
