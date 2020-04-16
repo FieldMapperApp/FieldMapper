@@ -7,7 +7,7 @@ import 'leaflet-easybutton';
 import './utils/easybutton-ext';
 
 import './utils/db';
-import { updateStatus, onOnline, onOffline, hideStatus, showStatus } from './utils';
+import { updateStatus, onOnline, onOffline, hideStatus, showStatus, onLoadAbout } from './utils';
 import { addControls } from './controls/controls';
 import { getLayers, getOptions } from './settings/utils';
 import { onLoadReset } from './settings/reset/reset';
@@ -120,8 +120,7 @@ window.app = {
         let OSM = app.OSM;
 
         document.getElementById('mapBtn').addEventListener('click', showStatus);
-        document.getElementById('settingsBtn').addEventListener('click', hideStatus);
-        document.getElementById('aboutBtn').addEventListener('click', hideStatus);
+        document.getElementById('settingsBtn').addEventListener('click', () => { onLoadAbout(); hideStatus() });
 
         document.getElementById('mapBtn').addEventListener('click', app.loadMap);
         document.addEventListener('openPage', function (ev) {

@@ -26,13 +26,12 @@
   <div class="footer grey-900 shadow tab">
     <button class="icon ion-android-map active" id="mapBtn" onclick="openTab('map')"> Map</button>
     <button class="icon ion-ios-gear" id="settingsBtn" onclick="openTab('tabSettings')"> Settings</button>
-    <button class="icon ion-ios-information" id="aboutBtn" onclick="openTab('tabAbout')"> About</button>
   </div>
   <div class="content has-header has-footer">
     <div class="tab-content active" id="map"></div>
     <div class="tab-content padding" id="tabSettings">
 
-      <div class="list radius" style="margin-top: 5px">
+      <div id="settingsList" class="list radius" style="margin-top: 5px">
         <div class="item" onclick="openPage('./main/settings/variables/managevariables')">
           <h2>Variable Management</h2>
           <div class="right">
@@ -59,16 +58,19 @@
         </div>
       </div>
 
-    </div>
-    <div class="tab-content padding" id="tabAbout">
-      <div class="list radius" style="margin-top: 10px">
-        <div class="item no-border" style="text-align: center">
-          Thanks for using FieldMapper. Visit the PROJECT WEBSITE for an extensive documentation. The source code is
-          available ON GITHUB&mdash;contributions welcome! 
+      <div id="about">
+        <div id="about-content">
+          <p>Thanks for using FieldMapper.</p>
+          <p>Visit the <a href="https://fieldmapper.github.io">project website</a> for an
+            extensive
+            documentation.</p>
         </div>
-        <div class="item no-border" style="text-align: center">
-          Do not hesitate to GET IN TOUCH if you encounter bugs or feel like FieldMapper is lacking an important
-          feature.
+        <div id="imprint">
+          <p>FieldMapper v1.0.0-beta | &copy; <a href="mailto:felix-schott@gmx.de">Felix Schott</a> 2020
+            |
+            Published
+            under
+            <a href="https://github.com/felluksch/FieldMapper/blob/master/LICENSE">GNU GPLv3</a></p>
         </div>
       </div>
     </div>

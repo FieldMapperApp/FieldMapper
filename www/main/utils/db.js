@@ -44,16 +44,16 @@ window.db = {
             this.root.getDirectory('db', { create: false }, dirEntry => {
                 dirEntry.getFile(key, { create: false }, function (fileEntry) {
                     fileEntry.remove(resolve())
-                }, onError);
-            }, onError);
+                }, (e) => { onError(e), resolve(null) });
+            }, (e) => { onError(e), resolve(null) });
         })
         
     },
     clear: () => {
         return new Promise(resolve => {
-            this.root.getDirectory('db', { create: true }, dirEntry => {
-                dirEntry.removeRecursively(resolve());
-            }, onError);
+            this.root.getDirectory('db', { create: false }, dirEntry => {
+                dirEntry.removeRecursively(resolve(null));
+            }, (e) => { onError(e), resolve(null) });
         })
     },
     getSize: () => {
@@ -68,5 +68,5 @@ window.db = {
 }
 
 function onError(error) {
-    console.log(error)
+    console.log(error.code)
 };

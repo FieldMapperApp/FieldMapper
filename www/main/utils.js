@@ -21,3 +21,13 @@ export function hideStatus() {
 export function showStatus() {
     document.getElementById('status').style.display = "inline";
 }
+
+export function onLoadAbout() {
+    let container = document.getElementById('tabSettings').getBoundingClientRect().bottom;
+    let list = document.getElementById('settingsList').getBoundingClientRect().bottom;
+    let imprint = document.getElementById('imprint').offsetHeight;
+    let about = document.getElementById('about');
+    let content = document.getElementById('about-content');
+    about.style.height = (container - list).toString() + "px";
+    content.style.height = (container - list - imprint).toString() + "px";
+}

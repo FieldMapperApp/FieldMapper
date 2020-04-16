@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './www/main/index.js',
   output: {
     path: path.resolve(__dirname, 'www'),
@@ -43,5 +43,5 @@ module.exports = {
       ignoreOrder: false, // Enable to remove warnings about conflicting order
     }), 
   ],
-  devtool: 'inline-source-map',
+  //devtool: 'inline-source-map',
 };
