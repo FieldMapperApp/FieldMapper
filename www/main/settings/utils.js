@@ -48,7 +48,7 @@ export async function getOptions() {
 
     return (options ? JSON.parse(options) : {
         colorbar: true,
-        colors: ["black", "green", "yellow", "red", "blue", "brown"],
+        colors: ["black", "olivedrab", "gold", "firebrick", "dodgerblue", "saddlebrown"],
         location: true,
         comments: true,
         cache: true,

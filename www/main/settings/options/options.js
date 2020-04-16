@@ -2,7 +2,6 @@ import { getOptions, getLayers } from '../utils';
 
 export async function onLoadOptions() {
 
-  let defColors = ["black", "green", "yellow", "red", "blue", "brown"];
   let options = await getOptions();
   let layers = await getLayers();
 
@@ -45,20 +44,18 @@ export async function onLoadOptions() {
   document.getElementById('groupColorCheckbox').addEventListener('click', checkColorBtn);
   document.getElementById('colorbarCheckbox').addEventListener('click', checkColorBtn);
 
-  let colorsAdded = defColors.map(e => {
-    if (options.colors.includes(e)) {
-      return document.getElementById(`${e}Checkbox`);
-    }
+  let colorsAdded = options.colors.map(e => {
+    return document.getElementById(`${e}Checkbox`);
   });
-  colorsAdded.filter(el => el != null).forEach(e => { e.checked = true });
+  colorsAdded.forEach(e => { e.checked = true });
 
   let form = document.getElementById("formoptions");
   if (form) {
-    [...form.elements].forEach(e => e.addEventListener('input', (ev) => { onChange(ev, options, defColors) }))
+    [...form.elements].forEach(e => e.addEventListener('input', (ev) => { onChange(ev, options) }))
   }
 }
 
-async function onChange(ev, options, defColors) {
+async function onChange(ev, options) {
 
   ev.preventDefault();
 
@@ -86,16 +83,12 @@ async function onChange(ev, options, defColors) {
       break
   }
 
-  if (defColors) {
-
-    let colorCheckboxes = defColors.map(e => document.getElementById(`${e}Checkbox`));
-    let colorsNew = colorCheckboxes.map(e => {
-      if (e.checked) { return e.value }
-    })
-    options.colors = colorsNew.filter(el => el != null);
-    app.properties.color = options.colors[0];
-
-  }
+  let colorCheckboxes = document.getElementById('colors-list').querySelectorAll('input[type="checkbox"]');
+  let colorsNew = [...colorCheckboxes].map(e => {
+    if (e.checked) { return e.value }
+  })
+  options.colors = colorsNew.filter(el => el != null);
+  app.properties.color = options.colors[0];
 
   if (document.getElementById('groupCheckbox').checked) {
     options.groupType = document.getElementById('groupTypeCheckbox').checked;
