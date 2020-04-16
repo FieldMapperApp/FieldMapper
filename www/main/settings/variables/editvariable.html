@@ -20,6 +20,10 @@
                         <button class="grey-400 radius-right" id="multiBtn" type="button">Non-dichotomous</button>
                     </div>
                 </div>
+                <div class="item" id="item-bin-multi">
+                    <label id="labelValue" for="varValue"></label>
+                    <input type="text" id="varValue"></input>
+                </div>
                 <div class="item" id="icon-checkbox">
                     <label for="checkboxIcon">Use SVG/PNG icon</label>
                     <i class="icon ion-information-circled" onclick="openPopover('popoverIcon')"></i>
@@ -31,12 +35,15 @@
             <div class="space"></div>
             <div class="row-center">
                 <button type="submit" class="grey-900 radius" style="margin-right: 5px">Save</button>
-                <button type="button" id="deleteeditvar" style="margin-left: 5px" class="grey-900 radius">Delete</button>
+                <button type="button" id="deleteeditvar" style="margin-left: 5px"
+                    class="grey-900 radius">Delete</button>
             </div>
             <div class="space"></div>
-            <div class="popover padding" id="popoverIcon">If you do not upload a custom icon, the first two letters of the variable name (if boolean/binary) or the first two letters of each value (non-dichotomous) will be used to generate an icon.</div>
+            <div class="popover padding" id="popoverIcon">If you do not upload a custom icon, the first two letters of
+                the variable name (if boolean/binary) or the first two letters of each value (non-dichotomous) will be
+                used to generate an icon.</div>
             <div class="popover padding" id="popoverType">
-                Boolean: hard-coded values "true" and "false" (single button)<br /> 
+                Boolean: hard-coded values "true" and "false" (single button)<br />
                 Binary: custom binary values (single button)<br />
                 Non-dichotomous: can have multiple values (bar of multiple buttons)
             </div>

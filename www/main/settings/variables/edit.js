@@ -20,7 +20,7 @@ export async function onOpenEdit(arg) { // render variable values (edit page)
   if (activeBtn.id !== 'booleanBtn') { document.getElementById('varValue').value = variables[getInd(variables, arg.name)].value };
 
   addFiles();
-  
+
   btns.forEach(e => e.addEventListener('click', onClick));
 
   function onClick(e) {
@@ -78,7 +78,7 @@ function addFiles() {
         `
       })
       document.getElementById('icon-checkbox').insertAdjacentHTML('afterend', items.join(''));
-    } 
+    }
   } else {
     getItems().forEach(e => e.remove())
   }
@@ -90,8 +90,8 @@ function getItems() {
   let i = 1;
 
   while (document.getElementById(`icon-${i}`)) {
-      arr.push(document.getElementById(`icon-${i}`));
-      i++;
+    arr.push(document.getElementById(`icon-${i}`));
+    i++;
   }
   return arr;
 
@@ -99,28 +99,32 @@ function getItems() {
 
 function addValue(id) {
 
+  let item = document.getElementById('item-bin-multi');
+  let label = document.getElementById('labelValue');
+  let input = document.getElementById('varValue');
+
   if (id === 'binaryBtn') {
-    if (document.getElementById('item-multi')) { document.getElementById('item-multi').remove(); document.getElementById('item-multi2').remove() };
-    document.getElementById('var-item-btns').insertAdjacentHTML('afterend', `
-      <div class="item" id="item-bin">
-        <label for="varValue">Please enter two comma-separated values. The first one is to represent the default state (when the button is inactive).</label>
-        <input type="text" id="varValue" placeholder="value1, value2" pattern="^[^,\n]+(?:,[^,\n]+){0,2}$" required></input>
-      </div>
-      `);
-      document.getElementById('varValue').addEventListener('input', addFiles);
+
+    item.style.display = "inline-block";
+    label.innerText = "Please enter two comma-separated values. The first one is to represent the default state (when the button is inactive).";
+    input.placeholder = "value1, value2";
+    input.required = true;
+    input.addEventListener('input', addFiles);
+
   } else if (id === 'multiBtn') {
-    if (document.getElementById('item-bin')) { document.getElementById('item-bin').remove() };
-    document.getElementById('var-item-btns').insertAdjacentHTML('afterend', `
-      <div class="item" id="item-multi">
-        <label for="varValue">You can enter as many comma-separated values as you want.</label>
-        <input type="text" id="varValue" placeholder="value1, value2, value3, ..." required>
-      </div>
-      `);
-      document.getElementById('varValue').addEventListener('input', addFiles);
+
+    item.style.display = "inline-block";
+    label.innerText = "You can enter as many comma-separated values as you want.";
+    input.placeholder = "value1, value2, value3, ...";
+    input.required = true;
+    input.addEventListener('input', addFiles);
+
   } else {
-    if (document.getElementById('item-bin')) { document.getElementById('item-bin').remove() };
-    if (document.getElementById('item-multi')) { document.getElementById('item-multi').remove(); };
-    if (document.getElementById('varValue')) { document.getElementById('varValue').removeEventListener('change', addFiles) };
+
+    item.style.display = "none";
+    input.required = false;
+    input.removeEventListener('change', addFiles);
+
   };
 
 }

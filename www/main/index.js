@@ -67,7 +67,7 @@ window.app = {
         }
 
         map.eachLayer(el => el.remove());
-        if (app.controls) { console.log(app.controls); app.controls.forEach(el => el.remove()) };
+        if (app.controls) { app.controls.forEach(el => el.remove()) };
         if (app.points.getLayers().length !== 0) { app.points.addTo(map) };
         if (app.lines.getLayers().length !== 0) { app.lines.addTo(map) };
 

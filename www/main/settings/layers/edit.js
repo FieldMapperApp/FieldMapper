@@ -51,10 +51,14 @@ function addBounds(id) {
 
     if (id === 'imageBtn') {
         document.getElementById('item-bounds').style.display = "inline-block";
+        document.getElementById('layerBounds1').required = true;
+        document.getElementById('layerBounds2').required = true;
         document.getElementById('layerFile').accept = "image/*";
         /* https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates */
     } else {
         document.getElementById('item-bounds').style.display = "none";
+        document.getElementById('layerBounds1').required = false;
+        document.getElementById('layerBounds2').required = false;
         document.getElementById('layerFile').accept = "";
     };
 
