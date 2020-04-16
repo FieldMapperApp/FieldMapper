@@ -40,14 +40,14 @@
                 <div class="item">
                     <h2 class="text-strong">Other</h2>
                     <div class="item" id="item-deletion">
-                        <label for="deletionCheckbox">Allow deletion of imported features</label>
+                        <label for="deletionCheckbox">Allow deletion of imported objects</label>
                         <i class="icon ion-information-circled" onclick="openPopover('popoverDeletion')"></i>
                         <div class="right">
                             <input type="checkbox" class="switch grey-900" id="deletionCheckbox">
                         </div>
                     </div>
                     <div class="item" id="item-export">
-                        <label for="exportCheckbox">Include imported features in export</label>
+                        <label for="exportCheckbox">Include imported layers in export</label>
                         <i class="icon ion-information-circled" onclick="openPopover('popoverExport')"></i>
                         <div class="right">
                             <input type="checkbox" class="switch grey-900" id="exportCheckbox">
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <div class="item" id="group-type">
-                        <label for="groupTypeCheckbox">Only group features of same geometry type</label>
+                        <label for="groupTypeCheckbox">Only group objects of same geometry type</label>
                         <i class="icon ion-information-circled" onclick="openPopover('popoverGroupType')"></i>
                         <div class="right no-space-top">
                             <input type="checkbox" class="switch grey-900" id="groupTypeCheckbox" checked>
@@ -76,7 +76,7 @@
                     </div>
                 </div>
                 <div class="item" id="colors-list">
-                    <h2 class="text-strong">Feature colors <i class="icon ion-information-circled"
+                    <h2 class="text-strong">Colors <i class="icon ion-information-circled"
                             onclick="openPopover('popoverColors')"></i></h2>
                     <div class="item">
                         <label for="blackCheckbox">Black</label>
@@ -105,23 +105,23 @@
                 </div>
             </div>
             <div class="popover padding" id="popoverColorbar">If enabled, the map will show a color bar to change the
-                feature color.</div>
+                marker color.</div>
             <div class="popover padding" id="popoverLocation">If enabled, the map will show a geolocation button.</div>
             <div class="popover padding" id="popoverGroup">If enabled, the map will show a "group" button. Activate this
-                button to relate the next feature to the previous feature.</div>
+                button to relate the next object to the previous object.</div>
             <div class="popover padding" id="popoverCaching">If enabled, the map will show a button to cache the current
                 map
                 extent for offline use.</div>
-            <div class="popover padding" id="popoverDeletion">If enabled, imported features can be deleted with the
+            <div class="popover padding" id="popoverDeletion">If enabled, imported objects can be deleted with the
                 undo/clear
                 buttons.</div>
             <div class="popover padding" id="popoverComments">If enabled, a window will show up where you can enter
                 additional
-                information after placing a feature on the map.</div>
-            <div class="popover padding" id="popoverExport">If enabled, imported features will be exported with newly
+                information after placing a marker on the map.</div>
+            <div class="popover padding" id="popoverExport">If enabled, imported objects will be exported with newly
                 drawn
-                features, although in a different file.</div>
-            <div class="popover padding" id="popoverGroupColor">If enabled, feature colors will be chosen automatically
+                objects, although in a different file.</div>
+            <div class="popover padding" id="popoverGroupColor">If enabled, marker colors will be chosen automatically
                 based on
                 group membership.</div>
             <div class="popover padding" id="popoverGroupType">If enabled, lines and points cannot be grouped together.
