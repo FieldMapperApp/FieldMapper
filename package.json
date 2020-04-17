@@ -1,11 +1,15 @@
 {
   "name": "fieldmapper",
   "displayName": "FieldMapper",
-  "version": "1.0.0",
+  "version": "1.0.0-beta1",
   "description": "Fieldwork toolbox for the collection of geotagged data.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FieldMapperApp/FieldMapper.git"
   },
   "keywords": [
     "ecosystem:cordova"
@@ -13,6 +17,8 @@
   "author": "Felix Schott",
   "license": "GPL-3.0",
   "dependencies": {
+    "acorn": "^7.1.1",
+    "bufferutil": "^4.0.1",
     "cordova-android": "^8.1.0",
     "cordova-browser": "^6.0.0",
     "cordova-plugin-device": "^2.0.3",
@@ -21,10 +27,15 @@
     "cordova-plugin-geolocation": "^4.0.2",
     "cordova-plugin-geolocation-permission-status": "^1.0.0",
     "cordova-plugin-network-information": "^2.0.2",
+    "fstream": "^1.0.12",
+    "kind-of": "^6.0.3",
     "leaflet": "^1.6.0",
     "leaflet-easybutton": "^2.4.0",
+    "minimist": "^1.2.5",
     "mobileui": "^1.1.19",
-    "sortablejs": "^1.10.2"
+    "serialize-javascript": "^3.0.0",
+    "sortablejs": "^1.10.2",
+    "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
     "cordova-plugin-webpack": "^0.4.7",
