@@ -39,15 +39,15 @@
       "cordova-plugin-whitelist": {},
       "cordova-plugin-webpack": {},
       "cordova-plugin-device": {},
-      "cordova-plugin-file": {},
       "cordova-plugin-geolocation": {},
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-network-information": {},
-      "cordova-plugin-geolocation-permission-status": {}
+      "cordova-plugin-geolocation-permission-status": {},
+      "cordova-plugin-file": {}
     },
     "platforms": [
-      "android",
-      "browser"
+      "browser",
+      "android"
     ]
   }
 }
