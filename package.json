@@ -1,8 +1,8 @@
 {
-  "name": "helloworld",
+  "name": "fieldmapper",
   "displayName": "FieldMapper",
   "version": "1.0.0",
-  "description": "<insert desctiption>",
+  "description": "Fieldwork toolbox for the collection of geotagged data.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
