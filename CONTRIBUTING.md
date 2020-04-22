@@ -12,11 +12,7 @@ mobileui install font "Open+Sans:300"
 ```
 
 **To Do**:  
-1.0.0
-- [x] change order of variables (buttons)
-- [x] info icon where appropriate
-
-1.1.0
+- [ ] in-built polygonize function
 - [ ] Auto saving
 - [ ] Images as attributes
 - [ ] Custom colors
