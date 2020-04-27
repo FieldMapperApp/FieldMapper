@@ -1,8 +1,8 @@
 import { deleteItem, getInd, getLayers, updateItem } from '../utils';
 import { LayerStorage } from './layer';
 
-export async function onOpenEdit(arg) { // render variable values (edit page)
-
+export async function onOpenEdit(arg) { 
+    
     let layers = await getLayers();
 
     document.getElementById('layerName').value = arg.name;
@@ -31,35 +31,37 @@ export async function onOpenEdit(arg) { // render variable values (edit page)
         deleteItem(arg.name, 'layers');
         backPage();
     })
-};
+}
 
 export async function onSubmitEdit(e) {
 
     e.preventDefault();
     console.log('submitted');
 
-    let layer = new LayerStorage;
+    let layer = new LayerStorage; // prepare input data for storage
     await layer.create();
 
     updateItem('layers', layer);
 
     backPage();
 
-};
+}
 
 function addBounds(id) {
+
+    // render bounds field visible if overlay
 
     if (id === 'imageBtn') {
         document.getElementById('item-bounds').style.display = "inline-block";
         document.getElementById('layerBounds1').required = true;
         document.getElementById('layerBounds2').required = true;
         document.getElementById('layerFile').accept = "image/*";
-        /* https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates */
+        // https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates 
     } else {
         document.getElementById('item-bounds').style.display = "none";
         document.getElementById('layerBounds1').required = false;
         document.getElementById('layerBounds2').required = false;
         document.getElementById('layerFile').accept = "";
-    };
+    }
 
 }  

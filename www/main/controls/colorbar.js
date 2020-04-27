@@ -66,7 +66,7 @@ export class Colorbar {
             control.setActive();
             _this._collapseBar();
         })
-    };
+    }
 
     _collapseBar() {
 
@@ -85,15 +85,14 @@ export class Colorbar {
         this._container.appendChild(this._colorBarOpen);
         for (let [i, val] of this._colors.entries()) {
             this._colorBtnsOpen[i].button.style.backgroundColor = val;
-        };
+        }
 
         let ev = new Event('controlexpand');
         window.dispatchEvent(ev);
     }
 
     add() {
-
-        
+     
         this._container.appendChild(this._colorBarCollapsed);
         this._colorBtnsCollapsed[0].button.style.backgroundColor = app.properties.color;
         

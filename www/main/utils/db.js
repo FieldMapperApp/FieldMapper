@@ -69,4 +69,4 @@ window.db = {
 
 function onError(error) {
     console.log(error.code)
-};
+}

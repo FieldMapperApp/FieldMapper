@@ -13,7 +13,7 @@ export async function onSubmitManage(e) {
 
     let names = layers.map(e => e.name);
     if (name !== '' && !names.includes(name)) {
-        layers.push(addNewLayer(name, layers)); // get input and call function to visualize new item
+        layers.push(addNewLayer(name, layers)); // get input and add item to the list
         input.value = '';
         input.focus();
         await db.setItem('layers', JSON.stringify({ ...layers })); // store locally
@@ -21,11 +21,11 @@ export async function onSubmitManage(e) {
         alert('Please enter a non-duplicate and non-empty name.')
     }
 
-};
+}
 
 function addNewLayer(name, layers) {
 
-    let newLayer = { // default values (can be changed upon click on the edit button)
+    let newLayer = { // default values (can be changed by clicking on the edit button)
         name,
         type: 'GeoJSON',
         file: '',
@@ -35,7 +35,7 @@ function addNewLayer(name, layers) {
 
     return newLayer;
 
-};
+}
 
 export function addItem(name) {
 
@@ -54,13 +54,12 @@ export function addItem(name) {
     let delBtn = document.getElementById("layer_del_" + name);
     let editBtn = document.getElementById("layer_edit_" + name);
 
-    delBtn.addEventListener('click', e => {
-        //e.stopPropagation();
+    delBtn.addEventListener('click', () => {
         console.log(name + "delete button triggered");
         deleteItem(name, 'layers');
     });
 
-    editBtn.addEventListener('click', e => {
+    editBtn.addEventListener('click', () => {
         console.log(name + " edit button triggered");
         openPage('./main/settings/layers/editlayer.html', { name }, onOpenEdit);
     });

@@ -7,8 +7,8 @@ export function createModeBtns(map) {
         L.easyButton('<img alt="create points" src="img/pin.svg" width="60%" />', function () {
             map.off('mousedown', onMousedown);
             map.on('click', onClick);
-            changeButtons(modeButtons);
-            if (this.button.parentElement.classList.contains('lines-mode')) { this.button.parentElement.classList.remove('lines-mode') };
+            changeButtons(modeButtons)
+            if (this.button.parentElement.classList.contains('lines-mode')) { this.button.parentElement.classList.remove('lines-mode') }
             this.button.parentElement.classList.add('points-mode');
             this.setActive();
             console.log('markerMode');
@@ -17,7 +17,7 @@ export function createModeBtns(map) {
             map.off('click', onClick);
             map.on('mousedown', onMousedown);
             changeButtons(modeButtons);
-            if (this.button.parentElement.classList.contains('points-mode')) { this.button.parentElement.classList.remove('points-mode') };
+            if (this.button.parentElement.classList.contains('points-mode')) { this.button.parentElement.classList.remove('points-mode') }
             this.button.parentElement.classList.add('lines-mode');
             this.setActive();
             console.log('freehandMode');

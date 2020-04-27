@@ -1,0 +1,27 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": "eslint:recommended",
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly",
+        "device": "readonly",
+        "app": "writable",
+        "db": "writable",
+        "L": "readonly",
+        "locationPermission": "readonly",
+        "backPage": "readonly",
+        "openPage": "readonly",
+        "cordova": "readonly",
+        "LocalFileSystem": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-prototype-builtins": "off"
+    }
+}

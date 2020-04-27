@@ -25,7 +25,6 @@ export function iconColor(color) {
 
 export function checkGroup(group, options) {
     let prev = getLastLayer();
-    if (prev) { console.log(prev.feature.properties.group, ' ', group) } else { console.log(group) };
     return (prev && options.groupColor ? prev.feature.properties.group !== group : false)
 }
 

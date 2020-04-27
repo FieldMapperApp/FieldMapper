@@ -65,7 +65,7 @@ export function addButton(el, map) {
 
             break;
 
-        case "multi":
+        case "multi": {
 
             console.log('case multi');
             let arr = el.value.map((e, i) => {
@@ -86,6 +86,7 @@ export function addButton(el, map) {
             app.properties[name] = el.value[0];
             arr[0].setActive();
             break;
+        }
     }
 
     return newButton;

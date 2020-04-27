@@ -1,9 +1,14 @@
+// VarStorage stores data as stringified objects/base 64 (icons)
+// Var decodes base64
+
 export class VarStorage {
 
   constructor() {
+
     this.name = document.getElementById('varName').value;
     this.type = this._getType();
     this.value = this._getValue();
+
   }
 
   async create() {

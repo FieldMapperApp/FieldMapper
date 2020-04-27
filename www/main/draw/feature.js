@@ -41,11 +41,10 @@ export class Feature {
         let btn = document.getElementById('groupBtn');
 
         if (type.getLayers().length != 0) {
-            if (btn.classList.contains('group-active')) {
-                console.log('active')
+            if (btn.classList.contains('group-active')) { // if group btn active, same group as previous obj
                 let prev = type.getLayers()[type.getLayers().length - 1];
-                return prev.feature.properties.group;
-            } else {
+                return prev.feature.properties.group; 
+            } else { // increment group
                 let prev = type.getLayers()[type.getLayers().length - 1];
                 if (char) {
                     return char + (parseInt(prev.feature.properties.group.slice(1), 10) + 1).toString();
@@ -53,7 +52,7 @@ export class Feature {
                     return prev.feature.properties.group + 1
                 }
             }
-        } else {
+        } else { // apparently it's the first object added to the map
             if (char) {
                 return char + 1
             } else {

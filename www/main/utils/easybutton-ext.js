@@ -1,4 +1,5 @@
 L.Control.EasyButton.include({
+
     setActive: function () {
         L.DomUtil.addClass(this.button, 'active');
         this.active = true;
@@ -10,4 +11,5 @@ L.Control.EasyButton.include({
         this.active = false;
         return this;
     },
+
 });

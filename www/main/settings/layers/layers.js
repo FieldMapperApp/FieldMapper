@@ -6,20 +6,20 @@ export async function onLoadManageLayers() {
 
   let layers = await getLayers();
 
-  if (layers.length !== 0) { layers.forEach(el => addItem(el.name, layers)) }; // render variable list from local storage
+  if (layers.length !== 0) { layers.forEach(el => addItem(el.name, layers)) } // render variable list from storage
 
   let clearBtn = document.getElementById('clearLayersBtn'); // set up event listeners
   clearBtn.addEventListener('click', onClearBtn);
 
   let form = document.getElementById("formlayers");
-  if (form) { form.addEventListener('submit', onSubmitManage) };
+  if (form) { form.addEventListener('submit', onSubmitManage) }
 
 }
 
 export function onLoadEditLayers() {
 
   let form = document.getElementById("formeditlayer");
-  if (form) { form.addEventListener('submit', onSubmitEdit) };
+  if (form) { form.addEventListener('submit', onSubmitEdit) }
 
 }
 
@@ -35,4 +35,4 @@ async function onClearBtn() { // remove all variables from storage and variables
 
   await db.removeItem('layers');
 
-};
+}

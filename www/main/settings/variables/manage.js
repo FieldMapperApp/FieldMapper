@@ -14,7 +14,7 @@ export async function onSubmitManage(e) {
 
     let names = variables.map(e => e.name);
     if (name !== '' && !names.includes(name)) {
-        variables.push(addNewVar(name, variables)); // get input and call function to visualize new item
+        variables.push(addNewVar(name, variables)); // get input and add to variable list
         input.value = '';
         input.focus();
         await db.setItem('variables', JSON.stringify({ ...variables })); // store locally
@@ -22,11 +22,11 @@ export async function onSubmitManage(e) {
         alert('Please enter a non-duplicate and non-empty name.')
     }
     
-};
+}
 
 function addNewVar(name, variables) {
 
-    let newVar = { // default values (can be changed upon click on the edit button)
+    let newVar = { // default values (can be changed by clicking on the edit button)
         name,
         type: 'boolean',
         value: ["true, false"],
@@ -38,7 +38,7 @@ function addNewVar(name, variables) {
 
     return newVar;
 
-};
+}
 
 export function addItem(name) {
 
@@ -58,12 +58,12 @@ export function addItem(name) {
     let delBtn = document.getElementById("var_del_" + name);
     let editBtn = document.getElementById("var_edit_" + name);
 
-    delBtn.addEventListener('click', e => {
+    delBtn.addEventListener('click', () => {
         console.log(name + "delete button triggered");
         deleteItem(name, 'variables');
     });
 
-    editBtn.addEventListener('click', e => {
+    editBtn.addEventListener('click', () => {
         console.log(name + " edit button triggered");
         openPage('./main/settings/variables/editvariable.html', { name }, onOpenEdit);
     });

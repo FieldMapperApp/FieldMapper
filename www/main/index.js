@@ -28,7 +28,8 @@ window.app = {
 
     ready: async () => {
 
-        if (!db.hasOwnProperty('root')) { await db.init() };
+        // init constants on start of the session
+        if (!db.hasOwnProperty('root')) { await db.init() }
 
         app.map = new L.map('map', {
             zoomControl: false,
@@ -37,7 +38,7 @@ window.app = {
         app.points = L.featureGroup();
         app.lines = L.featureGroup();
         app.importedFeatures = L.featureGroup();
-        app.properties = new Properties;
+        app.properties = new Properties; 
         await app.properties.create();
 
         await app.loadMap();
@@ -45,17 +46,20 @@ window.app = {
 
     },
 
-    loadMap: async () => {
+    // will be called every time the map tab is re-visited 
+    //to reflect changes of options
+    loadMap: async () => { 
 
         console.log(await getOptions())
 
-        let _layers = await getLayers();
-        let position = await db.getItem('position');
+        let _layers = await getLayers(); // get layers from storage or return empty array
+        let position = await db.getItem('position'); // retrieve last position from storage
 
         let map = app.map;
 
-        let layers = _layers.filter(e => e.hasOwnProperty('data'));
+        let layers = _layers.filter(e => e.hasOwnProperty('data')); // only complete data
 
+        // set map view (either last position from storage or default when first time using the app)
         if (position) {
             let view = JSON.parse(position);
             for (let [k, v] of Object.entries(view)) {
@@ -66,11 +70,13 @@ window.app = {
             map.setView([52.520008, 13.404954], 20)
         }
 
-        map.eachLayer(el => el.remove());
-        if (app.controls) { app.controls.forEach(el => el.remove()) };
-        if (app.points.getLayers().length !== 0) { app.points.addTo(map) };
-        if (app.lines.getLayers().length !== 0) { app.lines.addTo(map) };
+        // remove all layers and controls (and later re-add them) to reflect changes made in the settings
+        map.eachLayer(el => el.remove()); 
+        if (app.controls) { app.controls.forEach(el => el.remove()) }
+        if (app.points.getLayers().length !== 0) { app.points.addTo(map) }
+        if (app.lines.getLayers().length !== 0) { app.lines.addTo(map) }
 
+        // baselayer
         try {
             app.OSM = L.tileLayerCordova('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZmVsbHVrc2NoIiwiYSI6ImNqeGFpdTk4NTB2eGYzc3J6MTFiYnUzd2EifQ.Nf5z6iAR6YSOqlJmNyGVgg', {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -89,7 +95,8 @@ window.app = {
 
             return layers.map((e) => {
 
-                let layer = new Layer(e);
+                // layers are stored as stringified json objects (images as base64)
+                let layer = new Layer(e); // create layer from the downsized stored layers 
                 layer.layer.addTo(map);
 
                 let bounds = (layer.bounds ? layer.bounds : layer.layer.getBounds());
@@ -105,10 +112,10 @@ window.app = {
 
         let layersObj = {};
         for (let e of addedLayers) {
-            if (e.layer) { layersObj[e.name] = e.layer };
+            if (e.layer) { layersObj[e.name] = e.layer } // store as "layerName": dataObj
         }
 
-        addControls(map, app.OSM, layersObj);
+        addControls(map, app.OSM, layersObj); // add controls to the map
 
         console.log('map loaded');
 
@@ -122,7 +129,9 @@ window.app = {
         document.getElementById('mapBtn').addEventListener('click', showStatus);
         document.getElementById('settingsBtn').addEventListener('click', () => { onLoadAbout(); hideStatus() });
 
-        document.getElementById('mapBtn').addEventListener('click', app.loadMap);
+        document.getElementById('mapBtn').addEventListener('click', app.loadMap); 
+
+        // listen for mobileui openpage event and delegate to appropriate handler to render page
         document.addEventListener('openPage', function (ev) {
 
             switch (ev.detail.page) {
@@ -153,13 +162,14 @@ window.app = {
             }
         });
 
+        // show current position in status field
         map.on('moveend', async function () {
             updateStatus(map, OSM);
             await db.setItem('position', JSON.stringify({ lat: map.getCenter().lat, lng: map.getCenter().lng, zoom: map.getZoom() }));
         }).fire('moveend');
 
-        document.addEventListener("offline", (ev) => ((map, OSM) => onOffline(map, OSM)), false);
-        document.addEventListener("online", (ev) => ((map, OSM) => onOnline(map, OSM)), false);
+        document.addEventListener("offline", () => ((map, OSM) => onOffline(map, OSM)), false);
+        document.addEventListener("online", () => ((map, OSM) => onOnline(map, OSM)), false);
 
     }
 

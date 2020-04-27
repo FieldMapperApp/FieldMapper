@@ -9,7 +9,7 @@ export async function onLoadManageVars() {
   let variables = await getVars();
 
   if (variables.length !== 0) { variables.forEach(el => addItem(el.name)) 
-  }; // render variable list from local storage
+  } // render variable list from local storage
 
   let clearBtn = document.getElementById('clearVarBtn'); // set up event listeners
   clearBtn.addEventListener('click', onClearBtn);
@@ -18,7 +18,7 @@ export async function onLoadManageVars() {
   new Sortable(listVariables, {
     handle: '.ion-arrow-move',
     animation: 150,
-    onSort: async () => { 
+    onSort: async () => { // also change order in the stored array
       let variables = await getVars();
       let newOrder = [...listVariables.querySelectorAll('[id^="var_item"]')].map(e => e.id.split('_')[2]);
       variables.forEach(e => { e.id = newOrder.indexOf(e.name) });
@@ -28,14 +28,14 @@ export async function onLoadManageVars() {
   });
 
   let form = document.getElementById("formvariables");
-  if (form) { form.addEventListener('submit', onSubmitManage) };
+  if (form) { form.addEventListener('submit', onSubmitManage) }
 
 }
 
 export function onLoadEditVars() {
 
   let form = document.getElementById("formeditvar");
-  if (form) { form.addEventListener('submit', onSubmitEdit) };
+  if (form) { form.addEventListener('submit', onSubmitEdit) }
 
 }
 
@@ -52,4 +52,4 @@ async function onClearBtn() { // remove all variables from storage and variables
 
   await db.removeItem('variables');
 
-};
+}

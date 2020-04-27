@@ -1,6 +1,6 @@
 import { getOptions, getLayers } from '../utils';
 
-export async function onLoadOptions() {
+export async function onLoadOptions() { // re-create options from storage
 
   let options = await getOptions();
   let layers = await getLayers();
@@ -23,7 +23,7 @@ export async function onLoadOptions() {
   let exportCheckbox = document.getElementById('exportCheckbox');
   exportCheckbox.checked = options.export;
 
-  if (layers.length == 0) {
+  if (layers.length == 0) { // only show option if at least one imported layer
     document.getElementById('item-deletion').style.display = "none";
     document.getElementById('item-export').style.display = "none"
   }
@@ -39,7 +39,7 @@ export async function onLoadOptions() {
 
   checkGroupBtn(groupCheckbox, options);
 
-  groupCheckbox.addEventListener('click', function (e) { checkGroupBtn(e.target, options) });
+  groupCheckbox.addEventListener('click', (e) => { checkGroupBtn(e.target, options) });
 
   document.getElementById('groupColorCheckbox').addEventListener('click', checkColorBtn);
   document.getElementById('colorbarCheckbox').addEventListener('click', checkColorBtn);
@@ -51,7 +51,7 @@ export async function onLoadOptions() {
 
   let form = document.getElementById("formoptions");
   if (form) {
-    [...form.elements].forEach(e => e.addEventListener('input', (ev) => { onChange(ev, options) }))
+    [...form.elements].forEach(e => e.addEventListener('input', (ev) => { onChange(ev, options) })) // save when changed
   }
 }
 
@@ -103,7 +103,8 @@ async function onChange(ev, options) {
 
 }
 
-function checkGroupBtn(btn) {
+function checkGroupBtn(btn) { // only show additional group options if group option is checked
+
   let groupType = document.getElementById("group-type");
   let groupColor = document.getElementById("group-color");
   let itemComments = document.getElementById("item-comments");
@@ -117,10 +118,11 @@ function checkGroupBtn(btn) {
     groupColor.style.display = "none";
     itemComments.classList.add('no-border');
   }
+
 }
 
-function checkColorBtn(e) {
-
+function checkColorBtn(e) { // if group colors shall be automatically chosen, disable colorbar
+  
   console.log(e.target.id);
 
   let colorbar = document.getElementById('colorbarCheckbox');

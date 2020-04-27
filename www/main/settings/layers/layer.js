@@ -1,6 +1,9 @@
 import { iconColor, addPopUp } from "../../draw/utils";
 import { getDatetime } from '../../utils/date';
 
+// LayerStorage is used to store the data (as a stringified json/base64)
+// Layer creates a workable layer from the stored objects
+
 export class LayerStorage {
 
     constructor() {

@@ -6,7 +6,7 @@ export async function onMousedown(e) {
 
     let map = e.target;
     map.dragging.disable();
-    let feature = new Feature;
+    let feature = new Feature; // these are the attributes of the object
     await feature.create();
 
     let line = L.polyline([e.latlng], { color: feature.properties.color })
@@ -17,11 +17,11 @@ export async function onMousedown(e) {
     map.on('mousemove', onMousemove);
 
     function onMousemove(e) {
-        line.addLatLng(e.latlng);
+        line.addLatLng(e.latlng); // draw line while moving the mouse
         map.on('mouseup', onMouseup);
     }
 
-    function onMouseup(e) {
+    function onMouseup() {
         map.off('mousemove', onMousemove);
         map.dragging.enable();
 
@@ -31,12 +31,12 @@ export async function onMousedown(e) {
         map.off('mouseup', onMouseup);
     }
 
-};
+}
 
 export async function onClick(e) {
 
     let map = e.target;
-    let feature = new Feature;
+    let feature = new Feature; // attributes of the object
     await feature.create();
 
     let marker = L.marker(e.latlng, { icon: iconColor(feature.properties.color), draggable: true })
@@ -47,6 +47,6 @@ export async function onClick(e) {
 
     addPopUp(marker);
 
-};
+}
 
 

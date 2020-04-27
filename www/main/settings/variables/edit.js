@@ -17,7 +17,7 @@ export async function onOpenEdit(arg) { // render variable values (edit page)
   activeBtn.classList.add('grey-900');
 
   addValue(activeBtn.id);
-  if (activeBtn.id !== 'booleanBtn') { document.getElementById('varValue').value = variables[getInd(variables, arg.name)].value };
+  if (activeBtn.id !== 'booleanBtn') { document.getElementById('varValue').value = variables[getInd(variables, arg.name)].value }
 
   addFiles();
 
@@ -38,7 +38,7 @@ export async function onOpenEdit(arg) { // render variable values (edit page)
   })
 
   document.getElementById('checkboxIcon').addEventListener('click', addFiles);
-};
+}
 
 export async function onSubmitEdit(e) {
 
@@ -52,7 +52,7 @@ export async function onSubmitEdit(e) {
 
   backPage();
 
-};
+}
 
 function addFiles() {
 
@@ -97,7 +97,7 @@ function getItems() {
 
 }
 
-function addValue(id) {
+function addValue(id) { // placeholders/description based on active type
 
   let item = document.getElementById('item-bin-multi');
   let label = document.getElementById('labelValue');
@@ -125,6 +125,6 @@ function addValue(id) {
     input.required = false;
     input.removeEventListener('change', addFiles);
 
-  };
+  }
 
 }

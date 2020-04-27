@@ -32,10 +32,6 @@ function cacheBounds(map, OSM) {
             status_block.innerHTML = done + " / " + total + " = " + percent + "%";
         },
         console.log('downloading...'),
-        /*function () {
-            // for this demo, on success we use another L.TileLayer.Cordova feature and show the disk usage
-            testUsage();
-        },*/
         function (error) {
             alert("Failed\nError code: " + error.code);
         }

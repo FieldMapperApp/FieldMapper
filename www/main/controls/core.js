@@ -34,7 +34,7 @@ export function createUndoBtn(map, points, lines, imports) {
                             }
                             map.removeLayer(lastFeature);
                         }
-                    };
+                    }
                     control.setInactive();
                 }, 2);
             },
@@ -61,8 +61,8 @@ export function createClearBtn(map, points, lines, imports) {
                     console.log(layers)
                     if (layers !== 0) {
                         let sureClear = confirm('Are you sure?');
-                        if (sureClear === true) { clearAll(options.deletion, points, lines, imports, map) };
-                    };
+                        if (sureClear === true) { clearAll(options.deletion, points, lines, imports, map) }
+                    }
                     control.setInactive();
                 }, 2);
             },
@@ -94,19 +94,19 @@ export function createSaveBtn(map, points, lines, imports) {
                         alert('Nothing there to save yet!')
                     } else {
                         saveAs = prompt('Save as', '');
-                    };
+                    }
 
                     console.log(JSON.stringify(points.toGeoJSON()));
                     console.log(JSON.stringify(lines.toGeoJSON()));
                     console.log(JSON.stringify(imports.toGeoJSON()));
 
                     if (device.platform == 'Android' && saveAs) {
-                        if (lines.getLayers()) { await writeToFile(JSON.stringify(lines.toGeoJSON()), 'lines', saveAs) };
-                        if (points.getLayers()) { await writeToFile(JSON.stringify(points.toGeoJSON()), 'points', saveAs) };
+                        if (lines.getLayers()) { await writeToFile(JSON.stringify(lines.toGeoJSON()), 'lines', saveAs) }
+                        if (points.getLayers()) { await writeToFile(JSON.stringify(points.toGeoJSON()), 'points', saveAs) }
                         if (options.export && imports.getLayers()) { await writeToFile(JSON.stringify(imports.toGeoJSON()), 'imports', saveAs) }
                     
                         clearAll(options.deletion, points, lines, imports, map);
-                    };
+                    }
 
                 }, 2)
             }
@@ -130,7 +130,7 @@ function clearAll(option, points, lines, imports, map) {
     console.log(points.getLayers().length);
     console.log(lines.getLayers().length);
     console.log(imports.getLayers().length);
-};
+}
 
 export function createGroupBtn() {
     return L.easyButton({

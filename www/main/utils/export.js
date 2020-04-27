@@ -2,10 +2,9 @@ import { getDatetime, getDate } from './date.js';
 
 export function writeToFile(data, feature, saveAs) {
     return new Promise(resolve => {
-        var datetime = getDatetime(new Date, true);
-        var date = getDate(new Date);
-        if (saveAs.length != 0) { var filename = saveAs + "_" + feature + "_" + datetime + ".geojson" }
-        else { var filename = feature + "_" + datetime + ".geojson"};
+        let datetime = getDatetime(new Date, true);
+        let date = getDate(new Date);
+        let filename = (saveAs.length != 0 ? saveAs + "_" + feature + "_" + datetime + ".geojson" : feature + "_" + datetime + ".geojson");
         window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (root) {
             console.log(root.fullPath); 
             root.getDirectory('exports', {create: true }, function (dirEntry) {
@@ -15,12 +14,12 @@ export function writeToFile(data, feature, saveAs) {
     
                     subDirEntry.getFile(filename, { create: true }, function (fileEntry) {
                         fileEntry.createWriter(function (fileWriter) {
-                            fileWriter.onwriteend = function (e) {
+                            fileWriter.onwriteend = () => {
                                 alert('Saved!');
                                 resolve()
                             };
     
-                            fileWriter.onerror = function (e) {
+                            fileWriter.onerror = () => {
                                 console.log('Failed!');
                             };
     
@@ -59,4 +58,4 @@ export function countFiles() {
 
 function onError(error) {
     console.log(error)
-};
+}

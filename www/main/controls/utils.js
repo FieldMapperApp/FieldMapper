@@ -25,6 +25,7 @@ function _moveButtons(e, event, last) {
 
     return function _move(e, event, last) {
 
+        // constants
         let el = (e.getContainer().classList.contains('leaflet-control') ? e.getContainer() : e.getContainer().parentElement);
 
         let topLeftControl = document.getElementsByClassName('leaflet-top leaflet-left')[0];
@@ -39,6 +40,9 @@ function _moveButtons(e, event, last) {
         let marginBottom = parseInt(_marginBottom.replace(/px/g, ''), 10);
 
         if (event.type === 'controlcollapse') {
+
+            // when an expandable control is collapsed, check for each button 
+            // if there is enough space for it to move back to its origin
 
             [...bottomRightControl2.childNodes].reverse()
                 .forEach(e => {
@@ -65,7 +69,7 @@ function _moveButtons(e, event, last) {
         } else {
 
             let args = [event.type, el, topLeftControl2, topLeftControl3, bottomRightControl2, firstEl2Col, firstEl3Col, marginBottom, attributionControl];
-            expandInit(...args);
+            expand(...args);
 
             if (event.type === 'controlinit') {
                 firstEl2Col = topLeftControl2.firstChild;
@@ -73,24 +77,23 @@ function _moveButtons(e, event, last) {
             }
 
         }
-        changeBottom(bottomRightControl2, topRightControl, marginBottom);
+        changeBottom(bottomRightControl2, topRightControl, marginBottom); // we have to handle bottom right different from top left
 
-        bottomLeft = [...topLeftControl.childNodes].filter(e => e.id != "colorbar" && e.id != "modeCtrl");
-        if (last && topLeftControl2.lastChild && bottomLeft.length != 0) {
+        bottomLeft = [...topLeftControl.childNodes].filter(e => e.id != "colorbar" && e.id != "modeCtrl"); // only the variable buttons
+        if (last && topLeftControl2.lastChild && bottomLeft.length != 0) { // if col 2 is not empty
             let bottom2 = topLeftControl2.lastChild.getBoundingClientRect().bottom;
             let bottom1 = topLeftControl.lastChild.getBoundingClientRect().bottom;
             let nonVars = [...topLeftControl.childNodes].filter(e => e.id == "colorbar" || e.id == "modeCtrl");
             let _lastNonVars = nonVars[nonVars.length - 1];
-            let lastNonVars = (_lastNonVars.classList.contains('leaflet-control') ? _lastNonVars : _lastNonVars.childNodes[0]);
+            let lastNonVars = (_lastNonVars.classList.contains('leaflet-control') ? _lastNonVars : _lastNonVars.childNodes[0]); // bottom element that is not a var btn
             let bottomNonVars = lastNonVars.getBoundingClientRect().bottom;
             let bottomMap = document.getElementById('map').getBoundingClientRect().bottom;
-            if (bottom2 > bottom1) {
+            if (bottom2 > bottom1) { // if col 2 extents lower than col 1
                 let newMargin = ((bottom2 - bottomNonVars - totalHeight(bottomLeft, marginBottom)) / bottomLeft.length) - marginBottom;
-                bottomLeft.forEach(e => e.style.marginTop = newMargin.toString() + "px");
+                bottomLeft.forEach(e => e.style.marginTop = newMargin.toString() + "px"); // spread col 1 so that its bottom aligns with bottom col 2
             } else if (bottom2 < bottom1 && bottomMap - bottom2 < 60) {
                 let firstElBottom = firstEl2Col.getBoundingClientRect().bottom;
                 let btns = [...topLeftControl2.childNodes].slice(1);
-                console.log(firstEl2Col, firstElBottom)
                 let newMargin = ((bottom1 - firstElBottom - totalHeight(btns, marginBottom)) / btns.length) - marginBottom;
                 btns.forEach(e => e.style.marginTop = newMargin.toString() + "px");
             }
@@ -99,7 +102,7 @@ function _moveButtons(e, event, last) {
     }
 }
 
-function expandInit(type, el, topLeftControl2, topLeftControl3, bottomRightControl2, firstEl2Col, firstEl3Col, marginBottom, attributionControl) {
+function expand(type, el, topLeftControl2, topLeftControl3, bottomRightControl2, firstEl2Col, firstEl3Col, marginBottom, attributionControl) {
 
     if (el.parentElement.classList.contains('leaflet-left', 'leaflet-top') && isElementOutMap(el)) {
         el.remove();
@@ -178,6 +181,6 @@ function changeBottom(secondCol, firstCol, marginBottom) {
 
 export function changeButtons(arr) {
     arr.forEach(i => {
-        if (i.active == true) { i.setInactive() };
+        if (i.active == true) { i.setInactive() }
     });
-};
+}

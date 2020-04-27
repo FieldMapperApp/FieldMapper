@@ -32,14 +32,17 @@ async function onSubmit(ev) {
     let options = document.getElementById('clearOptions').checked;
     let layers = document.getElementById('clearLayers').checked;
     let position = document.getElementById('clearPosition').checked;
+    
     let sure = ([vars, files, cache, options, layers, position].some(x => x) ? confirm('Are you sure?') : false);
     if (sure) {
-        if (vars) { await db.removeItem('variables') };
-        if (files) { await clearData() };
-        if (cache) { app.OSM.emptyCache() };
-        if (options) { await db.removeItem('options') };
-        if (layers) { await db.removeItem('layers') };
-        if (position) { await db.removeItem('position') };
+
+        if (vars) { await db.removeItem('variables') }
+        if (files) { await clearData() }
+        if (cache) { app.OSM.emptyCache() }
+        if (options) { await db.removeItem('options') }
+        if (layers) { await db.removeItem('layers') }
+        if (position) { await db.removeItem('position') }
+
     }
 
     backPage();
